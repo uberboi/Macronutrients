@@ -17,16 +17,64 @@ path {
     stroke-width: 1;
     shape-rendering: crispEdges;
 }
+.arc text {
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
+.arc path {
+  stroke: #fff;
+}
+
+.myButton {
+	box-shadow: 0px 0px 10px 2px #9fb4f2;
+	box-shadow: 0px 0px 10px 2px #9fb4f2;
+	box-shadow: 0px 0px 10px 2px #9fb4f2;
+	background: (linear, left top, left bottom, (0.05, #7892c2), (1, #476e9e));
+	background: linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background: linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background: linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background: linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+	background-color: #7892c2;
+	border-radius: 10px;
+	border-radius: 10px;
+	border-radius: 10px;
+	border: 1px solid #4e6096;
+	display: inline-block;
+	cursor: pointer;
+	color: #ffffff;
+	font-family: Arial;
+	font-size: 13px;
+	padding: 6px 10px;
+	text-decoration: none;
+}
+.myButton:hover {
+	background: (linear, left top, left bottom,(0.05, #476e9e),(1, #7892c2));
+	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+	background-color: #476e9e;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
 
 </style>
 <body>
+    <h1 style="text-align:center; color:black; font:Times"><bold>Macronutrients in Fitness</bold></h1>
+    <input class="myButton" type="button" name="wLoss" value="Weight Loss">
+    <input class="myButton" type="button" name="mGain" value="Mass Gain">
+    <input class="myButton" type="button" name="maintain" value="Maintenence">
 
 <!-- load the d3.js library -->    
 <script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script>
-
-// Set the dimensions of the canvas / graph
+    // Set the dimensions of the canvas / graph
 var margin = {top: 30, right: 20, bottom: 30, left: 50},
     width = 600 - margin.left - margin.right,
     height = 270 - margin.top - margin.bottom;
@@ -55,14 +103,72 @@ var svg = d3.select("body")
     .append("g")
         .attr("transform", 
               "translate(" + margin.left + "," + margin.top + ")");
+    
+/* function for buttons not functional yet!
+function switchMacro() {
+    if (showCarbs){  
+        showCarbs = true;
+        showProtein = false;
+        showFats = false;
+        //switch graphs to carbs
+        refresh();
+    } else if (showProtein) {
+        showCarbs = false;
+        showProtein = true;
+        showFats = false;
+        //switch graphs to protein
+        refresh();
+    } else if (showFats) {
+        showCarbs = false;
+        showProtein = false;
+        showFats = true;
+        //switch to fats
+        refresh();
+    }
+    //redraw the map with correct color  
+    refresh();   
+} */
 
+    
+//Pie chart code
+//sample dataset
+var dataset = [ 
+    {label: "Protein", count: 100},
+    {label: "Fats", count: 100},
+    {label: "Carbohydrates", count:100}
+];
+
+var piesvg = d3.select("body")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + width / 3 + "," + height / 2 + ")");
+
+    
+var color = d3.scale.category20();
+    
+var radius = Math.min(width, height) / 2;
+    
+var arc = d3.svg.arc()
+    .outerRadius(radius - 10)
+    .innerRadius(0);
+    
+var labelArc = d3.svg.arc()
+    .outerRadius(radius - 40)
+    .innerRadius(radius - 40);
+    
+var pie = d3.layout.pie()
+    .sort(null)
+    .value(function(d) { return d.count; });
+    
 // Get the data
 d3.csv("Fatloss.csv", function(error, data) {
     data.forEach(function(d) {
         d.Weight = d.Weight;
         d.Calories = +d.Calories;
-    });
-
+    }); 
+    
     // Scale the range of the data
     x.domain(d3.extent(data, function(d) { return d.Weight; }));
     y.domain([0, d3.max(data, function(d) { return d.Calories; })]);
@@ -83,7 +189,25 @@ d3.csv("Fatloss.csv", function(error, data) {
         .attr("class", "y axis")
         .call(yAxis);
 
+    var g = piesvg.selectAll(".arc")
+        .data(pie(dataset))
+      .enter().append("g")
+        .attr("class", "arc");
+  
+    g.append("path")
+        .attr("d", arc)
+        .style("fill", function(d) { return color(d.data.label); });
+    
+    g.append("text")
+      .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+      .attr("dy", ".35em")
+      .text(function(d) { return d.data.count; });
 });
+    
+function type(d) {
+    d.Protein = +d.Protein;
+    return d;
+}
 
 </script>
 </body>
