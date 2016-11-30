@@ -3,6 +3,103 @@
 <style> /* set the CSS */
 
 body { font: 12px Arial;}
+    
+ .foot-links a, .foot-links p{
+    display: block;
+    color: rgb(63, 63, 63);
+    transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    font-family: OpenSansRegular, Arial, sans-serif;
+    font-size: 13px;
+    color: rgb(63, 63, 63);
+    padding-bottom: 5px;
+    text-shadow: rgb(255, 255, 255) 1px 1px 0px;
+
+  }
+    a:link {
+    color: blue;
+  }
+  .foot-links img{
+    padding-top: 5px;
+  }
+  #footer{
+    background: rgb(241, 241, 241);
+    border-top: 1px solid rgb(222, 222, 222);
+    margin-top: -2px;
+    padding-top: 0px;
+    padding-bottom: 5px;
+    padding-left: 25px;
+    margin-left: 85px; 
+    margin-right: 85px;
+    margin-bottom: 25px;
+  }
+
+  .foot-header{
+    font-family: OpenSansBold, Arial, sans-serif;
+    font-size: 18px;
+    color: rgb(63, 63, 63);
+    padding-bottom: 20px;
+    text-shadow: rgb(255, 255, 255) 1px 1px 0px;
+  }
+  
+  #footer .container{
+    max-width: 1300px;
+     
+     }
+
+  #bottom-footer{
+    margin-bottom: 20px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  #bottom-footer a{
+    text-decoration: none;
+    color: #626262;
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    -ms-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+    font-size: 12px;
+    padding: 0px 15px;
+    border-right: 1px solid #ccc;
+    font-family: 'OpenSansRegular', Arial, sans-serif;
+    font-size: 13px;
+    color: #626262;
+    padding: 0 12px;
+    text-shadow: 1px 1px 0 rgba(255,255,255,1);
+  }
+  #bottom-footer .phone img{
+    margin-right: 7px;
+  }
+  #bottom-footer .phone .red{
+    font-size: 22px;
+    margin-top: -7px;
+    font-family: 'OpenSansRegular', Arial, sans-serif;
+    font-size: 18px!important;
+    color: #d10029!important;
+    position: relative;
+    top: -5px;
+    text-shadow: 1px 1px 0 rgba(255,255,255,1)!important;
+  }
+  #bottom-footer .phone .red small{
+    font-family: 'OpenSansRegular', Arial, sans-serif;
+    font-size: 12px!important;
+    display: block;
+    color: #626262!important;
+    text-shadow: 1px 1px 0 rgba(255,255,255,1)!important;
+    margin-top: -5px;
+  }
+  #final-footer{
+    font-size: 11px;
+    color: #666;
+  }
+  #final-footer i{
+    font-size: auto;
+  }
 
 path { 
     stroke: steelblue;
@@ -63,6 +160,10 @@ path {
 	top:1px;
 }
 
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
 </style>
 <body>
     <h1 style="text-align:center; color:black; font:Times"><bold>Macronutrients in Fitness</bold></h1>
@@ -83,6 +184,7 @@ var margin = {top: 30, right: 20, bottom: 30, left: 50},
 var x = d3.time.scale().range([0, width]);
 var y = d3.scale.linear().range([height, 0]);
 
+var bisectDate = d3.bisector(function(d) { return d.Weight; }).left;
 // Define the axes
 var xAxis = d3.svg.axis().scale(x)
     .orient("bottom").ticks(5);
@@ -177,6 +279,34 @@ d3.csv("Fatloss.csv", function(error, data) {
     svg.append("path")
         .attr("class", "line")
         .attr("d", valueline(data));
+    var focus = svg.append("g")
+      .attr("class", "focus")
+      .style("display", "none");
+
+  /*focus.append("circle")
+      .attr("r", 4.5);
+
+  focus.append("text")
+      .attr("x", 9)
+      .attr("dy", ".35em");
+*/
+  svg.append("rect")
+      .attr("class", "overlay")
+      .attr("width", width)
+      .attr("height", height)
+      .on("mouseover", function() { focus.style("display", null); })
+      .on("mouseout", function() { focus.style("display", "none"); })
+      .on("mousemove", mousemove);
+
+  function mousemove() {
+   var x0 = x.invert(d3.mouse(this)[0]),
+    i = bisectDate(data, x0, 1),
+    d0 = data[i - 1],
+    d1 = data[i],
+    d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
+    focus.attr("transform", "translate(" + x(d.Weight) + "," + y(d.Calories) + ")");
+    focus.select("text").text(d.Calories);
+  }
 
     // Add the X Axis
     svg.append("g")
@@ -202,6 +332,8 @@ d3.csv("Fatloss.csv", function(error, data) {
       .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
       .attr("dy", ".35em")
       .text(function(d) { return d.data.count; });
+    
+    
 });
     
 function type(d) {
@@ -210,4 +342,38 @@ function type(d) {
 }
 
 </script>
+    <div class='row'>
+        <div id="footer">
+          <div class="container">
+            <div class="row-1">
+              <h3> Created by: </h3>
+                  Han Nguyen, Kevin Cai, Steven Huang  <br>
+
+              <h3>Created for: </h3> CMPS165, Data Programming for Visualization, Fall 2016
+            </div><!--/col-sm-3-->
+            <br>
+            <div class="col-sm-3">
+              <h3>
+                Files:
+              </h3>
+              <div class="foot-links">
+                  <li>files</li>
+                  <li>files</li>
+              </div>
+            </div><!--/col-sm-3-->
+            <div class="col-sm-3" style="margin-left: 5px";>
+              <h3>Data Sources:</h3>
+              <div class="foot-links">
+                <li>Sources</li>
+                
+              </div>
+            </div>
+            <div class="col-sm-3" style="margin-left: 75px";>
+              <h3> Code Sources:</h3>
+              <div class="foot-links">
+              </div>
+            </div>
+          </div><!--/container-->
+        </div><!--/footer-->
+      </div><!--/row-->
 </body>
