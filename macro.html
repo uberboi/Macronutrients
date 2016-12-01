@@ -164,7 +164,8 @@ path {
   fill: none;
   pointer-events: all;
 }
-    
+
+/*Button placement*/
 .buttonArea{
     text-align: justify;
 }
@@ -183,7 +184,7 @@ var margin = {top: 30, right: 20, bottom: 30, left: 50},
 
 // Set the ranges
 var x = d3.time.scale().range([0, width]);
-var y = d3.scale.linear().range([height, 0]);
+var y = d3.scale.linear().range([height + 200, 0]);
 
 var bisectDate = d3.bisector(function(d) { return d.Weight; }).left;
 // Define the axes
@@ -202,7 +203,7 @@ var valueline = d3.svg.line()
 var svg = d3.select("body")
     .append("svg")
         .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("height", height + margin.top + margin.bottom + 200)
     .append("g")
         .attr("transform", 
               "translate(" + margin.left + "," + margin.top + ")");
@@ -245,7 +246,8 @@ var dataset = [
 var piesvg = d3.select("body")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    //Add to height move pie chart to top left of graph
+    .attr("height", height + margin.top + margin.bottom + 200)
   .append("g")
     .attr("transform", "translate(" + width / 3 + "," + height / 2 + ")");
 
@@ -316,7 +318,8 @@ d3.csv("Fatloss.csv", function(error, data) {
     // Add the X Axis
     svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
+        //add to height to match y axis length
+        .attr("transform", "translate(0," + (height + 200) + ")")
         .call(xAxis);
 
     // Add the Y Axis
@@ -352,6 +355,7 @@ function type(d) {
 
 </script>
     
+    <!--seprate div class for button placement-->
     <br><br>
     <div class = "buttonArea">
         <input class="myButton" type="button" name="wLoss" value="Weight Loss">
