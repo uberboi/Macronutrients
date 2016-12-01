@@ -298,7 +298,7 @@ var div = d3.select("body").append("div")
     .style("top", (height +200) + "px");
     
 // Get the data
-d3.csv("Fatloss.csv", function(error, data) {
+d3.csv("data.csv", function(error, data) {
     data.forEach(function(d) {
         d.Weight = d.Weight;
         d.Calories = +d.Calories;
