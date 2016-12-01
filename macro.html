@@ -343,17 +343,13 @@ d3.csv("Fatloss.csv", function(error, data) {
     d1 = data[i],
     d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
     focus.attr("transform", "translate(" + x(d.Weight) + "," + y(d.Calories) + ")");
-<<<<<<< HEAD
     focus.select("text").text(d.Calories);
     div.transition()
         .duration(200)
         .style("opacity", .9)
     div.html(d["Calories"]);
-=======
     focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories);
-      
->>>>>>> origin/master
-  }
+        }
 
     // Add the X Axis
     svg.append("g")
