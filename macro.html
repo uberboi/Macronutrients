@@ -164,7 +164,10 @@ path {
   fill: none;
   pointer-events: all;
 }
-
+.focus circle {
+  fill: none;
+  stroke: steelblue;
+}
 /*Button placement*/
 .buttonArea{
     text-align: justify;
@@ -194,11 +197,11 @@ div.tooltip {
 <script>
     // Set the dimensions of the canvas / graph
 var margin = {top: 30, right: 20, bottom: 30, left: 50},
-    width = 600 - margin.left - margin.right,
+    width = 700 - margin.left - margin.right,
     height = 370 - margin.top - margin.bottom;
 
 // Set the ranges
-var x = d3.scale.linear().range([0,width]);
+var x = d3.scale.linear().range([0,width-150]);
 var y = d3.scale.linear().range([height + 200, 0]);
 
 var bisectDate = d3.bisector(function(d) { return d.Weight; }).left;
@@ -340,11 +343,16 @@ d3.csv("Fatloss.csv", function(error, data) {
     d1 = data[i],
     d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
     focus.attr("transform", "translate(" + x(d.Weight) + "," + y(d.Calories) + ")");
+<<<<<<< HEAD
     focus.select("text").text(d.Calories);
     div.transition()
         .duration(200)
         .style("opacity", .9)
     div.html(d["Calories"]);
+=======
+    focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories);
+      
+>>>>>>> origin/master
   }
 
     // Add the X Axis
