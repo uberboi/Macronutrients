@@ -349,7 +349,7 @@ d3.csv("data.csv", function(error, data) {
     div.transition()
         .duration(200)
         .style("opacity", .9)
-    div.html("Total Calories:"+d["Calories"]+"<br>"+"Proteins:"+d.Protein+"<br>"+"Carbohydrates:"+d.Carbohydrates+"<br>"+"Fats:"+d.Fats);
+    div.html("Total Calories:"+d["Calories"]+"kcals <br>"+"Proteins:"+d.Protein+"g <br>"+"Carbohydrates:"+d.Carbohydrates+"g <br>"+"Fats:"+d.Fats+"g");
       
     focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories);
         }
