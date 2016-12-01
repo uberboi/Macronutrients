@@ -177,12 +177,12 @@ path {
 div.tooltip {
     position: absolute;
     text-align: center;
-    width: 100px;
-    height: 77px;
+    width: 150px;
+    height: 100px;
     padding: 8px;
     margin-top: -20px;
-    font: 10px sans-serif;
-    background: grey;
+    font: 14px sans-serif;
+    background: rgba(0,0,0,.1);
     border: 0px;
     border-radius: 8px;
     pointer-events: none;
@@ -190,7 +190,7 @@ div.tooltip {
 </style>
 <body>
     <h1 style="text-align:center; color:black; font:Times"><bold>Macronutrients in Fitness</bold></h1>
-
+    <h3>Han Nguyen, Kevin Cai, Steven Huang</h3>
 <!-- load the d3.js library -->    
 <script src="http://d3js.org/d3.v3.min.js"></script>
 
@@ -349,7 +349,8 @@ d3.csv("Fatloss.csv", function(error, data) {
     div.transition()
         .duration(200)
         .style("opacity", .9)
-    div.html(d["Calories"]);
+    div.html("Total Calories:"+d["Calories"]+"<br>"+"Proteins:"+d.Protein+"<br>"+"Carbohydrates:"+d.Carbohydrates+"<br>"+"Fats:"+d.Fats);
+      
     focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories);
         }
 
