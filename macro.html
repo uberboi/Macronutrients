@@ -269,7 +269,9 @@ var labelArc = d3.svg.arc()
     
 var pie = d3.layout.pie()
     .sort(null)
-    .value(function(d) { return d.count; });
+    .value(function(d) { return (d.Protein); })
+    //.value(function(d) { return (d.Fats); });
+    //.data([rowData[0].Protein]);
     
 // Get the data
 d3.csv("Fatloss.csv", function(error, data) {
@@ -277,6 +279,13 @@ d3.csv("Fatloss.csv", function(error, data) {
         d.Weight = d.Weight;
         d.Calories = +d.Calories;
     }); 
+    
+    
+    //Filtered data by rows for piechart
+    var rowData = data.filter(function(d) {
+        return d.Weight === "100";
+    });
+    console.log(rowData);
     
     // Scale the range of the data
     x.domain(d3.extent(data, function(d) { return d.Weight; }));
@@ -329,27 +338,29 @@ d3.csv("Fatloss.csv", function(error, data) {
     
     //New variable 'g' for pie chart
     var g = piesvg.selectAll(".arc")
-        .data(pie(dataset))
+        .data(pie(rowData))
       .enter().append("g")
         .attr("class", "arc");
   
     //Append pie chart path with colors
     g.append("path")
         .attr("d", arc)
-        .style("fill", function(d) { return color(d.data.label); });
+        .style("fill", function(d, i) { return color(i); });
     
     //Append piechart with labels
     g.append("text")
       .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
       .attr("dy", ".35em")
-      .text(function(d) { return d.data.count; });
-    
+      .text(function(d) { return d.data.Protein + " "
+                                 + d.data.Fats; });
     
 });
 
 //Function to return pie chart values
 function type(d) {
-    d.Protein = +d.Protein;
+    d.Protein = +d.Protein
+    d.Carbohydrates = +d.Carbohydrates
+    d.Fats = +d.Fats;
     return d;
 }
 
