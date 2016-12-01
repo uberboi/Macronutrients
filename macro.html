@@ -175,7 +175,7 @@ path {
     
 /*Tooltip Code*/
 div.tooltip {
-    position: absolue;
+    position: absolute;
     text-align: center;
     width: 100px;
     height: 77px;
@@ -293,7 +293,9 @@ var pie = d3.layout.pie()
 //define Tooltip
 var div = d3.select("body").append("div")
     .attr("class", "tooltip")
-    .style("opacity", 1);
+    .style("opacity", 1)
+    .style("left", (width + 100) + "px")
+    .style("top", (height +200) + "px");
     
 // Get the data
 d3.csv("Fatloss.csv", function(error, data) {
