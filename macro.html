@@ -169,6 +169,21 @@ path {
 .buttonArea{
     text-align: justify;
 }
+    
+/*Tooltip Code*/
+div.tooltip {
+    position: absolue;
+    text-align: center;
+    width: 100px;
+    height: 77px;
+    padding: 8px;
+    margin-top: -20px;
+    font: 10px sans-serif;
+    background: grey;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
 </style>
 <body>
     <h1 style="text-align:center; color:black; font:Times"><bold>Macronutrients in Fitness</bold></h1>
@@ -232,7 +247,6 @@ function switchMacro() {
     //redraw the map with correct color  
     refresh();   
 } */
-
     
 //Pie chart code
 //sample dataset
@@ -244,9 +258,9 @@ var dataset = [
 
 //separate SVG body label for pie chart
 var piesvg = d3.select("body")
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    //Add to height move pie chart to top left of graph
+    .append("svg:svg")
+    //height and width of svg body
+    .attr("width", 400)
     .attr("height", height + margin.top + margin.bottom + 200)
   .append("g")
     .attr("transform", "translate(" + width / 3 + "," + height / 2 + ")");
@@ -272,6 +286,11 @@ var pie = d3.layout.pie()
     .value(function(d) { return (d.Protein); })
     //.value(function(d) { return (d.Fats); });
     //.data([rowData[0].Protein]);
+
+//define Tooltip
+var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 1);
     
 // Get the data
 d3.csv("Fatloss.csv", function(error, data) {
@@ -322,6 +341,10 @@ d3.csv("Fatloss.csv", function(error, data) {
     d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
     focus.attr("transform", "translate(" + x(d.Weight) + "," + y(d.Calories) + ")");
     focus.select("text").text(d.Calories);
+    div.transition()
+        .duration(200)
+        .style("opacity", .9)
+    div.html(d["Calories"]);
   }
 
     // Add the X Axis
