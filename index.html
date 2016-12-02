@@ -190,7 +190,9 @@ div.tooltip {
 </style>
 <body>
     <h1 style="text-align:center; color:black; font:Times"><bold>Macronutrients in Fitness</bold></h1>
-    <h3>Macronutrients are extremely important when it comes to fitness. Ideally you want to portion your daily calorie intake out so that you meet the recommended macronutrient intake without surpassing your daily calorie limit.  </h3>
+    <h3>Macronutrients are extremely important when it comes to fitness. Ideally you want to portion your daily calorie intake out so that you meet the recommended macronutrient intake without surpassing your daily calorie limit.</h3>
+    
+    <h3>Recommended Calorie intake based on Weight</h3>
 <!-- load the d3.js library -->    
 <script src="https://d3js.org/d3.v3.min.js"></script>
 
@@ -207,10 +209,11 @@ var y = d3.scale.linear().range([height + 200, 0]);
 var bisectDate = d3.bisector(function(d) { return d.Weight; }).left;
 // Define the axes
 var xAxis = d3.svg.axis().scale(x)
-    .orient("bottom").ticks(20);
+    .orient("bottom").ticks(10);
 
 var yAxis = d3.svg.axis().scale(y)
-    .orient("left").ticks(20);
+    .orient("left")
+    .ticks(10);
 
 // Define the line
 var valueline = d3.svg.line()
