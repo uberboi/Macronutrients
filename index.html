@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> /* set the CSS */
+
+body { font: 12px Arial;}
+    
+ .foot-links a, .foot-links p{
+    display: block;
+    color: rgb(63, 63, 63);
+    transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    font-family: OpenSansRegular, Arial, sans-serif;
+    font-size: 13px;
+    color: rgb(63, 63, 63);
+    padding-bottom: 5px;
+    text-shadow: rgb(255, 255, 255) 1px 1px 0px;
+
+  }
+    a:link {
+    color: blue;
+  }
+  .foot-links img{
+    padding-top: 5px;
+  }
+  #footer{
+    background: rgb(241, 241, 241);
+    border-top: 1px solid rgb(222, 222, 222);
+    margin-top: -2px;
+    padding-top: 0px;
+    padding-bottom: 5px;
+    padding-left: 25px;
+    margin-left: 85px; 
+    margin-right: 85px;
+    margin-bottom: 25px;
+  }
+
+  .foot-header{
+    font-family: OpenSansBold, Arial, sans-serif;
+    font-size: 18px;
+    color: rgb(63, 63, 63);
+    padding-bottom: 20px;
+    text-shadow: rgb(255, 255, 255) 1px 1px 0px;
+  }
+  
+  #footer .container{
+    max-width: 1300px;
+     
+     }
+
+  #bottom-footer{
+    margin-bottom: 20px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  #bottom-footer a{
+    text-decoration: none;
+    color: #626262;
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    -ms-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+    font-size: 12px;
+    padding: 0px 15px;
+    border-right: 1px solid #ccc;
+    font-family: 'OpenSansRegular', Arial, sans-serif;
+    font-size: 13px;
+    color: #626262;
+    padding: 0 12px;
+    text-shadow: 1px 1px 0 rgba(255,255,255,1);
+  }
+  #bottom-footer .phone img{
+    margin-right: 7px;
+  }
+  #bottom-footer .phone .red{
+    font-size: 22px;
+    margin-top: -7px;
+    font-family: 'OpenSansRegular', Arial, sans-serif;
+    font-size: 18px!important;
+    color: #d10029!important;
+    position: relative;
+    top: -5px;
+    text-shadow: 1px 1px 0 rgba(255,255,255,1)!important;
+  }
+  #bottom-footer .phone .red small{
+    font-family: 'OpenSansRegular', Arial, sans-serif;
+    font-size: 12px!important;
+    display: block;
+    color: #626262!important;
+    text-shadow: 1px 1px 0 rgba(255,255,255,1)!important;
+    margin-top: -5px;
+  }
+  #final-footer{
+    font-size: 11px;
+    color: #666;
+  }
+  #final-footer i{
+    font-size: auto;
+  }
+
+path { 
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+.arc text {
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
+.arc path {
+  stroke: #fff;
+}
+
+.myButton {
+	box-shadow: 0px 0px 10px 2px #9fb4f2;
+	box-shadow: 0px 0px 10px 2px #9fb4f2;
+	box-shadow: 0px 0px 10px 2px #9fb4f2;
+	background: (linear, left top, left bottom, (0.05, #7892c2), (1, #476e9e));
+	background: linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background: linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background: linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background: linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+	background-color: #7892c2;
+	border-radius: 10px;
+	border-radius: 10px;
+	border-radius: 10px;
+	border: 1px solid #4e6096;
+	display: inline-block;
+	cursor: pointer;
+	color: #ffffff;
+	font-family: Arial;
+	font-size: 13px;
+	padding: 6px 10px;
+	text-decoration: none;
+}
+.myButton:hover {
+	background: (linear, left top, left bottom,(0.05, #476e9e),(1, #7892c2));
+	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+	background-color: #476e9e;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+.focus circle {
+  fill: none;
+  stroke: steelblue;
+}
+/*Button placement*/
+.buttonArea{
+    text-align: justify;
+}
+    
+/*Tooltip Code*/
+div.tooltip {
+    position: absolute;
+    text-align: left;
+    width: 160px;
+    height: 80px;
+    padding: 8px;
+    margin-top: -20px;
+    font: 14px sans-serif;
+    background: rgba(0,0,0,.1);
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+</style>
+<body>
+    <h1 style="text-align:center; color:black; font:Times"><bold>Macronutrients in Fitness</bold></h1>
+    <h3>Macronutrients are extremely important when it comes to fitness. Ideally you want to portion your daily calorie intake out so that you meet the recommended macronutrient intake without surpassing your daily calorie limit.  </h3>
+<!-- load the d3.js library -->    
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+<script>
+    // Set the dimensions of the canvas / graph
+var margin = {top: 30, right: 20, bottom: 30, left: 50},
+    width = 700 - margin.left - margin.right,
+    height = 370 - margin.top - margin.bottom;
+
+// Set the ranges
+var x = d3.scale.linear().range([0,width-150]);
+var y = d3.scale.linear().range([height + 200, 0]);
+
+var bisectDate = d3.bisector(function(d) { return d.Weight; }).left;
+// Define the axes
+var xAxis = d3.svg.axis().scale(x)
+    .orient("bottom").ticks(20);
+
+var yAxis = d3.svg.axis().scale(y)
+    .orient("left").ticks(20);
+
+// Define the line
+var valueline = d3.svg.line()
+    .x(function(d) { return x(d.Weight); })
+    .y(function(d) { return y(d.Calories); });
+    
+// Adds the svg canvas
+var svg = d3.select("body")
+    .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom + 200)
+    .append("g")
+        .attr("transform", 
+              "translate(" + margin.left + "," + margin.top + ")");
+    
+/* function for buttons not functional yet!
+function switchMacro() {
+    if (showCarbs){  
+        showCarbs = true;
+        showProtein = false;
+        showFats = false;
+        //switch graphs to carbs
+        refresh();
+    } else if (showProtein) {
+        showCarbs = false;
+        showProtein = true;
+        showFats = false;
+        //switch graphs to protein
+        refresh();
+    } else if (showFats) {
+        showCarbs = false;
+        showProtein = false;
+        showFats = true;
+        //switch to fats
+        refresh();
+    }
+    //redraw the map with correct color  
+    refresh();   
+} */
+    
+//Pie chart code
+//sample dataset
+var dataset = [ 
+    {label: "Protein", count: 100},
+    {label: "Fats", count: 100},
+    {label: "Carbohydrates", count:100}
+];
+
+//separate SVG body label for pie chart
+var piesvg = d3.select("body")
+    .append("svg:svg")
+    //height and width of svg body
+    .attr("width", 400)
+    .attr("height", height + margin.top + margin.bottom + 200)
+  .append("g")
+    .attr("transform", "translate(" + width / 3 + "," + height / 2 + ")");
+
+//Color scale for pie chart    
+var color = d3.scale.category20();
+
+//Radius for pie chart
+var radius = Math.min(width, height) / 2;
+
+//Pie chart radius
+var arc = d3.svg.arc()
+    .outerRadius(radius - 10)
+    .innerRadius(0);
+
+//Format and position for pie chart labels if added
+var labelArc = d3.svg.arc()
+    .outerRadius(radius - 40)
+    .innerRadius(radius - 40);
+    
+var pie = d3.layout.pie()
+    .sort(null)
+    .value(function(d) { return (d.Protein); })
+    //.value(function(d) { return (d.Fats); });
+    //.data([rowData[0].Protein]);
+
+//define Tooltip
+var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 1)
+    .style("left", (width + 100) + "px")
+    .style("top", (height +200) + "px");
+    
+// Get the data
+d3.csv("data.csv", function(error, data) {
+    data.forEach(function(d) {
+        d.Weight = d.Weight;
+        d.Calories = +d.Calories;
+    }); 
+    
+    
+    //Filtered data by rows for piechart
+    var rowData = data.filter(function(d) {
+        return d.Weight === "100";
+    });
+    console.log(rowData);
+    
+    // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return d.Weight; }));
+    y.domain([0, d3.max(data, function(d) { return d.Calories; })]);
+
+    // Add the valueline path.
+    svg.append("path")
+        .attr("class", "line")
+        .attr("d", valueline(data));
+    var focus = svg.append("g")
+      .attr("class", "focus")
+      .style("display", "none");
+
+  focus.append("circle")
+      .attr("r", 4.5);
+
+  focus.append("text")
+      .attr("x", 9)
+      .attr("dy", ".35em");
+    
+  svg.append("rect")
+      .attr("class", "overlay")
+      .attr("width", width)
+      .attr("height", height+190)
+      .on("mouseover", function() { focus.style("display", null); })
+      .on("mouseout", function() { focus.style("display", "none"); })
+      .on("mousemove", mousemove);
+
+  function mousemove() {
+   var x0 = x.invert(d3.mouse(this)[0]),
+    i = bisectDate(data, x0, 1),
+    d0 = data[i - 1],
+    d1 = data[i],
+    d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
+    focus.attr("transform", "translate(" + x(d.Weight) + "," + y(d.Calories) + ")");
+    focus.select("text").text(d.Calories);
+    div.transition()
+        .duration(200)
+        .style("opacity", .9)
+    div.html("Total Calories:"+d["Calories"]+"kcals <br>"+"Proteins:"+d.Protein+"g <br>"+"Carbohydrates:"+d.Carbohydrates+"g <br>"+"Fats:"+d.Fats+"g");
+      
+    focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories);
+        }
+
+    // Add the X Axis
+    svg.append("g")
+        .attr("class", "x axis")
+        //add to height to match y axis length
+        .attr("transform", "translate(0," + (height + 200) + ")")
+        .call(xAxis);
+
+    // Add the Y Axis
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis);
+    
+    //New variable 'g' for pie chart
+    var g = piesvg.selectAll(".arc")
+        .data(pie(rowData))
+      .enter().append("g")
+        .attr("class", "arc");
+  
+    //Append pie chart path with colors
+    g.append("path")
+        .attr("d", arc)
+        .style("fill", function(d, i) { return color(i); });
+    
+    //Append piechart with labels
+    g.append("text")
+      .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+      .attr("dy", ".35em")
+      .text(function(d) { return d.data.Protein + " "
+                                 + d.data.Fats; });
+    
+});
+
+//Function to return pie chart values
+function type(d) {
+    d.Protein = +d.Protein
+    d.Carbohydrates = +d.Carbohydrates
+    d.Fats = +d.Fats;
+    return d;
+}
+
+</script>
+    
+    <!--seprate div class for button placement-->
+    <br><br>
+    <div class = "buttonArea">
+        <input class="myButton" type="button" name="wLoss" value="Weight Loss">
+        <input class="myButton" type="button" name="mGain" value="Mass Gain">
+        <input class="myButton" type="button" name="maintain" value="Maintenence">
+    </div>
+    <br>
+    
+    <div class='row'>
+        <div id="footer">
+          <div class="container">
+            <div class="row-1">
+              <h3> Created by: </h3>
+                  Han Nguyen, Kevin Cai, Steven Huang  <br>
+
+              <h3>Created for: </h3> CMPS165, Data Programming for Visualization, Fall 2016
+            </div><!--/col-sm-3-->
+            <br>
+            <div class="col-sm-3">
+              <h3>
+                Files:
+              </h3>
+              <div class="foot-links">
+                  <li>macro.html</li>
+                  <li>data.csv</li>
+              </div>
+            </div><!--/col-sm-3-->
+            <div class="col-sm-3" style="margin-left: 5px";>
+              <h3>Data Sources:</h3>
+              <div class="foot-links">
+                  <li><a href="http://www.jtsstrength.com/articles/2013/08/30/optimal-nutrition-for-strength-performance/">Optimal nutrition for strength performance</a></li> 
+              </div>
+            </div>
+            <div class="col-sm-3" style="margin-left: 5px";>
+              <h3> Code Sources:</h3>
+              <div class="foot-links">
+                  <li><a href="https://bl.ocks.org/mbostock/3902569/">X-value Mouseover</a></li> 
+              </div>
+            </div>
+          </div><!--/container-->
+        </div><!--/footer-->
+      </div><!--/row-->
+</body>
