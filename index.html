@@ -301,8 +301,8 @@ var pie = d3.layout.pie()
 var div = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 1)
-    .style("left", (width + 100) + "px")
-    .style("top", (height +200) + "px");
+    .style("left", (width + 230) + "px")
+    .style("top", (height + 50) + "px");
     
 // Get the data
 d3.csv("data.csv", function(error, data) {
@@ -314,7 +314,7 @@ d3.csv("data.csv", function(error, data) {
     
     //Filtered data by rows for piechart
     var rowData = data.filter(function(d) {
-        return d.Weight === "100";
+        return d.Weight === "400";
     });
     console.log(rowData);
     
