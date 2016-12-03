@@ -189,8 +189,8 @@ div.tooltip {
 }
 </style>
 <body>
-    <h1 style="text-align:center; color:black; font:Times"><bold>Macronutrients in Fitness</bold></h1>
-    <h3>Macronutrients are extremely important when it comes to fitness. Ideally you want to portion your daily calorie intake out so that you meet the recommended macronutrient intake without surpassing your daily calorie limit.</h3>
+    <h1 style="text-align:center; color:black; font:Times"><bold>Caloric and Macronutrients Intake for Fitness</bold></h1>
+    <h2>Macronutrients are extremely important when it comes to fitness. Ideally you want to portion your daily calorie intake out so that you meet the recommended macronutrient intake without surpassing your daily calorie limit.</h2>
     
     <h3>Recommended Calorie intake based on Weight</h3>
 <!-- load the d3.js library -->    
@@ -266,21 +266,24 @@ var dataset = [
 var piesvg = d3.select("body")
     .append("svg:svg")
     //height and width of svg body
-    .attr("width", 400)
+    .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom + 200)
   .append("g")
-    .attr("transform", "translate(" + width / 3 + "," + height / 2 + ")");
-
+    .attr("transform", "translate(" + (width / 3 + 30) + "," + (height - 75) + ")");
+    
 //Color scale for pie chart    
-var color = d3.scale.category20();
+//var color = d3.scale.category20c();
+//Custom Color Scale
+var color = d3.scale.ordinal()
+.range(["#deebf7", "#6baed6", "#08519c"]);
 
 //Radius for pie chart
 var radius = Math.min(width, height) / 2;
 
 //Pie chart radius
 var arc = d3.svg.arc()
-    .outerRadius(radius - 10)
-    .innerRadius(0);
+    .outerRadius(height - 75)
+    .innerRadius(height - 150);
 
 //Format and position for pie chart labels if added
 var labelArc = d3.svg.arc()
@@ -356,7 +359,11 @@ d3.csv("data.csv", function(error, data) {
     div.html("Total Calories:"+d["Calories"]+"kcals <br>"+"Proteins:"+d.Protein+"g <br>"+"Carbohydrates:"+d.Carbohydrates+"g <br>"+"Fats:"+d.Fats+"g");
       
     focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories);
-        }
+    var rowData = data.filter(function(d) {
+        return d.Weight === d["Weight"];
+    });
+    console.log(rowData);
+    }
 
     // Add the X Axis
     svg.append("g")
@@ -386,22 +393,25 @@ d3.csv("data.csv", function(error, data) {
     //Append pie chart path with colors
     g.append("path")
         .attr("d", arc)
-        .style("fill", function(d, i) { return color(i); });
+        .style("fill", function(d, i) { return color(i); })
+      .transition()
+        .ease("elastic")
+        .duration(4000)
+        .attrTween("d", tweenPie);
     
     //Append piechart with labels
     g.append("text")
       .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
       .attr("dy", ".35em")
-      .text(function(d, i) { return dataPie[i].name });
+      .text(function(d, i) { return dataPie[i].name + ": " + d3.format(".2f")((d.endAngle - d.startAngle)/(2*Math.PI)*100) + "%" });
     
 });
 
-//Function to return pie chart values
-function type(d) {
-    d.Protein = +d.Protein
-    d.Carbohydrates = +d.Carbohydrates
-    d.Fats = +d.Fats;
-    return d;
+//Function for Pie animation
+function tweenPie(b) {
+    b.innerRadius = radius *.6
+    var i = d3.interpolate({startAngle: 0, endAngle: 0}, b);
+    return function(t) { return arc(i(t)); };
 }
 
 </script>
