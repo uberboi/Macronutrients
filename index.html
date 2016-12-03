@@ -336,7 +336,7 @@ d3.csv("data.csv", function(error, data) {
     
   svg.append("rect")
       .attr("class", "overlay")
-      .attr("width", width)
+      .attr("width", width-150)
       .attr("height", height+190)
       .on("mouseover", function() { focus.style("display", null); })
       .on("mouseout", function() { focus.style("display", "none"); })
