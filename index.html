@@ -322,9 +322,21 @@ d3.csv("data.csv", function(error, data) {
     y.domain([0, d3.max(data, function(d) { return d.Calories; })]);
 
     // Add the valueline path.
-    svg.append("path")
+    var path = svg.append("path")
         .attr("class", "line")
         .attr("d", valueline(data));
+    var totalLength = path.node().getTotalLength();
+
+    path
+      .attr("stroke-dasharray", totalLength + " " + totalLength)
+      .attr("stroke-dashoffset", totalLength)
+      .transition()
+        .duration(2000)
+        .ease("linear")
+        .attr("stroke-dashoffset", 0);
+    
+    
+    
     var focus = svg.append("g")
       .attr("class", "focus")
       .style("display", "none");
@@ -345,6 +357,7 @@ d3.csv("data.csv", function(error, data) {
       .on("mousemove", mousemove);
     
   function mousemove() {
+<<<<<<< HEAD
       var x0 = x.invert(d3.mouse(this)[0]),
       i = bisectDate(data, x0, 1),
       d0 = data[i - 1],
@@ -358,6 +371,21 @@ d3.csv("data.csv", function(error, data) {
       div.html("Total Calories:"+d["Calories"]+"kcals <br>"+"Proteins:"+d.Protein+"g <br>"+"Carbohydrates:"+d.Carbohydrates+"g <br>"+"Fats:"+d.Fats+"g");
       focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories);
       var rowData = data.filter(function(d) {
+=======
+   var x0 = x.invert(d3.mouse(this)[0]),
+    i = bisectDate(data, x0, 1),
+    d0 = data[i - 1],
+    d1 = data[i],
+    d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
+    focus.attr("transform", "translate(" + x(d.Weight) + "," + y(d.Calories) + ")");
+// focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories);    
+      div.transition()
+        .duration(200)
+        .style("opacity", .9)
+    div.html("Total Calories:"+d["Calories"]+"kcals <br>"+"Proteins:"+d.Protein+"g <br>"+"Carbohydrates:"+d.Carbohydrates+"g <br>"+"Fats:"+d.Fats+"g");
+      
+    var rowData = data.filter(function(d) {
+>>>>>>> origin/master
         return d.Weight === d["Weight"];
       });
       console.log(rowData);
