@@ -269,26 +269,25 @@ var piesvg = d3.select("body")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom + 200)
   .append("g")
-    .attr("transform", "translate(" + (width / 3 + 30) + "," + (height - 75) + ")");
+    .attr("transform", "translate(" + (width / 3 + 30) + "," + (height - 70) + ")");
     
 //Color scale for pie chart    
-//var color = d3.scale.category20c();
 //Custom Color Scale
 var color = d3.scale.ordinal()
-.range(["#deebf7", "#6baed6", "#08519c"]);
+.range(["#deebf7", "#6baed6", "#2171b5"]);
 
-//Radius for pie chart
+//Radius for pie chart1
 var radius = Math.min(width, height) / 2;
 
 //Pie chart radius
 var arc = d3.svg.arc()
-    .outerRadius(height - 75)
-    .innerRadius(height - 150);
+    .outerRadius(height - 70)
+    .innerRadius(height - 155);
 
 //Format and position for pie chart labels if added
 var labelArc = d3.svg.arc()
-    .outerRadius(radius - 40)
-    .innerRadius(radius - 40);
+    .outerRadius(radius + 40)
+    .innerRadius(radius + 40);
     
 var pie = d3.layout.pie()
     .sort(null)
@@ -302,7 +301,7 @@ var div = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 1)
     .style("left", (width + 230) + "px")
-    .style("top", (height + 50) + "px");
+    .style("top", (height + 45) + "px"); 
     
 // Get the data
 d3.csv("data.csv", function(error, data) {
@@ -344,26 +343,25 @@ d3.csv("data.csv", function(error, data) {
       .on("mouseover", function() { focus.style("display", null); })
       .on("mouseout", function() { focus.style("display", "none"); })
       .on("mousemove", mousemove);
-
+    
   function mousemove() {
-   var x0 = x.invert(d3.mouse(this)[0]),
-    i = bisectDate(data, x0, 1),
-    d0 = data[i - 1],
-    d1 = data[i],
-    d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
-    focus.attr("transform", "translate(" + x(d.Weight) + "," + y(d.Calories) + ")");
-    focus.select("text").text(d.Calories);
-    div.transition()
-        .duration(200)
-        .style("opacity", .9)
-    div.html("Total Calories:"+d["Calories"]+"kcals <br>"+"Proteins:"+d.Protein+"g <br>"+"Carbohydrates:"+d.Carbohydrates+"g <br>"+"Fats:"+d.Fats+"g");
-      
-    focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories);
-    var rowData = data.filter(function(d) {
+      var x0 = x.invert(d3.mouse(this)[0]),
+      i = bisectDate(data, x0, 1),
+      d0 = data[i - 1],
+      d1 = data[i],
+      d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
+      focus.attr("transform", "translate(" + x(d.Weight) + "," + y(d.Calories) + ")");
+      focus.select("text").text(d.Calories);
+      div.transition()
+          .duration(200)
+          .style("opacity", .9)
+      div.html("Total Calories:"+d["Calories"]+"kcals <br>"+"Proteins:"+d.Protein+"g <br>"+"Carbohydrates:"+d.Carbohydrates+"g <br>"+"Fats:"+d.Fats+"g");
+      focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories);
+      var rowData = data.filter(function(d) {
         return d.Weight === d["Weight"];
-    });
-    console.log(rowData);
-    }
+      });
+      console.log(rowData);
+      }
 
     // Add the X Axis
     svg.append("g")
@@ -379,19 +377,19 @@ d3.csv("data.csv", function(error, data) {
     
     //create new array for pie chart
     dataPie = [
-        {"name": "Carbohydrates", "val": rowData[0]["Carbohydrates"]},
+        {"name": "Carbs", "val": rowData[0]["Carbohydrates"]},
         {"name": "Protein", "val": rowData[0]["Protein"]},
         {"name": "Fats", "val": rowData[0]["Fats"]}
     ]
     
     //New variable 'g' for pie chart
-    var g = piesvg.selectAll(".arc")
+    var gpie = piesvg.selectAll(".arc")
         .data(pie(dataPie))
       .enter().append("g")
         .attr("class", "arc");
   
     //Append pie chart path with colors
-    g.append("path")
+    gpie.append("path")
         .attr("d", arc)
         .style("fill", function(d, i) { return color(i); })
       .transition()
@@ -400,13 +398,17 @@ d3.csv("data.csv", function(error, data) {
         .attrTween("d", tweenPie);
     
     //Append piechart with labels
-    g.append("text")
+    gpie.append("text")
+      .style("fill", "White")
+      .style("font", "bold 12px Arial")
+      .transition().duration(2000)
       .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
       .attr("dy", ".35em")
+      .style("fill", "Black")
       .text(function(d, i) { return dataPie[i].name + ": " + d3.format(".2f")((d.endAngle - d.startAngle)/(2*Math.PI)*100) + "%" });
-    
-});
 
+});
+    
 //Function for Pie animation
 function tweenPie(b) {
     b.innerRadius = radius *.6
