@@ -120,7 +120,7 @@ path {
 }
 
 .arc path {
-  stroke: #fff;
+  stroke: #fff
 }
 
 .myButton {
@@ -186,6 +186,23 @@ div.tooltip {
     border: 0px;
     border-radius: 8px;
     pointer-events: none;
+    }
+    
+/*Tooltip Code for Pie chart*/
+.tooltipPie {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    position: absolute;
+    display: none;
+    width: auto;
+    height: auto;
+    background: none repeat scroll 0 0 grey;
+    border: 0 none;
+    border-radius: 8px 8px 8px 8px;
+    box-shadow: -3px 3px 15px #888888;
+    color: black;
+    font: 12px sans-serif;
+    padding: 5px;
+    text-align: center;
 }
 </style>
 <body>
@@ -209,11 +226,16 @@ var y = d3.scale.linear().range([height + 200, 0]);
 var bisectDate = d3.bisector(function(d) { return d.Weight; }).left;
 // Define the axes
 var xAxis = d3.svg.axis().scale(x)
-    .orient("bottom").ticks(10);
+    .orient("bottom")
+    .tickSize(0)
+    .tickValues([100,500]);
+    //.ticks(10);
 
 var yAxis = d3.svg.axis().scale(y)
     .orient("left")
-    .ticks(10);
+    .tickValues([500,5500])
+    .tickSize(0);
+    //.ticks(10);
 
 // Define the line
 var valueline = d3.svg.line()
@@ -255,12 +277,6 @@ function switchMacro() {
 } */
     
 //Pie chart code
-//sample dataset
-var dataset = [ 
-    {label: "Protein", count: 100},
-    {label: "Fats", count: 100},
-    {label: "Carbohydrates", count:100}
-];
 
 //separate SVG body label for pie chart
 var piesvg = d3.select("body")
@@ -269,39 +285,48 @@ var piesvg = d3.select("body")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom + 200)
   .append("g")
-    .attr("transform", "translate(" + (width / 3 + 30) + "," + (height - 70) + ")");
+    .attr("transform", "translate(" + (width / 3 + 50) + "," + (height - 50) + ")");
     
 //Color scale for pie chart    
 //Custom Color Scale
 var color = d3.scale.ordinal()
-.range(["#deebf7", "#6baed6", "#2171b5"]);
+.range(["#6baed6", "#2171b5", "#deebf7" ]);
 
-//Radius for pie chart1
+//Radius for pie chart
 var radius = Math.min(width, height) / 2;
 
 //Pie chart radius
 var arc = d3.svg.arc()
     .outerRadius(height - 70)
     .innerRadius(height - 155);
+    
+//Variable for Pie chart mouseOver animation
+var arcOver = d3.svg.arc()
+    .innerRadius(height - 135)   
+    .outerRadius(height - 50);    
 
 //Format and position for pie chart labels if added
 var labelArc = d3.svg.arc()
     .outerRadius(radius + 40)
     .innerRadius(radius + 40);
     
+var labelArcOver = d3.svg.arc()
+    .outerRadius(radius + 40)
+    .innerRadius(radius + 40);
+    
 var pie = d3.layout.pie()
     .sort(null)
     .value(function(d) { return (d.val); });
-    //.value(function(d) { return (d.Protein); })
-    //.value(function(d) { return (d.Fats); });
-    //.data([rowData[0].Protein]);
 
 //define Tooltip
+var divPie = d3.select("body").append("divPie")
+    .attr("class", "tooltipPie");
+            
 var div = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 1)
-    .style("left", (width + 230) + "px")
-    .style("top", (height + 45) + "px"); 
+    .style("left", (width + 250) + "px")
+    .style("top", (height + 65) + "px"); 
     
 // Get the data
 d3.csv("data.csv", function(error, data) {
@@ -315,28 +340,15 @@ d3.csv("data.csv", function(error, data) {
     var rowData = data.filter(function(d) {
         return d.Weight === "400";
     });
-    console.log(rowData);
     
     // Scale the range of the data
     x.domain(d3.extent(data, function(d) { return d.Weight; }));
     y.domain([0, d3.max(data, function(d) { return d.Calories; })]);
 
     // Add the valueline path.
-    var path = svg.append("path")
+    svg.append("path")
         .attr("class", "line")
         .attr("d", valueline(data));
-    var totalLength = path.node().getTotalLength();
-
-    path
-      .attr("stroke-dasharray", totalLength + " " + totalLength)
-      .attr("stroke-dashoffset", totalLength)
-      .transition()
-        .duration(2000)
-        .ease("linear")
-        .attr("stroke-dashoffset", 0);
-    
-    
-    
     var focus = svg.append("g")
       .attr("class", "focus")
       .style("display", "none");
@@ -357,7 +369,6 @@ d3.csv("data.csv", function(error, data) {
       .on("mousemove", mousemove);
     
   function mousemove() {
-<<<<<<< HEAD
       var x0 = x.invert(d3.mouse(this)[0]),
       i = bisectDate(data, x0, 1),
       d0 = data[i - 1],
@@ -371,24 +382,8 @@ d3.csv("data.csv", function(error, data) {
       div.html("Total Calories:"+d["Calories"]+"kcals <br>"+"Proteins:"+d.Protein+"g <br>"+"Carbohydrates:"+d.Carbohydrates+"g <br>"+"Fats:"+d.Fats+"g");
       focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories);
       var rowData = data.filter(function(d) {
-=======
-   var x0 = x.invert(d3.mouse(this)[0]),
-    i = bisectDate(data, x0, 1),
-    d0 = data[i - 1],
-    d1 = data[i],
-    d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
-    focus.attr("transform", "translate(" + x(d.Weight) + "," + y(d.Calories) + ")");
-// focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories);    
-      div.transition()
-        .duration(200)
-        .style("opacity", .9)
-    div.html("Total Calories:"+d["Calories"]+"kcals <br>"+"Proteins:"+d.Protein+"g <br>"+"Carbohydrates:"+d.Carbohydrates+"g <br>"+"Fats:"+d.Fats+"g");
-      
-    var rowData = data.filter(function(d) {
->>>>>>> origin/master
         return d.Weight === d["Weight"];
       });
-      console.log(rowData);
       }
 
     // Add the X Axis
@@ -397,11 +392,29 @@ d3.csv("data.csv", function(error, data) {
         //add to height to match y axis length
         .attr("transform", "translate(0," + (height + 200) + ")")
         .call(xAxis);
+    
+    //X Axis Label
+    svg.append("text")
+        .attr("transform", "translate(" + (width / 3) + "," + (height + 218) + ")")
+        .style("text-anchor", "right")
+        .style("font-weight", "bold")
+        .style("font-size", "14")
+        .text("Weight");
 
     // Add the Y Axis
     svg.append("g")
         .attr("class", "y axis")
         .call(yAxis);
+    
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -20)
+        .attr("x", -240)
+        .attr("dy", "1em")
+        .style("text-anchor","middle")
+        .style("font-weight", "bold")
+        .style("font-size", "14")
+        .text("Calories");
     
     //create new array for pie chart
     dataPie = [
@@ -420,6 +433,24 @@ d3.csv("data.csv", function(error, data) {
     gpie.append("path")
         .attr("d", arc)
         .style("fill", function(d, i) { return color(i); })
+        .on("mouseover", function(d) {
+          d3.select(this)
+           .transition()
+            .duration(1000)
+            .attr("d", arcOver);
+          })
+        .on("mousemove", function(d){
+            divPie.style("left", d3.event.pageX+10+"px");
+            divPie.style("top", d3.event.pageY-25+"px");
+            divPie.style("display", "inline-block");
+            divPie.html("Hi");
+        })
+        .on("mouseout", function(d) {
+          divPie.style("display", "none");
+          d3.select(this).transition()
+              .duration(1000)
+              .attr("d", arc);
+		  })
       .transition()
         .ease("elastic")
         .duration(4000)
@@ -433,8 +464,7 @@ d3.csv("data.csv", function(error, data) {
       .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
       .attr("dy", ".35em")
       .style("fill", "Black")
-      .text(function(d, i) { return dataPie[i].name + ": " + d3.format(".2f")((d.endAngle - d.startAngle)/(2*Math.PI)*100) + "%" });
-
+      .text(function(d, i) { return dataPie[i].name + ": " + d3.format(".2f")((d.endAngle - d.startAngle)/(2*Math.PI)*100) + "%" })
 });
     
 //Function for Pie animation
@@ -442,6 +472,7 @@ function tweenPie(b) {
     b.innerRadius = radius *.6
     var i = d3.interpolate({startAngle: 0, endAngle: 0}, b);
     return function(t) { return arc(i(t)); };
+    
 }
 
 </script>
