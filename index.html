@@ -267,7 +267,18 @@ function switchMacro() {
         d.Weight = d.Weight;
         d.Calories = +d.Calories;
     }); 
-    
+    // Define the axes
+var xAxis = d3.svg.axis().scale(x)
+    .orient("bottom")
+    .tickSize(0)
+    .tickValues([100,500]);
+    //.ticks(10);
+
+var yAxis = d3.svg.axis().scale(y)
+    .orient("left")
+    .tickValues([500,5500])
+    .tickSize(0);
+    //.ticks(2);
     //Filtered data by rows for piechart
     var rowData = data.filter(function(d) {
         return d.Weight === "400";
@@ -414,7 +425,18 @@ function switchMacro() {
         d.Weight = d.Weight;
         d.Calories = +d.Calories2;
     }); 
-    
+    // Define the axes
+var xAxis = d3.svg.axis().scale(x)
+    .orient("bottom")
+    .tickSize(0)
+    .tickValues([100,500]);
+    //.ticks(10);
+
+var yAxis = d3.svg.axis().scale(y)
+    .orient("left")
+    .tickValues([500,7000])
+    .tickSize(0);
+    //.ticks(2);
     //Filtered data by rows for piechart
     var rowData = data.filter(function(d) {
         return d.Weight === "400";
@@ -562,7 +584,18 @@ function switchMacro() {
         d.Weight = d.Weight;
         d.Calories = +d.Calories3;
     }); 
-    
+    // Define the axes
+var xAxis = d3.svg.axis().scale(x)
+    .orient("bottom")
+    .tickSize(0)
+    .tickValues([100,500]);
+    //.ticks(10);
+
+var yAxis = d3.svg.axis().scale(y)
+    .orient("left")
+    .tickValues([500,8500])
+    .tickSize(0);
+    //.ticks(2);
     //Filtered data by rows for piechart
     var rowData = data.filter(function(d) {
         return d.Weight === "400";
@@ -718,19 +751,7 @@ var x = d3.scale.linear().range([0,width-150]);
 var y = d3.scale.linear().range([height + 200, 0]);
 
 var bisectDate = d3.bisector(function(d) { return d.Weight; }).left;
-// Define the axes
-var xAxis = d3.svg.axis().scale(x)
-    .orient("bottom")
-    .tickSize(0)
-    .tickValues([100,500]);
-    //.ticks(10);
-
-var yAxis = d3.svg.axis().scale(y)
-    .orient("left")
-    .tickValues([500,5500])
-    .tickSize(0);
-    //.ticks(10);
-
+    
 // Define the line
 var valueline = d3.svg.line()
     .x(function(d) { return x(d.Weight); })
@@ -745,7 +766,7 @@ var svg = d3.select("body")
         .attr("transform", 
               "translate(" + margin.left + "," + margin.top + ")");
 
-
+    
 //separate SVG body label for pie chart
 var piesvg = d3.select("body")
     .append("svg:svg")
