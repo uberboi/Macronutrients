@@ -123,6 +123,32 @@ path {
   stroke: #fff;
 }
 
+.d3 {
+    display: none;
+}
+    .BackB{
+    box-shadow: 0px 0px 10px 2px #9fb4f2;
+	box-shadow: 0px 0px 10px 2px #9fb4f2;
+	box-shadow: 0px 0px 10px 2px #9fb4f2;
+	background: (linear, left top, left bottom, (0.05, #7892c2), (1, #476e9e));
+	background: linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background: linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background: linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background: linear-gradient(top, #78x92c2 5%, #476e9e 100%);
+	background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+	background-color: #7892c2;
+	border-radius: 10px;
+	border-radius: 10px;
+	border-radius: 10px;
+	border: 1px solid #4e6096;
+	display: none;
+	cursor: pointer;
+	color: #ffffff;
+	font-family: Arial;
+	font-size: 13px;
+	padding: 6px 10px;
+	text-decoration: none;
+    }
 .fLossB, .maintainB, .mGainB {
 	box-shadow: 0px 0px 10px 2px #9fb4f2;
 	box-shadow: 0px 0px 10px 2px #9fb4f2;
@@ -131,7 +157,7 @@ path {
 	background: linear-gradient(top, #7892c2 5%, #476e9e 100%);
 	background: linear-gradient(top, #7892c2 5%, #476e9e 100%);
 	background: linear-gradient(top, #7892c2 5%, #476e9e 100%);
-	background: linear-gradient(top, #7892c2 5%, #476e9e 100%);
+	background: linear-gradient(top, #78x92c2 5%, #476e9e 100%);
 	background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
 	background-color: #7892c2;
 	border-radius: 10px;
@@ -146,7 +172,7 @@ path {
 	padding: 6px 10px;
 	text-decoration: none;
 }
-.fLossB:hover, .maintainB:hover, .mGainB:hover {
+.fLossB:hover, .maintainB:hover, .mGainB:hover, .BackB:hover {
 	background: (linear, left top, left bottom,(0.05, #476e9e),(1, #7892c2));
 	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
 	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
@@ -155,7 +181,7 @@ path {
 	background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
 	background-color: #476e9e;
 }
-.fLossB:active, .maintainB:active, .mGainB:active {
+.fLossB:active, .maintainB:active, .mGainB:active, .BackB:active {
 	position:relative;
 	top:1px;
 }
@@ -218,19 +244,26 @@ div.tooltip {
         <input class="maintainB" type="button" name="maintain" value="Maintenence">
         <input class="mGainB" type="button" name="mGain" value="Mass Gain">
     </div>
+    <input class="BackB" type="button" name="Back" value="Back">
 <!-- load the d3.js library -->    
 <script src="https://d3js.org/d3.v3.min.js"></script>
 
 <script>
+
     //init variables 
     var fLoss = false;
     var maintain = false;
     var mGain = false;
+    var Back = false;
     
     //jump to respective functions if button is pressed
     d3.select("input.fLossB").on("click", fatLoss)
     d3.select("input.maintainB").on("click", maintenence)
     d3.select("input.mGainB").on("click", massGain)
+    d3.select("input.BackB").on("click", BackB)
+    
+    var button = document.getElementsByClassName("BackB");
+    var buttonArea = document.getElementsByClassName("buttonArea");
     
         function fatLoss() {
             piesvg.selectAll("*").remove();
@@ -241,6 +274,8 @@ div.tooltip {
             mGain = false;
             console.log("fatloss button was pressed!")
             switchMacro();
+            button[0].style.display="inline-block";
+            buttonArea[0].style.display="none";
         }
         function maintenence()  {
             piesvg.selectAll("*").remove();
@@ -249,6 +284,8 @@ div.tooltip {
             maintain = true;
             mGain = false;
             switchMacro();
+            button[0].style.display="inline-block";
+            buttonArea[0].style.display="none";
         }
         function massGain() {         
             piesvg.selectAll("*").remove();
@@ -257,8 +294,16 @@ div.tooltip {
             maintain = false;
             mGain = true;
             switchMacro();
+             button[0].style.display="inline-block";
+            buttonArea[0].style.display="none";
         }
-
+        function BackB(){
+            piesvg.selectAll("*").remove();
+            svg.selectAll("*").remove();
+            console.log("pressed")
+            button[0].style.display="none";
+            buttonArea[0].style.display="block";
+        }
      switchMacro();
 function switchMacro() {
     if (fLoss){  
@@ -417,6 +462,7 @@ var yAxis = d3.svg.axis().scale(y)
       .attr("dy", ".35em")
       .style("fill", "Black")
       .text(function(d, i) { return dataPie[i].name + ": " + d3.format(".2f")((d.endAngle - d.startAngle)/(2*Math.PI)*100) + "%" })
+    
 });
         //draw everything r
     } else if (maintain) {
