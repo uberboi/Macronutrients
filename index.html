@@ -123,7 +123,7 @@ path {
   stroke: #fff;
 }
 
-.myButton {
+.fLossB, .maintainB, .mGainB {
 	box-shadow: 0px 0px 10px 2px #9fb4f2;
 	box-shadow: 0px 0px 10px 2px #9fb4f2;
 	box-shadow: 0px 0px 10px 2px #9fb4f2;
@@ -146,7 +146,7 @@ path {
 	padding: 6px 10px;
 	text-decoration: none;
 }
-.myButton:hover {
+.fLossB:hover, .maintainB:hover, .mGainB:hover {
 	background: (linear, left top, left bottom,(0.05, #476e9e),(1, #7892c2));
 	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
 	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
@@ -155,7 +155,7 @@ path {
 	background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
 	background-color: #476e9e;
 }
-.myButton:active {
+.fLossB:active, .maintainB:active, .mGainB:active {
 	position:relative;
 	top:1px;
 }
@@ -210,10 +210,504 @@ div.tooltip {
     <h2>Macronutrients are extremely important when it comes to fitness. Ideally you want to portion your daily calorie intake out so that you meet the recommended macronutrient intake without surpassing your daily calorie limit.</h2>
     
     <h3>Recommended Calorie intake based on Weight</h3>
+    
+    <!--seprate div class for button placement-->
+    <div class = "buttonArea">
+        <input class="fLossB" type="button" name="wLoss" value="Weight Loss">
+        <input class="maintainB" type="button" name="maintain" value="Maintenence">
+        <input class="mGainB" type="button" name="mGain" value="Mass Gain">
+    </div>
 <!-- load the d3.js library -->    
 <script src="https://d3js.org/d3.v3.min.js"></script>
 
 <script>
+    //init variables 
+    var fLoss = false;
+    var maintain = false;
+    var mGain = false;
+    
+    //jump to respective functions if button is pressed
+    d3.select("input.fLossB").on("click", fatLoss)
+    d3.select("input.maintainB").on("click", maintenence)
+    d3.select("input.mGainB").on("click", massGain)
+    
+        function fatLoss() {
+            piesvg.selectAll("*").remove();
+            //d3.select("body").selectAll('g').remove();
+            svg.selectAll("*").remove();
+            fLoss = true;
+            maintain = false;
+            mGain = false;
+            console.log("fatloss button was pressed!")
+            switchMacro();
+        }
+        function maintenence()  {
+            piesvg.selectAll("*").remove();
+            svg.selectAll("*").remove();
+            fLoss = false;
+            maintain = true;
+            mGain = false;
+            switchMacro();
+        }
+        function massGain() {         
+            piesvg.selectAll("*").remove();
+            svg.selectAll("*").remove();
+            fLoss = false;
+            maintain = false;
+            mGain = true;
+            switchMacro();
+        }
+
+     switchMacro();
+function switchMacro() {
+    if (fLoss){  
+        // Get the data
+        d3.csv("data.csv", function(error, data) {
+        data.forEach(function(d) {
+        d.Weight = d.Weight;
+        d.Calories = +d.Calories;
+    }); 
+    
+    //Filtered data by rows for piechart
+    var rowData = data.filter(function(d) {
+        return d.Weight === "400";
+    });
+    
+    // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return d.Weight; }));
+    y.domain([0, d3.max(data, function(d) { return d.Calories; })]);
+
+    // Add the valueline path.
+    var path = svg.append("path")
+        .attr("class", "line")
+        .attr("d", valueline(data));
+    
+    var totalLength = path.node().getTotalLength();
+    
+    path
+        .attr("stroke-dasharray", totalLength + " " + totalLength)
+        .attr("stroke-dashoffset", totalLength)
+        .transition()
+            .duration(2000)
+            .ease("linear")
+            .attr("stroke-dashoffset", 0);
+    
+    var focus = svg.append("g")
+      .attr("class", "focus")
+      .style("display", "none");
+
+  focus.append("circle")
+      .attr("r", 4.5);
+
+  focus.append("text")
+      .attr("x", 9)
+      .attr("dy", ".35em");
+    
+  svg.append("rect")
+      .attr("class", "overlay")
+      .attr("width", width-150)
+      .attr("height", height+190)
+      .on("mouseover", function() { focus.style("display", null); })
+      .on("mouseout", function() { focus.style("display", "none"); })
+      .on("mousemove", mousemove);
+    
+  function mousemove() {
+      var x0 = x.invert(d3.mouse(this)[0]),
+      i = bisectDate(data, x0, 1),
+      d0 = data[i - 1],
+      d1 = data[i],
+      d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
+      focus.attr("transform", "translate(" + x(d.Weight) + "," + y(d.Calories) + ")");
+      focus.select("text").text(d.Calories);
+      div.transition()
+          .duration(200)
+          .style("opacity", .9)
+      div.html("Total Calories:"+d["Calories"]+"kcals <br>"+"Proteins:"+d.Protein+"g <br>"+"Carbohydrates:"+d.Carbohydrates+"g <br>"+"Fats:"+d.Fats+"g");
+      focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories);
+      }
+
+    // Add the X Axis
+    svg.append("g")
+        .attr("class", "x axis")
+        //add to height to match y axis length
+        .attr("transform", "translate(0," + (height + 200) + ")")
+        .call(xAxis);
+    
+    //X Axis Label
+    svg.append("text")
+        .attr("transform", "translate(" + (width / 3) + "," + (height + 218) + ")")
+        .style("text-anchor", "right")
+        .style("font-weight", "bold")
+        .style("font-size", "14")
+        .text("Weight");
+
+    // Add the Y Axis
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis);
+    
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -20)
+        .attr("x", -240)
+        .attr("dy", "1em")
+        .style("text-anchor","middle")
+        .style("font-weight", "bold")
+        .style("font-size", "14")
+        .text("Calories");
+    
+    //create new array for pie chart
+    dataPie = [
+        {"name": "Carbs", "val": rowData[0]["Carbohydrates"]},
+        {"name": "Protein", "val": rowData[0]["Protein"]},
+        {"name": "Fats", "val": rowData[0]["Fats"]}
+    ]
+    
+    //New variable 'g' for pie chart
+    var gpie = piesvg.selectAll(".arc")
+        .data(pie(dataPie))
+      .enter().append("g")
+        .attr("class", "arc");
+  
+    //Append pie chart path with colors
+    gpie.append("path")
+        .attr("d", arc)
+        .style("fill", function(d, i) { return color(i); })
+        .on("mouseover", function(d) {
+          d3.select(this)
+           .transition()
+            .duration(1000)
+            .attr("d", arcOver);
+          })
+        .on("mousemove", function(d){
+            divPie.style("left", d3.event.pageX+10+"px");
+            divPie.style("top", d3.event.pageY-25+"px");
+            divPie.style("display", "inline-block");
+            divPie.html(d.data.name);
+        })
+        .on("mouseout", function(d) {
+          divPie.style("display", "none");
+          d3.select(this).transition()
+              .duration(1000)
+              .attr("d", arc);
+		  })
+      .transition()
+        .ease("elastic")
+        .duration(4000)
+        .attrTween("d", tweenPie);
+    
+    //Append piechart with labels
+    gpie.append("text")
+      .style("fill", "White")
+      .style("font", "bold 12px Arial")
+      .transition().duration(2000)
+      .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+      .attr("dy", ".35em")
+      .style("fill", "Black")
+      .text(function(d, i) { return dataPie[i].name + ": " + d3.format(".2f")((d.endAngle - d.startAngle)/(2*Math.PI)*100) + "%" })
+});
+        //draw everything r
+    } else if (maintain) {
+        // Get the data
+        d3.csv("data.csv", function(error, data) {
+        data.forEach(function(d) {
+        d.Weight = d.Weight;
+        d.Calories = +d.Calories2;
+    }); 
+    
+    //Filtered data by rows for piechart
+    var rowData = data.filter(function(d) {
+        return d.Weight === "400";
+    });
+    
+    // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return d.Weight; }));
+    y.domain([0, d3.max(data, function(d) { return d.Calories2; })]);
+
+    // Add the valueline path.
+    var path = svg.append("path")
+        .attr("class", "line")
+        .attr("d", valueline(data));
+    
+    var totalLength = path.node().getTotalLength();
+    
+    path
+        .attr("stroke-dasharray", totalLength + " " + totalLength)
+        .attr("stroke-dashoffset", totalLength)
+        .transition()
+            .duration(2000)
+            .ease("linear")
+            .attr("stroke-dashoffset", 0);
+    
+    var focus = svg.append("g")
+      .attr("class", "focus")
+      .style("display", "none");
+
+  focus.append("circle")
+      .attr("r", 4.5);
+
+  focus.append("text")
+      .attr("x", 9)
+      .attr("dy", ".35em");
+    
+  svg.append("rect")
+      .attr("class", "overlay")
+      .attr("width", width-150)
+      .attr("height", height+190)
+      .on("mouseover", function() { focus.style("display", null); })
+      .on("mouseout", function() { focus.style("display", "none"); })
+      .on("mousemove", mousemove);
+    
+  function mousemove() {
+      var x0 = x.invert(d3.mouse(this)[0]),
+      i = bisectDate(data, x0, 1),
+      d0 = data[i - 1],
+      d1 = data[i],
+      d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
+      focus.attr("transform", "translate(" + x(d.Weight) + "," + y(d.Calories2) + ")");
+      focus.select("text").text(d.Calories2);
+      div.transition()
+          .duration(200)
+          .style("opacity", .9)
+      div.html("Total Calories:"+d["Calories2"]+"kcals <br>"+"Proteins:"+d.Protein2+"g <br>"+"Carbohydrates:"+d.Carbohydrates2+"g <br>"+"Fats:"+d.Fats2+"g");
+      focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories2);
+      }
+
+    // Add the X Axis
+    svg.append("g")
+        .attr("class", "x axis")
+        //add to height to match y axis length
+        .attr("transform", "translate(0," + (height + 200) + ")")
+        .call(xAxis);
+    
+    //X Axis Label
+    svg.append("text")
+        .attr("transform", "translate(" + (width / 3) + "," + (height + 218) + ")")
+        .style("text-anchor", "right")
+        .style("font-weight", "bold")
+        .style("font-size", "14")
+        .text("Weight");
+
+    // Add the Y Axis
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis);
+    
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -20)
+        .attr("x", -240)
+        .attr("dy", "1em")
+        .style("text-anchor","middle")
+        .style("font-weight", "bold")
+        .style("font-size", "14")
+        .text("Calories");
+    
+    //create new array for pie chart
+    dataPie = [
+        {"name": "Carbs", "val": rowData[0]["Carbohydrates2"]},
+        {"name": "Protein", "val": rowData[0]["Protein2"]},
+        {"name": "Fats", "val": rowData[0]["Fats2"]}
+    ]
+    
+    //New variable 'g' for pie chart
+    var gpie = piesvg.selectAll(".arc")
+        .data(pie(dataPie))
+      .enter().append("g")
+        .attr("class", "arc");
+  
+    //Append pie chart path with colors
+    gpie.append("path")
+        .attr("d", arc)
+        .style("fill", function(d, i) { return color(i); })
+        .on("mouseover", function(d) {
+          d3.select(this)
+           .transition()
+            .duration(1000)
+            .attr("d", arcOver);
+          })
+        .on("mousemove", function(d){
+            divPie.style("left", d3.event.pageX+10+"px");
+            divPie.style("top", d3.event.pageY-25+"px");
+            divPie.style("display", "inline-block");
+            divPie.html(d.data.name);
+        })
+        .on("mouseout", function(d) {
+          divPie.style("display", "none");
+          d3.select(this).transition()
+              .duration(1000)
+              .attr("d", arc);
+		  })
+      .transition()
+        .ease("elastic")
+        .duration(4000)
+        .attrTween("d", tweenPie);
+    
+    //Append piechart with labels
+    gpie.append("text")
+      .style("fill", "White")
+      .style("font", "bold 12px Arial")
+      .transition().duration(2000)
+      .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+      .attr("dy", ".35em")
+      .style("fill", "Black")
+      .text(function(d, i) { return dataPie[i].name + ": " + d3.format(".2f")((d.endAngle - d.startAngle)/(2*Math.PI)*100) + "%" })
+});
+        // draw maintence graphs
+    } else if (mGain) {
+      
+        // Get the data
+        d3.csv("data.csv", function(error, data) {
+        data.forEach(function(d) {
+        d.Weight = d.Weight;
+        d.Calories = +d.Calories3;
+    }); 
+    
+    //Filtered data by rows for piechart
+    var rowData = data.filter(function(d) {
+        return d.Weight === "400";
+    });
+    
+    // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return d.Weight; }));
+    y.domain([0, d3.max(data, function(d) { return d.Calories3; })]);
+
+    // Add the valueline path.
+    var path = svg.append("path")
+        .attr("class", "line")
+        .attr("d", valueline(data));
+    
+    var totalLength = path.node().getTotalLength();
+    
+    path
+        .attr("stroke-dasharray", totalLength + " " + totalLength)
+        .attr("stroke-dashoffset", totalLength)
+        .transition()
+            .duration(2000)
+            .ease("linear")
+            .attr("stroke-dashoffset", 0);
+    
+    var focus = svg.append("g")
+      .attr("class", "focus")
+      .style("display", "none");
+
+  focus.append("circle")
+      .attr("r", 4.5);
+
+  focus.append("text")
+      .attr("x", 9)
+      .attr("dy", ".35em");
+    
+  svg.append("rect")
+      .attr("class", "overlay")
+      .attr("width", width-150)
+      .attr("height", height+190)
+      .on("mouseover", function() { focus.style("display", null); })
+      .on("mouseout", function() { focus.style("display", "none"); })
+      .on("mousemove", mousemove);
+    
+  function mousemove() {
+      var x0 = x.invert(d3.mouse(this)[0]),
+      i = bisectDate(data, x0, 1),
+      d0 = data[i - 1],
+      d1 = data[i],
+      d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
+      focus.attr("transform", "translate(" + x(d.Weight) + "," + y(d.Calories3) + ")");
+      focus.select("text").text(d.Calories3);
+      div.transition()
+          .duration(200)
+          .style("opacity", .9)
+      div.html("Total Calories:"+d["Calories3"]+"kcals <br>"+"Proteins:"+d.Protein3+"g <br>"+"Carbohydrates:"+d.Carbohydrates3+"g <br>"+"Fats:"+d.Fats3+"g");
+      focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories3);
+      }
+
+    // Add the X Axis
+    svg.append("g")
+        .attr("class", "x axis")
+        //add to height to match y axis length
+        .attr("transform", "translate(0," + (height + 200) + ")")
+        .call(xAxis);
+    
+    //X Axis Label
+    svg.append("text")
+        .attr("transform", "translate(" + (width / 3) + "," + (height + 218) + ")")
+        .style("text-anchor", "right")
+        .style("font-weight", "bold")
+        .style("font-size", "14")
+        .text("Weight");
+
+    // Add the Y Axis
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis);
+    
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -20)
+        .attr("x", -240)
+        .attr("dy", "1em")
+        .style("text-anchor","middle")
+        .style("font-weight", "bold")
+        .style("font-size", "14")
+        .text("Calories");
+    
+    //create new array for pie chart
+    dataPie = [
+        {"name": "Carbs", "val": rowData[0]["Carbohydrates3"]},
+        {"name": "Protein", "val": rowData[0]["Protein3"]},
+        {"name": "Fats", "val": rowData[0]["Fats3"]}
+    ]
+    
+    //New variable 'g' for pie chart
+    var gpie = piesvg.selectAll(".arc")
+        .data(pie(dataPie))
+      .enter().append("g")
+        .attr("class", "arc");
+  
+    //Append pie chart path with colors
+    gpie.append("path")
+        .attr("d", arc)
+        .style("fill", function(d, i) { return color(i); })
+        .on("mouseover", function(d) {
+          d3.select(this)
+           .transition()
+            .duration(1000)
+            .attr("d", arcOver);
+          })
+        .on("mousemove", function(d){
+            divPie.style("left", d3.event.pageX+10+"px");
+            divPie.style("top", d3.event.pageY-25+"px");
+            divPie.style("display", "inline-block");
+            divPie.html(d.data.name);
+        })
+        .on("mouseout", function(d) {
+          divPie.style("display", "none");
+          d3.select(this).transition()
+              .duration(1000)
+              .attr("d", arc);
+		  })
+      .transition()
+        .ease("elastic")
+        .duration(4000)
+        .attrTween("d", tweenPie);
+    
+    //Append piechart with labels
+    gpie.append("text")
+      .style("fill", "White")
+      .style("font", "bold 12px Arial")
+      .transition().duration(2000)
+      .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+      .attr("dy", ".35em")
+      .style("fill", "Black")
+      .text(function(d, i) { return dataPie[i].name + ": " + d3.format(".2f")((d.endAngle - d.startAngle)/(2*Math.PI)*100) + "%" })
+});
+
+        
+        
+        
+    }  
+} //end switchMacro function
+      
     // Set the dimensions of the canvas / graph
 var margin = {top: 30, right: 20, bottom: 30, left: 50},
     width = 700 - margin.left - margin.right,
@@ -241,7 +735,7 @@ var yAxis = d3.svg.axis().scale(y)
 var valueline = d3.svg.line()
     .x(function(d) { return x(d.Weight); })
     .y(function(d) { return y(d.Calories); });
-    
+  
 // Adds the svg canvas
 var svg = d3.select("body")
     .append("svg")
@@ -250,33 +744,7 @@ var svg = d3.select("body")
     .append("g")
         .attr("transform", 
               "translate(" + margin.left + "," + margin.top + ")");
-    
-/* function for buttons not functional yet!
-function switchMacro() {
-    if (showCarbs){  
-        showCarbs = true;
-        showProtein = false;
-        showFats = false;
-        //switch graphs to carbs
-        refresh();
-    } else if (showProtein) {
-        showCarbs = false;
-        showProtein = true;
-        showFats = false;
-        //switch graphs to protein
-        refresh();
-    } else if (showFats) {
-        showCarbs = false;
-        showProtein = false;
-        showFats = true;
-        //switch to fats
-        refresh();
-    }
-    //redraw the map with correct color  
-    refresh();   
-} */
-    
-//Pie chart code
+
 
 //separate SVG body label for pie chart
 var piesvg = d3.select("body")
@@ -324,10 +792,13 @@ var divPie = d3.select("body").append("divPie")
             
 var div = d3.select("body").append("div")
     .attr("class", "tooltip")
-    .style("opacity", 1)
+    .style("opacity", 0)
     .style("left", (width + 250) + "px")
-    .style("top", (height + 65) + "px"); 
+    .style("top", (height + 90) + "px"); 
+
     
+    
+/*    
 // Get the data
 d3.csv("data.csv", function(error, data) {
     data.forEach(function(d) {
@@ -474,6 +945,8 @@ d3.csv("data.csv", function(error, data) {
       .style("fill", "Black")
       .text(function(d, i) { return dataPie[i].name + ": " + d3.format(".2f")((d.endAngle - d.startAngle)/(2*Math.PI)*100) + "%" })
 });
+
+*/
     
 //Function for Pie animation
 function tweenPie(b) {
@@ -484,14 +957,8 @@ function tweenPie(b) {
 }
 
 </script>
-    
-    <!--seprate div class for button placement-->
     <br><br>
-    <div class = "buttonArea">
-        <input class="myButton" type="button" name="wLoss" value="Weight Loss">
-        <input class="myButton" type="button" name="mGain" value="Mass Gain">
-        <input class="myButton" type="button" name="maintain" value="Maintenence">
-    </div>
+    
     <br>
     
     <div class='row'>
