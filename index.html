@@ -383,7 +383,7 @@ function switchMacro() {
             divPie.style("left", d3.event.pageX+10+"px");
             divPie.style("top", d3.event.pageY-25+"px");
             divPie.style("display", "inline-block");
-            divPie.html(d.data.name);
+            divPie.html("Recommended Sources of " + d.data.name + "<br>");
         })
         .on("mouseout", function(d) {
           divPie.style("display", "none");
@@ -766,7 +766,7 @@ var radius = Math.min(width, height) / 2;
 //Pie chart radius
 var arc = d3.svg.arc()
     .outerRadius(height - 70)
-    .innerRadius(height - 155);
+    .innerRadius(height - 160);
     
 //Variable for Pie chart mouseOver animation
 var arcOver = d3.svg.arc()
@@ -794,7 +794,7 @@ var div = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0)
     .style("left", (width + 250) + "px")
-    .style("top", (height + 90) + "px"); 
+    .style("top", (height + 95) + "px"); 
 
     
     
