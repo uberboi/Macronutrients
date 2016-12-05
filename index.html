@@ -120,7 +120,7 @@ path {
 }
 
 .arc path {
-  stroke: #fff
+  stroke: #fff;
 }
 
 .myButton {
@@ -346,9 +346,20 @@ d3.csv("data.csv", function(error, data) {
     y.domain([0, d3.max(data, function(d) { return d.Calories; })]);
 
     // Add the valueline path.
-    svg.append("path")
+    var path = svg.append("path")
         .attr("class", "line")
         .attr("d", valueline(data));
+    
+    var totalLength = path.node().getTotalLength();
+    
+    path
+        .attr("stroke-dasharray", totalLength + " " + totalLength)
+        .attr("stroke-dashoffset", totalLength)
+        .transition()
+            .duration(2000)
+            .ease("linear")
+            .attr("stroke-dashoffset", 0);
+    
     var focus = svg.append("g")
       .attr("class", "focus")
       .style("display", "none");
@@ -381,9 +392,6 @@ d3.csv("data.csv", function(error, data) {
           .style("opacity", .9)
       div.html("Total Calories:"+d["Calories"]+"kcals <br>"+"Proteins:"+d.Protein+"g <br>"+"Carbohydrates:"+d.Carbohydrates+"g <br>"+"Fats:"+d.Fats+"g");
       focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories);
-      var rowData = data.filter(function(d) {
-        return d.Weight === d["Weight"];
-      });
       }
 
     // Add the X Axis
@@ -443,7 +451,7 @@ d3.csv("data.csv", function(error, data) {
             divPie.style("left", d3.event.pageX+10+"px");
             divPie.style("top", d3.event.pageY-25+"px");
             divPie.style("display", "inline-block");
-            divPie.html("Hi");
+            divPie.html(d.data.name);
         })
         .on("mouseout", function(d) {
           divPie.style("display", "none");
