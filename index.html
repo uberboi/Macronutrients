@@ -266,6 +266,30 @@ div.tooltip {
 <script src="https://d3js.org/d3.v3.min.js"></script>
 
 <script>
+    //Hardcode Pie chart tooltip data
+    var Protein = [
+        {"Protein": "Greek Yogurt ", "size": "23 g", "serving": "8 oz."},
+        {"Protein": "Eggs ", "size": "6 g", "serving": "50 g"},
+        {"Protein": "Milk ", "size": "8 g", "serving": "1 cup"},
+        {"Protein": "Chicken Breast ", "size": "24 g", "serving": "3 oz."},
+        {"Protein": "Sockeye Salmon ", "size": "23 g", "serving": "3 oz."},
+    ]
+      
+    var Carbs = [
+        {"Carbs": "Oats ", "size": "28 g", "serving": "1 oz."},
+        {"Carbs": "Bananas ", "size": "6 g", "serving": "1 oz."},
+        {"Carbs": "Pasta ", "size": "43 g", "serving": "1 cup"},
+        {"Carbs": "Sweat Potatoes ", "size": "6 g", "serving": "1 oz."},
+        {"Carbs": "Grapes ", "size": "5 g", "serving": "1 oz."},
+    ]
+    
+    var Fats = [
+        {"Fats": "Avocados ", "size": "4 g", "serving": "1 oz."},
+        {"Fats": "Almonds ", "size": "14 g", "serving": "1 oz."},
+        {"Fats": "Extra Virgin Olive Oil ", "size": "9 g", "serving": "10 g"},
+        {"Fats": "Peanut Butter ", "size": "14 g", "serving": "1 oz."},
+        {"Fats": "Dark Chocolate ", "size": "12 g", "serving": "1 oz."},
+    ]
 
     //init variables 
     var fLoss = false;
@@ -436,31 +460,6 @@ var yAxis = d3.svg.axis().scale(y)
         {"name": "Protein", "val": rowData[0]["Protein"]},
         {"name": "Fats", "val": rowData[0]["Fats"]}
     ]
-    
-    var Protein = [
-        {"Protein": "Greek Yogurt ", "size": "23 g", "serving": "8 oz."},
-        {"Protein": "Eggs ", "size": "6 g", "serving": "50 g"},
-        {"Protein": "Milk ", "size": "8 g", "serving": "1 cup"},
-        {"Protein": "Chicken Breast ", "size": "24 g", "serving": "3 oz."},
-        {"Protein": "Sockeye Salmon ", "size": "23 g", "serving": "3 oz."},
-    ]
-      
-    var Carbs = [
-        {"Carbohydrates": "Greek Yogurt ", "size": "23 g", "serving": "8 oz."},
-        {"Carbohydrates": "Eggs ", "size": "6 g", "serving": "50 g"},
-        {"Carbohydrates": "Milk ", "size": "8 g", "serving": "1 cup"},
-        {"Carbohydrates": "Chicken Breast ", "size": "24 g", "serving": "3 oz."},
-        {"Carbohydrates": "Sockeye Salmon ", "size": "23 g", "serving": "3 oz."},
-    ]
-    
-    var Fats = [
-        {"Fats": "Greek Yogurt ", "size": "23 g", "serving": "8 oz."},
-        {"Fats": "Eggs ", "size": "6 g", "serving": "50 g"},
-        {"Fats": "Milk ", "size": "8 g", "serving": "1 cup"},
-        {"Fats": "Chicken Breast ", "size": "24 g", "serving": "3 oz."},
-        {"Fats": "Sockeye Salmon ", "size": "23 g", "serving": "3 oz."},
-    ]
-    
    
     //New variable 'g' for pie chart
     var gpie = piesvg.selectAll(".arc")
@@ -652,10 +651,24 @@ var yAxis = d3.svg.axis().scale(y)
             .attr("d", arcOver);
           })
         .on("mousemove", function(d){
+            x = d.data.name;
+            console.log(x);
+            if (x === "Protein") {
+                x = Protein;     
+            } else if (x === "Carbs") {
+                x = Carbs
+            } else if (x === "Fats") {
+                x = Fats
+            }
             divPie.style("left", d3.event.pageX+10+"px");
             divPie.style("top", d3.event.pageY-25+"px");
             divPie.style("display", "inline-block");
-            divPie.html(d.data.name);
+            divPie.html("Recommended Sources of " + d.data.name + "<br>" +
+                       x[0][d.data.name] + x[0]["size"] + " per " + x[0]["serving"] + " serving" + "<br>"
+                       + x[1][d.data.name] + x[1]["size"] + " per " + x[1]["serving"] + " serving" + "<br>"
+                       + x[2][d.data.name] + x[2]["size"] + " per " + x[2]["serving"] + " serving" + "<br>"
+                       + x[3][d.data.name] + x[3]["size"] + " per " + x[3]["serving"] + " serving" + "<br>"
+                       + x[4][d.data.name] + x[4]["size"] + " per " + x[4]["serving"] + " serving" + "<br>");
         })
         .on("mouseout", function(d) {
           divPie.style("display", "none");
@@ -811,10 +824,24 @@ var yAxis = d3.svg.axis().scale(y)
             .attr("d", arcOver);
           })
         .on("mousemove", function(d){
+            x = d.data.name;
+            console.log(x);
+            if (x === "Protein") {
+                x = Protein;     
+            } else if (x === "Carbs") {
+                x = Carbs
+            } else if (x === "Fats") {
+                x = Fats
+            }
             divPie.style("left", d3.event.pageX+10+"px");
             divPie.style("top", d3.event.pageY-25+"px");
             divPie.style("display", "inline-block");
-            divPie.html(d.data.name);
+            divPie.html("Recommended Sources of " + d.data.name + "<br>" +
+                       x[0][d.data.name] + x[0]["size"] + " per " + x[0]["serving"] + " serving" + "<br>"
+                       + x[1][d.data.name] + x[1]["size"] + " per " + x[1]["serving"] + " serving" + "<br>"
+                       + x[2][d.data.name] + x[2]["size"] + " per " + x[2]["serving"] + " serving" + "<br>"
+                       + x[3][d.data.name] + x[3]["size"] + " per " + x[3]["serving"] + " serving" + "<br>"
+                       + x[4][d.data.name] + x[4]["size"] + " per " + x[4]["serving"] + " serving" + "<br>");
         })
         .on("mouseout", function(d) {
           divPie.style("display", "none");
