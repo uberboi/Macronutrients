@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <style> /* set the CSS */
 
-body { font: 12px Arial;}
+body { font: 12px Lato;}
     
  .foot-links a, .foot-links p{
     display: block;
@@ -127,6 +127,7 @@ path {
     display: none;
 }
     .BackB{
+    position:absolute;
     box-shadow: 0px 0px 10px 2px #9fb4f2;
 	box-shadow: 0px 0px 10px 2px #9fb4f2;
 	box-shadow: 0px 0px 10px 2px #9fb4f2;
@@ -148,9 +149,11 @@ path {
 	font-size: 13px;
 	padding: 6px 10px;
 	text-decoration: none;
+    left: 1200px;
     }
 .fLossB, .maintainB, .mGainB {
-	box-shadow: 0px 0px 10px 2px #9fb4f2;
+    position:relative;
+    box-shadow: 0px 0px 10px 2px #9fb4f2;
 	box-shadow: 0px 0px 10px 2px #9fb4f2;
 	box-shadow: 0px 0px 10px 2px #9fb4f2;
 	background: (linear, left top, left bottom, (0.05, #7892c2), (1, #476e9e));
@@ -169,9 +172,19 @@ path {
 	color: #ffffff;
 	font-family: Arial;
 	font-size: 13px;
-	padding: 6px 10px;
+	padding: 60px 100px;
 	text-decoration: none;
+    top:200px;
 }
+    .BackB:hover{
+        background: (linear, left top, left bottom,(0.05, #476e9e),(1, #7892c2));
+	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
+	background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+	background-color: #476e9e;
+    }
 .fLossB:hover, .maintainB:hover, .mGainB:hover, .BackB:hover {
 	background: (linear, left top, left bottom,(0.05, #476e9e),(1, #7892c2));
 	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
@@ -181,9 +194,13 @@ path {
 	background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
 	background-color: #476e9e;
 }
-.fLossB:active, .maintainB:active, .mGainB:active, .BackB:active {
+    .BackB:active{
+    position:absolute;
+    left:1200px;
+    }
+.fLossB:active, .maintainB:active, .mGainB:active {
 	position:relative;
-	top:1px;
+    top:200px;
 }
 
 .overlay {
@@ -244,7 +261,7 @@ div.tooltip {
         <input class="maintainB" type="button" name="maintain" value="Maintenence">
         <input class="mGainB" type="button" name="mGain" value="Mass Gain">
     </div>
-    <input class="BackB" type="button" name="Back" value="Back">
+    <input class="BackB" type="button" name="Back" value="Change Goal">
 <!-- load the d3.js library -->    
 <script src="https://d3js.org/d3.v3.min.js"></script>
 
