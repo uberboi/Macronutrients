@@ -248,6 +248,16 @@ div.tooltip {
     padding: 5px;
     text-align: center;
 }
+    
+.goalsDiv {
+    position:relative;
+    left: 490px;
+    top: 200px;
+    font-size:20px;
+    font-family: monospace;
+    color: #C32200;
+    overflow: hidden;
+}    
 </style>
 <body>
     <h1 style="text-align:center; color:black; font:Times"><bold>Caloric and Macronutrients Intake for Fitness</bold></h1>
@@ -255,6 +265,8 @@ div.tooltip {
     
     <h3>Recommended Calorie intake based on Weight</h3>
     
+    
+    <div class = "goalsDiv"><h2>What are your fitness goals?</h2></div>
     <!--seprate div class for button placement-->
     <div class = "buttonArea">
         <input class="fLossB" type="button" name="wLoss" value="Weight Loss">
@@ -305,6 +317,7 @@ div.tooltip {
     
     var button = document.getElementsByClassName("BackB");
     var buttonArea = document.getElementsByClassName("buttonArea");
+    var goalsDiv = document.getElementsByClassName("goalsDiv");
     
         function fatLoss() {
             piesvg.selectAll("*").remove();
@@ -317,6 +330,7 @@ div.tooltip {
             switchMacro();
             button[0].style.display="inline-block";
             buttonArea[0].style.display="none";
+            goalsDiv[0].style.display="none";
         }
         function maintenence()  {
             piesvg.selectAll("*").remove();
@@ -327,6 +341,7 @@ div.tooltip {
             switchMacro();
             button[0].style.display="inline-block";
             buttonArea[0].style.display="none";
+            goalsDiv[0].style.display="none";
         }
         function massGain() {         
             piesvg.selectAll("*").remove();
@@ -337,6 +352,7 @@ div.tooltip {
             switchMacro();
              button[0].style.display="inline-block";
             buttonArea[0].style.display="none";
+            goalsDiv[0].style.display="none";
         }
         function BackB(){
             piesvg.selectAll("*").remove();
@@ -344,6 +360,7 @@ div.tooltip {
             console.log("pressed")
             button[0].style.display="none";
             buttonArea[0].style.display="block";
+            goalsDiv[0].style.display="block";
         }
      switchMacro();
 function switchMacro() {
