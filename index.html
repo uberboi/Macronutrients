@@ -273,22 +273,22 @@ div.tooltip {
     top: 200px;
     font-size: 20px;
     font-family: monospace;
-    color: #C32200;
+    color: #3399ff;
     overflow: hidden;
 }    
 </style>
 <body>
     <div class="page-header">
 <h1>Calorie and Macronutrients Intake for Fitness</h1></div>
-    <h2 style="text-align: center;">Based on your fitness goals, to maximize results you must consume a certain amount of calories and macronutrients ( Carbohydrates, Proteins, Fats) based on your weight.</h2>    
+    <h2 style="text-align: center;">Based on your fitness goals, to maximize results you must consume a certain amount of calories and macronutrients ( Carbohydrates, Proteins, Fats) relative to your weight.</h2>    
 
     
     <!--seprate div class for button placement-->
     <div class = "buttonArea">
-        <div class = "goalsDiv"><h2>What are your fitness goals?</h2></div>
+        <div class = "goalsDiv"><h2>What is your fitness goal?</h2></div>
         <input class="fLossB" type="button" name="wLoss" value="I want to lose weight!">
-        <input class="maintainB" type="button" name="maintain" value="I like my current state!">
-        <input class="mGainB" type="button" name="mGain" value="I'm too skinny!">
+        <input class="maintainB" type="button" name="maintain" value="I want to maintain my body!">
+        <input class="mGainB" type="button" name="mGain" value="I need more muscle!">
     </div>
     <input class="BackB" type="button" name="Back" value="Change Goal">
 <!-- load the d3.js library -->    
@@ -337,9 +337,6 @@ div.tooltip {
     var goalsDiv = document.getElementsByClassName("goalsDiv");
     
         function fatLoss() {
-            piesvg.selectAll("*").remove();
-            //d3.select("body").selectAll('g').remove();
-            svg.selectAll("*").remove();
             fLoss = true;
             maintain = false;
             mGain = false;
@@ -350,8 +347,6 @@ div.tooltip {
             goalsDiv[0].style.display="none";
         }
         function maintenence()  {
-            piesvg.selectAll("*").remove();
-            svg.selectAll("*").remove();
             fLoss = false;
             maintain = true;
             mGain = false;
@@ -361,8 +356,6 @@ div.tooltip {
             goalsDiv[0].style.display="none";
         }
         function massGain() {         
-            piesvg.selectAll("*").remove();
-            svg.selectAll("*").remove();
             fLoss = false;
             maintain = false;
             mGain = true;
@@ -452,12 +445,10 @@ var yAxis = d3.svg.axis().scale(y)
       d1 = data[i],
       d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
       focus.attr("transform", "translate(" + x(d.Weight) + "," + y(d.Calories) + ")");
-      focus.select("text").text(d.Calories);
       div.transition()
           .duration(200)
           .style("opacity", .9)
-      div.html("Total Calories:"+d["Calories"]+"kcals <br>"+"Proteins:"+d.Protein+"g <br>"+"Carbohydrates:"+d.Carbohydrates+"g <br>"+"Fats:"+d.Fats+"g");
-      focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories);
+   div.html("Weight:" + d.Weight+ "lbs" + "<br> Calories:"+d["Calories2"]+"kcals <br>"+"Proteins:"+d.Protein2+"g <br>"+"Carbohydrates:"+d.Carbohydrates2+"g <br>"+"Fats:"+d.Fats2+"g");
       }
 
     // Add the X Axis
@@ -480,13 +471,10 @@ var yAxis = d3.svg.axis().scale(y)
         .attr("class", "y axis")
         .call(yAxis);
             
-        svg.append("text")
-        .attr("x", (width / 2))             
-        .attr("y", 0 - (margin.top / 2))
-        .attr("text-anchor", "middle")  
-        .style("font-size", "14px") 
+       svg.append("text")
+        .attr("y", 0 - (margin.top / 2) +50)
+         .style("font-size", "12px") 
         .text("Hover over to see your recommended calorie intake and macronutrients according to weight");
-    
     svg.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", -20)
@@ -632,11 +620,10 @@ var yAxis = d3.svg.axis().scale(y)
       d1 = data[i],
       d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
       focus.attr("transform", "translate(" + x(d.Weight) + "," + y(d.Calories2) + ")");
-      focus.select("text").text(d.Calories2);
       div.transition()
           .duration(200)
           .style("opacity", .9)
-      div.html("Weight:" + d.Weight+ "lbs" + "<br> Total Calories:"+d["Calories2"]+"kcals <br>"+"Proteins:"+d.Protein2+"g <br>"+"Carbohydrates:"+d.Carbohydrates2+"g <br>"+"Fats:"+d.Fats2+"g");
+      div.html("Weight:" + d.Weight+ "lbs" + "<br> Calories:"+d["Calories2"]+"kcals <br>"+"Proteins:"+d.Protein2+"g <br>"+"Carbohydrates:"+d.Carbohydrates2+"g <br>"+"Fats:"+d.Fats2+"g");
       }
 
     // Add the X Axis
@@ -660,10 +647,8 @@ var yAxis = d3.svg.axis().scale(y)
         .call(yAxis);
             
     svg.append("text")
-        .attr("x", (width / 2))             
-        .attr("y", 0 - (margin.top / 2))
-        .attr("text-anchor", "middle")  
-         .style("font-size", "14px") 
+        .attr("y", 0 - (margin.top / 2) +50)
+         .style("font-size", "12px") 
         .text("Hover over to see your recommended calorie intake and macronutrients according to weight");
     svg.append("text")
         .attr("transform", "rotate(-90)")
@@ -809,12 +794,10 @@ var yAxis = d3.svg.axis().scale(y)
       d1 = data[i],
       d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
       focus.attr("transform", "translate(" + x(d.Weight) + "," + y(d.Calories3) + ")");
-      focus.select("text").text(d.Calories3);
       div.transition()
           .duration(200)
           .style("opacity", .9)
-      div.html("Total Calories:"+d["Calories3"]+"kcals <br>"+"Proteins:"+d.Protein3+"g <br>"+"Carbohydrates:"+d.Carbohydrates3+"g <br>"+"Fats:"+d.Fats3+"g");
-      focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories3);
+      div.html("Weight:" + d.Weight+ "lbs" + "<br> Calories:"+d["Calories2"]+"kcals <br>"+"Proteins:"+d.Protein2+"g <br>"+"Carbohydrates:"+d.Carbohydrates2+"g <br>"+"Fats:"+d.Fats2+"g");
       }
 
     // Add the X Axis
