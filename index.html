@@ -478,24 +478,23 @@ var yAxis = d3.svg.axis().scale(y)
             .attr("d", arcOver);
           })
         .on("mousemove", function(d){
-            x = d.data.name;
-            console.log(x);
-            if (x === "Protein") {
-                x = Protein;     
-            } else if (x === "Carbs") {
-                x = Carbs
-            } else if (x === "Fats") {
-                x = Fats
+            z = d.data.name;
+            if (z === "Protein") {
+                z = Protein;     
+            } else if (z === "Carbs") {
+                z = Carbs;
+            } else if (z === "Fats") {
+                z = Fats;
             }
             divPie.style("left", d3.event.pageX+10+"px");
             divPie.style("top", d3.event.pageY-25+"px");
             divPie.style("display", "inline-block");
             divPie.html("Recommended Sources of " + d.data.name + "<br>" +
-                       x[0][d.data.name] + x[0]["size"] + " per " + x[0]["serving"] + " serving" + "<br>"
-                       + x[1][d.data.name] + x[1]["size"] + " per " + x[1]["serving"] + " serving" + "<br>"
-                       + x[2][d.data.name] + x[2]["size"] + " per " + x[2]["serving"] + " serving" + "<br>"
-                       + x[3][d.data.name] + x[3]["size"] + " per " + x[3]["serving"] + " serving" + "<br>"
-                       + x[4][d.data.name] + x[4]["size"] + " per " + x[4]["serving"] + " serving" + "<br>");
+                       z[0][d.data.name] + z[0]["size"] + " per " + z[0]["serving"] + " serving" + "<br>"
+                       + z[1][d.data.name] + z[1]["size"] + " per " + z[1]["serving"] + " serving" + "<br>"
+                       + z[2][d.data.name] + z[2]["size"] + " per " + z[2]["serving"] + " serving" + "<br>"
+                       + z[3][d.data.name] + z[3]["size"] + " per " + z[3]["serving"] + " serving" + "<br>"
+                       + z[4][d.data.name] + z[4]["size"] + " per " + z[4]["serving"] + " serving" + "<br>");
         })
         .on("mouseout", function(d) {
           divPie.style("display", "none");
@@ -651,24 +650,23 @@ var yAxis = d3.svg.axis().scale(y)
             .attr("d", arcOver);
           })
         .on("mousemove", function(d){
-            x = d.data.name;
-            console.log(x);
-            if (x === "Protein") {
-                x = Protein;     
-            } else if (x === "Carbs") {
-                x = Carbs
-            } else if (x === "Fats") {
-                x = Fats
+            z = d.data.name;
+            if (z === "Protein") {
+                z = Protein;     
+            } else if (z === "Carbs") {
+                z = Carbs;
+            } else if (z === "Fats") {
+                z = Fats;
             }
             divPie.style("left", d3.event.pageX+10+"px");
             divPie.style("top", d3.event.pageY-25+"px");
             divPie.style("display", "inline-block");
             divPie.html("Recommended Sources of " + d.data.name + "<br>" +
-                       x[0][d.data.name] + x[0]["size"] + " per " + x[0]["serving"] + " serving" + "<br>"
-                       + x[1][d.data.name] + x[1]["size"] + " per " + x[1]["serving"] + " serving" + "<br>"
-                       + x[2][d.data.name] + x[2]["size"] + " per " + x[2]["serving"] + " serving" + "<br>"
-                       + x[3][d.data.name] + x[3]["size"] + " per " + x[3]["serving"] + " serving" + "<br>"
-                       + x[4][d.data.name] + x[4]["size"] + " per " + x[4]["serving"] + " serving" + "<br>");
+                       z[0][d.data.name] + z[0]["size"] + " per " + z[0]["serving"] + " serving" + "<br>"
+                       + z[1][d.data.name] + z[1]["size"] + " per " + z[1]["serving"] + " serving" + "<br>"
+                       + z[2][d.data.name] + z[2]["size"] + " per " + z[2]["serving"] + " serving" + "<br>"
+                       + z[3][d.data.name] + z[3]["size"] + " per " + z[3]["serving"] + " serving" + "<br>"
+                       + z[4][d.data.name] + z[4]["size"] + " per " + z[4]["serving"] + " serving" + "<br>");
         })
         .on("mouseout", function(d) {
           divPie.style("display", "none");
@@ -824,24 +822,23 @@ var yAxis = d3.svg.axis().scale(y)
             .attr("d", arcOver);
           })
         .on("mousemove", function(d){
-            x = d.data.name;
-            console.log(x);
-            if (x === "Protein") {
-                x = Protein;     
-            } else if (x === "Carbs") {
-                x = Carbs
-            } else if (x === "Fats") {
-                x = Fats
+            z = d.data.name;
+            if (z === "Protein") {
+                z = Protein;     
+            } else if (z === "Carbs") {
+                z = Carbs;
+            } else if (z === "Fats") {
+                z = Fats;
             }
             divPie.style("left", d3.event.pageX+10+"px");
             divPie.style("top", d3.event.pageY-25+"px");
             divPie.style("display", "inline-block");
             divPie.html("Recommended Sources of " + d.data.name + "<br>" +
-                       x[0][d.data.name] + x[0]["size"] + " per " + x[0]["serving"] + " serving" + "<br>"
-                       + x[1][d.data.name] + x[1]["size"] + " per " + x[1]["serving"] + " serving" + "<br>"
-                       + x[2][d.data.name] + x[2]["size"] + " per " + x[2]["serving"] + " serving" + "<br>"
-                       + x[3][d.data.name] + x[3]["size"] + " per " + x[3]["serving"] + " serving" + "<br>"
-                       + x[4][d.data.name] + x[4]["size"] + " per " + x[4]["serving"] + " serving" + "<br>");
+                       z[0][d.data.name] + z[0]["size"] + " per " + z[0]["serving"] + " serving" + "<br>"
+                       + z[1][d.data.name] + z[1]["size"] + " per " + z[1]["serving"] + " serving" + "<br>"
+                       + z[2][d.data.name] + z[2]["size"] + " per " + z[2]["serving"] + " serving" + "<br>"
+                       + z[3][d.data.name] + z[3]["size"] + " per " + z[3]["serving"] + " serving" + "<br>"
+                       + z[4][d.data.name] + z[4]["size"] + " per " + z[4]["serving"] + " serving" + "<br>");
         })
         .on("mouseout", function(d) {
           divPie.style("display", "none");
