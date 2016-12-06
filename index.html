@@ -4,6 +4,22 @@
 
 body { font: 12px Lato;}
     
+.page-header {
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid #eee;
+}
+    h1 {
+    font-family: gandhi_serifregular,"Georgia",Times New Roman,serif;
+    font-style: normal;
+    font-size: 3.0rem;
+    line-height: 1.12;
+    letter-spacing: -0.9px;
+    margin-bottom: .5em;
+    margin-top: 0;
+    color: #222;
+    text-align: center;
+}
  .foot-links a, .foot-links p{
     display: block;
     color: rgb(63, 63, 63);
@@ -217,6 +233,9 @@ path {
     text-align: center;
 }
     
+    .p3{
+        text-align:right;
+    }
 /*Tooltip Code*/
 div.tooltip {
     position: absolute;
@@ -259,12 +278,10 @@ div.tooltip {
 }    
 </style>
 <body>
-    <h1 style="text-align:center; color:black; font:Times"><bold>Caloric and Macronutrients Intake for Fitness</bold></h1>
-    
-    <h2 style="text-align: center;">Macronutrients are extremely important when it comes to fitness. Ideally you want to portion your daily calorie intake out so that you meet the recommended macronutrient intake without surpassing your daily calorie limit.</h2>
-    
-    <h3>Recommended Calorie intake based on Weight</h3>
-    
+    <div class="page-header">
+<h1>Calorie and Macronutrients Intake for Fitness</h1></div>
+    <h2 style="text-align: center;">Based on your fitness goals, to maximize results you must consume a certain amount of calories and macronutrients ( Carbohydrates, Proteins, Fats) based on your weight.</h2>    
+
     
     <!--seprate div class for button placement-->
     <div class = "buttonArea">
@@ -361,6 +378,8 @@ div.tooltip {
             button[0].style.display="none";
             buttonArea[0].style.display="block";
             goalsDiv[0].style.display="block";
+            div.transition()
+            .style("opacity", 0);
         }
      switchMacro();
 function switchMacro() {
@@ -460,6 +479,13 @@ var yAxis = d3.svg.axis().scale(y)
     svg.append("g")
         .attr("class", "y axis")
         .call(yAxis);
+            
+        svg.append("text")
+        .attr("x", (width / 2))             
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "14px") 
+        .text("Hover over to see your recommended calorie intake and macronutrients according to weight");
     
     svg.append("text")
         .attr("transform", "rotate(-90)")
@@ -533,6 +559,7 @@ var yAxis = d3.svg.axis().scale(y)
       .attr("dy", ".35em")
       .style("fill", "Black")
       .text(function(d, i) { return dataPie[i].name + ": " + d3.format(".2f")((d.endAngle - d.startAngle)/(2*Math.PI)*100) + "%" })
+    
     
 });
         //draw everything r
@@ -609,8 +636,7 @@ var yAxis = d3.svg.axis().scale(y)
       div.transition()
           .duration(200)
           .style("opacity", .9)
-      div.html("Total Calories:"+d["Calories2"]+"kcals <br>"+"Proteins:"+d.Protein2+"g <br>"+"Carbohydrates:"+d.Carbohydrates2+"g <br>"+"Fats:"+d.Fats2+"g");
-      focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories2);
+      div.html("Weight:" + d.Weight+ "lbs" + "<br> Total Calories:"+d["Calories2"]+"kcals <br>"+"Proteins:"+d.Protein2+"g <br>"+"Carbohydrates:"+d.Carbohydrates2+"g <br>"+"Fats:"+d.Fats2+"g");
       }
 
     // Add the X Axis
@@ -632,7 +658,13 @@ var yAxis = d3.svg.axis().scale(y)
     svg.append("g")
         .attr("class", "y axis")
         .call(yAxis);
-    
+            
+    svg.append("text")
+        .attr("x", (width / 2))             
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle")  
+         .style("font-size", "14px") 
+        .text("Hover over to see your recommended calorie intake and macronutrients according to weight");
     svg.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", -20)
@@ -814,9 +846,12 @@ var yAxis = d3.svg.axis().scale(y)
         .style("font-weight", "bold")
         .style("font-size", "14")
         .text("Calories");
-    
+    svg.append("text")
+        .attr("y", 0 - (margin.top / 2) +50)
+         .style("font-size", "12px") 
+        .text("Hover over to see your recommended calorie intake and macronutrients according to weight");
     //create new array for pie chart
-    dataPie = [
+    dataPie = [ 
         {"name": "Carbs", "val": rowData[0]["Carbohydrates3"]},
         {"name": "Protein", "val": rowData[0]["Protein3"]},
         {"name": "Fats", "val": rowData[0]["Fats3"]}
@@ -959,7 +994,7 @@ var div = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0)
     .style("left", (width + 250) + "px")
-    .style("top", (height + 48) + "px"); 
+    .style("top", (height + 100) + "px"); 
 
     
     
