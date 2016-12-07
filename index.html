@@ -203,9 +203,6 @@ path {
     text-align: center;
 }
     
-    .p3{
-        text-align:right;
-    }
 /*Tooltip Code*/
 div.tooltip {
     position: absolute;
@@ -422,9 +419,8 @@ focus.append("rect")
 //        .attr("dy", "-.3em");
     focus.append("text")
         .attr("class", "y2")
-        .attr("dx", 8)
-        .attr("dy", "-.3em")
-        .attr("dx", 100)
+        .style("text-anchor","end")
+        .attr("dx", 125)
         .attr("dy", "2em");
 
     // place the date at the intersection
@@ -448,7 +444,6 @@ focus.append("rect")
 //        .attr("dy", "1em");
     focus.append("text")
         .attr("class", "y4")
-        .attr("dx", 8)
         .style("text-anchor","end")
         .attr("dx", 125)
         .attr("dy", "1em");
