@@ -223,8 +223,8 @@ div.tooltip {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     position: absolute;
     display: none;
-    width: auto;
-    height: auto;
+    width: 250px;
+    height: 100px;
     background: none repeat scroll 0 0 grey;
     border: 0 none;
     border-radius: 8px 8px 8px 8px;
@@ -583,8 +583,6 @@ focus.append("rect")
             } else if (z === "Fats") {
                 z = Fats;
             }
-            divPie.style("left", d3.event.pageX+10+"px");
-            divPie.style("top", d3.event.pageY-25+"px");
             divPie.style("display", "inline-block");
             divPie.html("Recommended Sources of " + d.data.name + "<br>" +
                        z[0][d.data.name] + z[0]["size"] + " per " + z[0]["serving"] + " serving" + "<br>"
@@ -1162,7 +1160,7 @@ var valueline = d3.svg.line()
 // Adds the svg canvas
 var svg = d3.select("body")
     .append("svg")
-        .attr("width", width + margin.left + margin.right-100)
+        .attr("width", width + margin.left + margin.right + 200)
         .attr("height", height + margin.top + margin.bottom + 200)
     .append("g")
         .attr("transform", 
@@ -1211,13 +1209,15 @@ var pie = d3.layout.pie()
 
 //define Tooltip
 var divPie = d3.select("body").append("divPie")
-    .attr("class", "tooltipPie");
+    .attr("class", "tooltipPie")
+    .style("left", (width + 110) + "px")
+    .style("top", (height + 190) + "px");
             
 var div = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0)
-    .style("left", (width + 150) + "px")
-    .style("top", (height + 200) + "px"); 
+    .style("left", (width) + "px")
+    .style("top", (height) + "px"); 
 
     
     
