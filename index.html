@@ -186,6 +186,13 @@ path {
   fill: none;
   pointer-events: all;
 }
+    .tool{
+    fill:grey;
+    width: 130px;
+    height: 30px;
+    padding: 8px;
+    opacity: .2;
+    }
 .focus circle {
   fill: none;
   stroke: steelblue;
@@ -245,6 +252,7 @@ div.tooltip {
   .tick line{
     opacity: 0.2;
   }
+
 </style>
 
 <body>
@@ -380,58 +388,72 @@ var yAxis = d3.svg.axis().scale(y)
             .ease("linear")
             .attr("stroke-dashoffset", 0);
     
-            
     var focus = svg.append("g") 
     .style("display", "none")
     .attr("transform", "translate(50,0)");
-// append the x line
-    focus.append("line")
-        .attr("class", "x")
-        .style("stroke", "blue")
-        .style("stroke-dasharray", "3,3")
-        .style("opacity", 0.5)
-        .attr("y1", 0)
-        .attr("y2", height);
-    // append the y line
-    focus.append("line")
-        .attr("class", "y")
-        .style("stroke", "blue")
-        .style("stroke-dasharray", "3,3")
-        .style("opacity", 0.5)
-        .attr("x1", width)
-        .attr("x2", width);
-    // append the circle at the intersection
+   // append the circle at the intersection
     focus.append("circle")
         .attr("class", "y")
         .style("fill", "none")
         .style("stroke", "blue")
         .attr("r", 4);
 
+focus.append("rect")
+        .attr("class", "tool")
+        .attr("transform", "translate(0,-500)");
     // place the value at the intersection
-    focus.append("text")
-        .attr("class", "y1")
-        .style("stroke", "white")
-        .style("stroke-width", "3.5px")
-        .style("opacity", 0.8)
-        .attr("dx", 8)
-        .attr("dy", "-.3em");
+//    focus.append("text")
+//        .attr("class", "y1")
+//        .style("stroke", "white")
+//        .style("stroke-width", "3.5px")
+//        .style("opacity", 0.8)
+//        .attr("dx", 8)
+//        .attr("dy", "-.3em");
+        focus.append("text")
+        .attr("class", "y5")
+        .attr("dx", 10)
+        .attr("dy", "2em");
+//    focus.append("text")
+//        .attr("class", "y1")
+//        .style("stroke", "white")
+//        .style("stroke-width", "3.5px")
+//        .style("opacity", 0.8)
+//        .attr("dx", 100)
+//        .attr("dy", "-.3em");
     focus.append("text")
         .attr("class", "y2")
         .attr("dx", 8)
-        .attr("dy", "-.3em");
+        .attr("dy", "-.3em")
+        .attr("dx", 100)
+        .attr("dy", "2em");
 
     // place the date at the intersection
-    focus.append("text")
-        .attr("class", "y3")
-        .style("stroke", "white")
-        .style("stroke-width", "3.5px")
-        .style("opacity", 0.8)
-        .attr("dx", 8)
-        .attr("dy", "1em");
+//    focus.append("text")
+//        .attr("class", "y3")
+//        .style("stroke", "white")
+//        .style("stroke-width", "3.5px")
+//        .style("opacity", 0.8)
+//        .attr("dx", 8)
+//        .attr("dy", "1em");
+        focus.append("text")
+        .attr("class", "y6")
+        .attr("dx", 10)
+        .attr("dy", "1em")
+//    focus.append("text")
+//        .attr("class", "y3")
+//        .style("stroke", "white")
+//        .style("stroke-width", "3.5px")
+//        .style("opacity", .8)
+//        .attr("dx", 125)
+//        .attr("dy", "1em");
     focus.append("text")
         .attr("class", "y4")
         .attr("dx", 8)
+        .style("text-anchor","end")
+        .attr("dx", 125)
         .attr("dy", "1em");
+    
+  svg.append("rect")
     
   svg.append("rect")
       .attr("class", "overlay")
@@ -465,6 +487,7 @@ var yAxis = d3.svg.axis().scale(y)
 		          "translate(" + x(d.Weight) + "," +
 		                         y(d.Calories) + ")")
 		    .text(d.Calories);
+      
 
 		focus.select("text.y3")
 		    .attr("transform",
@@ -477,18 +500,21 @@ var yAxis = d3.svg.axis().scale(y)
 		          "translate(" + x(d.Weight) + "," +
 		                         y(d.Calories) + ")")
 		    .text(d.Weight);
-
-		focus.select(".x")
+      focus.select("text.y5")
 		    .attr("transform",
 		          "translate(" + x(d.Weight) + "," +
 		                         y(d.Calories) + ")")
-		               .attr("y2", height - y(d.Calories));
-
-		focus.select(".y")
+		    .text("Calories:");
+      
+      focus.select("text.y6")
 		    .attr("transform",
-		          "translate(" + width * -1 + "," +
+		          "translate(" + x(d.Weight) + "," +
 		                         y(d.Calories) + ")")
-		               .attr("x2", width + width);
+		    .text("Weight:");
+      focus.select("rect.tool")
+            .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")");
 //      div.transition()
 //          .duration(200)
 //          .style("opacity", .9)
@@ -646,53 +672,48 @@ var yAxis = d3.svg.axis().scale(y)
 var focus = svg.append("g") 
     .style("display", "none")
     .attr("transform", "translate(50,0)");
-// append the x line
-    focus.append("line")
-        .attr("class", "x")
-        .style("stroke", "blue")
-        .style("stroke-dasharray", "3,3")
-        .style("opacity", 0.5)
-        .attr("y1", 0)
-        .attr("y2", height);
-    // append the y line
-    focus.append("line")
-        .attr("class", "y")
-        .style("stroke", "blue")
-        .style("stroke-dasharray", "3,3")
-        .style("opacity", 0.5)
-        .attr("x1", width)
-        .attr("x2", width);
     // append the circle at the intersection
     focus.append("circle")
         .attr("class", "y")
         .style("fill", "none")
         .style("stroke", "blue")
         .attr("r", 4);
-
+focus.append("rect")
+        .attr("class", "tool")
+        .attr("transform", "translate(0,-500)");
     // place the value at the intersection
-    focus.append("text")
-        .attr("class", "y1")
-        .style("stroke", "white")
-        .style("stroke-width", "3.5px")
-        .style("opacity", 0.8)
-        .attr("dx", 8)
-        .attr("dy", "-.3em");
+        focus.append("text")
+        .attr("class", "y5")
+        .attr("dx", 10)
+        .attr("dy", "2em");
+//    focus.append("text")
+//        .attr("class", "y1")
+//        .style("stroke", "white")
+//        .style("stroke-width", "3.5px")
+//        .style("opacity", 0.8)
+//        .attr("dx", 100)
+//        .attr("dy", "-.3em");
     focus.append("text")
         .attr("class", "y2")
-        .attr("dx", 8)
-        .attr("dy", "-.3em");
+        .attr("dx", 100)
+        .attr("dy", "2em");
 
     // place the date at the intersection
-    focus.append("text")
-        .attr("class", "y3")
-        .style("stroke", "white")
-        .style("stroke-width", "3.5px")
-        .style("opacity", 0.8)
-        .attr("dx", 8)
-        .attr("dy", "1em");
+        focus.append("text")
+        .attr("class", "y6")
+        .attr("dx", 10)
+        .attr("dy", "1em")
+//    focus.append("text")
+//        .attr("class", "y3")
+//        .style("stroke", "white")
+//        .style("stroke-width", "3.5px")
+//        .style("opacity", .8)
+//        .attr("dx", 125)
+//        .attr("dy", "1em");
     focus.append("text")
         .attr("class", "y4")
-        .attr("dx", 8)
+        .style("text-anchor","end")
+        .attr("dx", 125)
         .attr("dy", "1em");
     
   svg.append("rect")
@@ -727,6 +748,7 @@ var focus = svg.append("g")
 		          "translate(" + x(d.Weight) + "," +
 		                         y(d.Calories) + ")")
 		    .text(d.Calories);
+      
 
 		focus.select("text.y3")
 		    .attr("transform",
@@ -739,18 +761,22 @@ var focus = svg.append("g")
 		          "translate(" + x(d.Weight) + "," +
 		                         y(d.Calories) + ")")
 		    .text(d.Weight);
-
-		focus.select(".x")
+      focus.select("text.y5")
 		    .attr("transform",
 		          "translate(" + x(d.Weight) + "," +
 		                         y(d.Calories) + ")")
-		               .attr("y2", height - y(d.Calories));
-
-		focus.select(".y")
+		    .text("Calories:");
+      
+      focus.select("text.y6")
 		    .attr("transform",
-		          "translate(" + width * -1 + "," +
+		          "translate(" + x(d.Weight) + "," +
 		                         y(d.Calories) + ")")
-		               .attr("x2", width + width);
+		    .text("Weight:");
+      focus.select("rect.tool")
+            .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")");
+
 //      div.transition()
 //          .duration(200)
 //          .style("opacity", .9)
@@ -907,53 +933,48 @@ var yAxis = d3.svg.axis().scale(y)
 var focus = svg.append("g") 
     .style("display", "none")
     .attr("transform", "translate(50,0)");
-// append the x line
-    focus.append("line")
-        .attr("class", "x")
-        .style("stroke", "blue")
-        .style("stroke-dasharray", "3,3")
-        .style("opacity", 0.5)
-        .attr("y1", 0)
-        .attr("y2", height);
-    // append the y line
-    focus.append("line")
-        .attr("class", "y")
-        .style("stroke", "blue")
-        .style("stroke-dasharray", "3,3")
-        .style("opacity", 0.5)
-        .attr("x1", width)
-        .attr("x2", width);
     // append the circle at the intersection
     focus.append("circle")
         .attr("class", "y")
         .style("fill", "none")
         .style("stroke", "blue")
         .attr("r", 4);
-
+focus.append("rect")
+        .attr("class", "tool")
+        .attr("transform", "translate(0,-500)");
     // place the value at the intersection
-    focus.append("text")
-        .attr("class", "y1")
-        .style("stroke", "white")
-        .style("stroke-width", "3.5px")
-        .style("opacity", 0.8)
-        .attr("dx", 8)
-        .attr("dy", "-.3em");
+        focus.append("text")
+        .attr("class", "y5")
+        .attr("dx", 10)
+        .attr("dy", "2em");
+//    focus.append("text")
+//        .attr("class", "y1")
+//        .style("stroke", "white")
+//        .style("stroke-width", "3.5px")
+//        .style("opacity", 0.8)
+//        .attr("dx", 100)
+//        .attr("dy", "-.3em");
     focus.append("text")
         .attr("class", "y2")
-        .attr("dx", 8)
-        .attr("dy", "-.3em");
+        .attr("dx", 100)
+        .attr("dy", "2em");
 
     // place the date at the intersection
-    focus.append("text")
-        .attr("class", "y3")
-        .style("stroke", "white")
-        .style("stroke-width", "3.5px")
-        .style("opacity", 0.8)
-        .attr("dx", 8)
-        .attr("dy", "1em");
+        focus.append("text")
+        .attr("class", "y6")
+        .attr("dx", 10)
+        .attr("dy", "1em")
+//    focus.append("text")
+//        .attr("class", "y3")
+//        .style("stroke", "white")
+//        .style("stroke-width", "3.5px")
+//        .style("opacity", .8)
+//        .attr("dx", 125)
+//        .attr("dy", "1em");
     focus.append("text")
         .attr("class", "y4")
-        .attr("dx", 8)
+        .style("text-anchor","end")
+        .attr("dx", 125)
         .attr("dy", "1em");
     
   svg.append("rect")
@@ -988,6 +1009,7 @@ var focus = svg.append("g")
 		          "translate(" + x(d.Weight) + "," +
 		                         y(d.Calories) + ")")
 		    .text(d.Calories);
+      
 
 		focus.select("text.y3")
 		    .attr("transform",
@@ -1000,18 +1022,22 @@ var focus = svg.append("g")
 		          "translate(" + x(d.Weight) + "," +
 		                         y(d.Calories) + ")")
 		    .text(d.Weight);
-
-		focus.select(".x")
+      focus.select("text.y5")
 		    .attr("transform",
 		          "translate(" + x(d.Weight) + "," +
 		                         y(d.Calories) + ")")
-		               .attr("y2", height - y(d.Calories));
-
-		focus.select(".y")
+		    .text("Calories:");
+      
+      focus.select("text.y6")
 		    .attr("transform",
-		          "translate(" + width * -1 + "," +
+		          "translate(" + x(d.Weight) + "," +
 		                         y(d.Calories) + ")")
-		               .attr("x2", width + width);
+		    .text("Weight:");
+      focus.select("rect.tool")
+            .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")");
+
 //      div.transition()
 //          .duration(200)
 //          .style("opacity", .9)
@@ -1397,4 +1423,3 @@ function tweenPie(b) {
           </div><!--/container-->
         </div><!--/footer-->
       </div><!--/row-->
-</body>
