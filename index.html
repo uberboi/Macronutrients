@@ -223,13 +223,13 @@ div.tooltip {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     position: absolute;
     display: none;
-    width: 225px;
-    height: 90px;
+    width: 300px;
+    height: 120px;
     background: rgba(0,0,0,.1);
     border: 0 none;
     border-radius: 8px 8px 8px 8px;
     color: black;
-    font: 12px sans-serif;
+    font: 14px sans-serif;
     padding: 5px;
     text-align: center;
 }
@@ -609,7 +609,7 @@ focus.append("rect")
                        + '<span style = "float:left;">'+ z[4][d.data.name] + '</span><span style = "float:right;">' + z[4]["size"] + " per " + z[4]["serving"] + " serving" + "</span>" + "<br>");
         })
         .on("mouseout", function(d) {
-          divPie.style("display", "inline-block");
+          divPie.style("display", "none");
           d3.select(this).transition()
               .duration(1000)
               .attr("d", arc);
@@ -631,13 +631,11 @@ focus.append("rect")
     
     gpie.append("text")
         .style("fill", "Black")
-        .style("font", "bold 12px Arial")
+        .style("font", " bold 16px Arial")
         .attr("y", -75)
         .attr("x", -1)
         .attr("dy", "1em")
         .style("text-anchor","middle")
-        .style("font-weight", "bold")
-        .style("font-size", "12")
         .text("Hover over for Recommended Food Sources");
     
 });
@@ -813,7 +811,7 @@ focus.append("rect")
     
     //X Axis Label
     svg.append("text")
-        .attr("transform", "translate(" + (width / 3+150) + "," + (height + 200) + ")")
+        .attr("transform", "translate(" + (width / 3+50) + "," + (height + 200) + ")")
         .style("text-anchor", "right")
         .style("font-weight", "bold")
         .style("font-size", "20")
@@ -903,13 +901,11 @@ focus.append("rect")
     
     gpie.append("text")
         .style("fill", "Black")
-        .style("font", "bold 12px Arial")
+        .style("font", "bold 16px Arial")
         .attr("y", -75)
         .attr("x", -1)
         .attr("dy", "1em")
         .style("text-anchor","middle")
-        .style("font-weight", "bold")
-        .style("font-size", "12")
         .text("Hover over for Recommended Food Sources");
 });
         // draw maintence graphs
@@ -1174,13 +1170,11 @@ focus.append("rect")
     
     gpie.append("text")
         .style("fill", "Black")
-        .style("font", "bold 12px Arial")
+        .style("font", "bold 16px Arial")
         .attr("y", -75)
         .attr("x", -1)
         .attr("dy", "1em")
         .style("text-anchor","middle")
-        .style("font-weight", "bold")
-        .style("font-size", "12")
         .text("Hover over for Recommended Food Sources");
 });
 
@@ -1223,7 +1217,7 @@ var piesvg = d3.select("body")
     .attr("width", width + margin.left + margin.right-100)
     .attr("height", height + margin.top + margin.bottom + 200)
   .append("g")
-    .attr("transform", "translate(" + (width / 3 + 50) + "," + (height - 50) + ")");
+    .attr("transform", "translate(" + (width / 3 + 90) + "," + (height - 120) + ")");
     
 //Color scale for pie chart    
 //Custom Color Scale
@@ -1231,26 +1225,23 @@ var color = d3.scale.ordinal()
 .range(["#6baed6", "#2171b5", "#deebf7" ]);
 
 //Radius for pie chart
-var radius = Math.min(width, height) / 2;
-
+var radius = Math.min(630, 310) / 2;
+console.log(radius);
+    
 //Pie chart radius
 var arc = d3.svg.arc()
-    .outerRadius(height - 70)
-    .innerRadius(height - 160);
-    
+    .outerRadius(240 + 40)
+    .innerRadius(150 + 40);
+
 //Variable for Pie chart mouseOver animation
 var arcOver = d3.svg.arc()
-    .innerRadius(height - 135)   
-    .outerRadius(height - 50);    
+    .innerRadius(175 + 40)   
+    .outerRadius(260 + 40);    
 
 //Format and position for pie chart labels if added
 var labelArc = d3.svg.arc()
-    .outerRadius(radius + 40)
-    .innerRadius(radius + 40);
-    
-var labelArcOver = d3.svg.arc()
-    .outerRadius(radius + 40)
-    .innerRadius(radius + 40);
+    .outerRadius(195 + 40)
+    .innerRadius(195 + 40);
     
 var pie = d3.layout.pie()
     .sort(null)
@@ -1259,8 +1250,8 @@ var pie = d3.layout.pie()
 //define Tooltip
 var divPie = d3.select("body").append("divPie")
     .attr("class", "tooltipPie")
-    .style("left", (width + 320) + "px")
-    .style("top", (height + 250) + "px");
+    .style("left", (width + 340) + "px")
+    .style("top", (height + 180) + "px");
             
 var div = d3.select("body").append("div")
     .attr("class", "tooltip")
