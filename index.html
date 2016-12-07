@@ -9,15 +9,7 @@ body { font: 12px Lato;}
     margin: 40px 0 20px;
     border-bottom: 1px solid #eee;
 }
-a {
-    text-decoration: none;
-}
-a:link, a:visited {
-    color: blue;
-}
-a:hover {
-    color: red;
-}
+
     h1 {
     font-family: gandhi_serifregular,"Georgia",Times New Roman,serif;
     font-style: normal;
@@ -58,6 +50,7 @@ a:hover {
     margin-left: 85px; 
     margin-right: 85px;
     margin-bottom: 25px;
+    text-align:left;
   }
 
   .foot-header{
@@ -382,7 +375,7 @@ var yAxis = d3.svg.axis().scale(y)
     .innerTickSize(-width+100)
     .outerTickSize(0)
     .tickPadding(10)
-    .ticks(13);
+    .ticks(16);
     //Filtered data by rows for piechart
     var rowData = data.filter(function(d) {
         return d.Weight === "400";
@@ -390,7 +383,7 @@ var yAxis = d3.svg.axis().scale(y)
     
     // Scale the range of the data
     x.domain([0,500]);
-    y.domain([0, 5500]);
+    y.domain([0, 8500]);
 
     // Add the valueline path.
     var path = svg.append("path")
@@ -467,7 +460,7 @@ focus.append("rect")
       d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
       
       divLine.style("display", "block")
-            .text("If you are " + (d.Weight) + " lbs, and you would like to lose weight then you must eat less than " + (d.Calories) + " calories a day, consisting of " + (d.Protein) + " grams of protein " + (d.Carbohydrates) + ", grams of carbohydrates, " + (d.Fats) + " grams of fat.");
+            .text("If you are " + (d.Weight) + " lbs and you would like to lose weight then you must eat less than " + (d.Calories) + " calories a day, consisting of " + (d.Protein) + " grams of protein, " + (d.Carbohydrates) + " grams of carbohydrates, and " + (d.Fats) + " grams of fat.");
       
       
   }
@@ -540,7 +533,7 @@ focus.append("rect")
     
     //X Axis Label
     svg.append("text")
-        .attr("transform", "translate(" + (width / 3+150) + "," + (height + 200) + ")")
+        .attr("transform", "translate(" + (width / 3+75) + "," + (height + 200) + ")")
         .style("text-anchor", "right")
         .style("font-weight", "bold")
         .style("font-size", "20")
@@ -556,7 +549,7 @@ focus.append("rect")
         .attr("x", 50)
         .attr("y", (margin.bottom) + 650)
         .style("font-size", "12px") 
-        .text("Hover over to see your recommended calorie intake and macronutrients according to weight");
+        .text("Click on the graph to select your weight to see your recommended calorie intake and macronutrients according to weight");
     svg.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", -40)
@@ -661,7 +654,7 @@ var yAxis = d3.svg.axis().scale(y)
     .innerTickSize(-width+100)
     .outerTickSize(0)
     .tickPadding(10)
-    .ticks(14);
+    .ticks(16);
     //Filtered data by rows for piechart
     var rowData = data.filter(function(d) {
         return d.Weight === "400";
@@ -669,7 +662,7 @@ var yAxis = d3.svg.axis().scale(y)
     
     // Scale the range of the data
     x.domain([0,500]);
-    y.domain([0, 7000]);
+    y.domain([0, 8500]);
 
     // Add the valueline path.
     var path = svg.append("path")
@@ -741,7 +734,7 @@ focus.append("rect")
       d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
       
       divLine.style("display", "block")
-            .text("If you are " + (d.Weight) + " lbs, and you would like to maintain your weight then you should eat about " + (d.Calories2) + " calories a day, consisting of " + (d.Protein2) + " grams of protein " + (d.Carbohydrates2) + ", grams of carbohydrates, " + (d.Fats2) + " grams of fat.");
+            .text("If you are " + (d.Weight) + " lbs and you would like to maintain your weight then you should eat about " + (d.Calories2) + " calories a day, consisting of " + (d.Protein2) + " grams of protein, " + (d.Carbohydrates2) + " grams of carbohydrates, and " + (d.Fats2) + " grams of fat.");
   }
   function mousemove() {
       var x0 = x.invert(d3.mouse(this)[0]),
@@ -812,7 +805,7 @@ focus.append("rect")
     
     //X Axis Label
     svg.append("text")
-        .attr("transform", "translate(" + (width / 3+50) + "," + (height + 200) + ")")
+        .attr("transform", "translate(" + (width / 3+75) + "," + (height + 200) + ")")
         .style("text-anchor", "right")
         .style("font-weight", "bold")
         .style("font-size", "20")
@@ -828,7 +821,7 @@ focus.append("rect")
         .attr("x", 50)
         .attr("y", (margin.bottom) + 650)
         .style("font-size", "12px") 
-        .text("Hover over to see your recommended calorie intake and macronutrients according to weight");
+        .text("Click on the graph to select your weight to see your recommended calorie intake and macronutrients according to weight");
     svg.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", -40)
@@ -1025,7 +1018,7 @@ focus.append("rect")
       d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
     
       divLine.style("display", "block")
-            .text("If you are " + (d.Weight) + " lbs, and you would like to build muscle then you should eat about " + (d.Calories3) + " calories a day, consisting of " + (d.Protein3) + " grams of protein " + (d.Carbohydrates3) + ", grams of carbohydrates, " + (d.Fats3) + " grams of fat.");
+          .text("If you are " + (d.Weight) + " lbs and you would like to build muscle then you should eat about " + (d.Calories3) + " calories a day, consisting of " + (d.Protein3) + ", grams of protein, " + (d.Carbohydrates3) + " grams of carbohydrates, and " + (d.Fats3) + " grams of fat.");
   }
   function mousemove() {
       var x0 = x.invert(d3.mouse(this)[0]),
@@ -1096,7 +1089,7 @@ focus.append("rect")
     
     //X Axis Label
     svg.append("text")
-        .attr("transform", "translate(" + (width / 3+150) + "," + (height + 200) + ")")
+        .attr("transform", "translate(" + (width / 3+75) + "," + (height + 200) + ")")
         .style("text-anchor", "right")
         .style("font-weight", "bold")
         .style("font-size", "20")
@@ -1121,7 +1114,7 @@ focus.append("rect")
         .attr("x", 50)
         .attr("y", (margin.bottom) + 650)
          .style("font-size", "12px") 
-        .text("Hover over to see your recommended calorie intake and macronutrients according to weight");
+        .text("Click on the graph to select your weight to see your recommended calorie intake and macronutrients according to weight");
     //create new array for pie chart
     dataPie = [ 
         {"name": "Carbs", "val": rowData[0]["Carbohydrates3"]},
@@ -1234,6 +1227,8 @@ var piesvg = d3.select("body")
   .append("g")
     .attr("transform", "translate(" + (width / 3 + 90) + "," + (height - 120) + ")");
     
+d3.select("body")
+.attr("align","center");
 //Color scale for pie chart    
 //Custom Color Scale
 var color = d3.scale.ordinal()
@@ -1265,7 +1260,7 @@ var pie = d3.layout.pie()
 //define Tooltip
 var divPie = d3.select("body").append("divPie")
     .attr("class", "tooltipPie")
-    .style("left", (width + 340) + "px")
+    .style("left", (width + 525) + "px")
     .style("top", (height + 180) + "px");
             
 var div = d3.select("body").append("div")
@@ -1276,7 +1271,7 @@ var div = d3.select("body").append("div")
 
 var divLine = d3.select("body").append("divLine")
     .attr("class", "bottomTip")
-    .style("left", (30) + "px" )
+    .style("left", (300) + "px" )
     .style("top", (height + 625) + "px")
     
     
@@ -1309,7 +1304,7 @@ function tweenPie(b) {
                 Files:
               </h3>
               <div class="foot-links">
-                  <li>macro.html</li>
+                  <li>index.html</li>
                   <li>data.csv</li>
               </div>
             </div><!--/col-sm-3-->
@@ -1325,6 +1320,7 @@ function tweenPie(b) {
                   <li><a style="text-decoration:none; color:blue" href="https://bl.ocks.org/mbostock/3902569/">X-value Mouseover</a></li>
                   <li><a style="text-decoration:none; color:blue" href="https://bl.ocks.org/mbostock/4341574/">Pie Chart Animations</a></li>
                   <li><a style="text-decoration:none; color:blue" href="https://jsfiddle.net/8huvuoj9/1/">Pie Chart Mouseover Animation</a></li>
+                  <li><a style="text-decoration:none; color:blue" href="https://bl.ocks.org/d3noob/6eb506b129f585ce5c8a/">Favorite tooltip (complex version)</a></li>
               </div>
             </div>
           </div><!--/container-->
