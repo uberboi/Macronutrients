@@ -188,9 +188,9 @@ path {
 }
     .tool{
     fill:grey;
-    width: 130px;
-    height: 30px;
-    padding: 8px;
+    width: 150px;
+    height: 50px;
+    padding: 1px;
     opacity: .2;
     }
 .focus circle {
@@ -242,13 +242,27 @@ div.tooltip {
     overflow: hidden;
 }  
     .tick text{
-    font-size: 12px;
+    font-size: 20px;
   }
 
   .tick line{
     opacity: 0.2;
   }
-
+    .y1,.y2,.y3,.y4,.y5,.y6{
+        font-size: 20px;
+    }
+.bottomTip{
+    position: absolute;
+    text-align: left;
+    background: rgba(0,0,0,.1);
+    display: none;
+    width: 225px;
+    height: 50px;
+    padding: 5px;
+    font-size: 14px;
+    border: 0 none;
+    border-radius: 8px 8px 8px 8px;
+}
 </style>
 
 <body>
@@ -357,7 +371,7 @@ var xAxis = d3.svg.axis().scale(x)
 
 var yAxis = d3.svg.axis().scale(y)
     .orient("left")
-    .innerTickSize(-width+150)
+    .innerTickSize(-width+100)
     .outerTickSize(0)
     .tickPadding(10)
     .ticks(13);
@@ -368,7 +382,7 @@ var yAxis = d3.svg.axis().scale(y)
     
     // Scale the range of the data
     x.domain([0,500]);
-    y.domain([0, d3.max(data, function(d) { return d.Calories; })]);
+    y.domain([0, 5500]);
 
     // Add the valueline path.
     var path = svg.append("path")
@@ -394,7 +408,7 @@ var yAxis = d3.svg.axis().scale(y)
         .attr("class", "y")
         .style("fill", "none")
         .style("stroke", "blue")
-        .attr("r", 4);
+        .attr("r", 6);
 
 focus.append("rect")
         .attr("class", "tool")
@@ -409,7 +423,7 @@ focus.append("rect")
 //        .attr("dy", "-.3em");
         focus.append("text")
         .attr("class", "y5")
-        .attr("dx", 10)
+        .attr("dx", 5)
         .attr("dy", "2em");
 //    focus.append("text")
 //        .attr("class", "y1")
@@ -421,7 +435,7 @@ focus.append("rect")
     focus.append("text")
         .attr("class", "y2")
         .style("text-anchor","end")
-        .attr("dx", 125)
+        .attr("dx", 145)
         .attr("dy", "2em");
 
     // place the date at the intersection
@@ -434,7 +448,7 @@ focus.append("rect")
 //        .attr("dy", "1em");
         focus.append("text")
         .attr("class", "y6")
-        .attr("dx", 10)
+        .attr("dx", 5)
         .attr("dy", "1em")
 //    focus.append("text")
 //        .attr("class", "y3")
@@ -446,16 +460,16 @@ focus.append("rect")
     focus.append("text")
         .attr("class", "y4")
         .style("text-anchor","end")
-        .attr("dx", 125)
+        .attr("dx", 145)
         .attr("dy", "1em");
     
   svg.append("rect")
     
   svg.append("rect")
       .attr("class", "overlay")
-      .attr("width", width-150)
-      .attr("height", height+205)
-      .attr("transform", "translate(50,0)")
+      .attr("width", width-90)
+      .attr("height", height+220)
+      .attr("transform", "translate(50,-25)")
       .style("pointer-events", "all")
       .on("mouseover", function() { focus.style("display", null); })
       .on("mouseout", function() { focus.style("display", "none"); })
@@ -526,10 +540,10 @@ focus.append("rect")
     
     //X Axis Label
     svg.append("text")
-        .attr("transform", "translate(" + (width / 3+50) + "," + (height + 200) + ")")
+        .attr("transform", "translate(" + (width / 3+150) + "," + (height + 200) + ")")
         .style("text-anchor", "right")
         .style("font-weight", "bold")
-        .style("font-size", "14")
+        .style("font-size", "20")
         .text("Weight");
 
     // Add the Y Axis
@@ -545,12 +559,12 @@ focus.append("rect")
         .text("Hover over to see your recommended calorie intake and macronutrients according to weight");
     svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", -20)
-        .attr("x", -240)
+        .attr("y", -40)
+        .attr("x", -260)
         .attr("dy", "1em")
         .style("text-anchor","middle")
         .style("font-weight", "bold")
-        .style("font-size", "14")
+        .style("font-size", "20")
         .text("Calories");
     
     //create new array for pie chart
@@ -646,7 +660,7 @@ var xAxis = d3.svg.axis().scale(x)
 
 var yAxis = d3.svg.axis().scale(y)
     .orient("left")
-    .innerTickSize(-width+150)
+    .innerTickSize(-width+100)
     .outerTickSize(0)
     .tickPadding(10)
     .ticks(14);
@@ -683,14 +697,14 @@ var focus = svg.append("g")
         .attr("class", "y")
         .style("fill", "none")
         .style("stroke", "blue")
-        .attr("r", 4);
+        .attr("r", 6);
 focus.append("rect")
         .attr("class", "tool")
         .attr("transform", "translate(0,-500)");
     // place the value at the intersection
         focus.append("text")
         .attr("class", "y5")
-        .attr("dx", 10)
+        .attr("dx", 5)
         .attr("dy", "2em");
 //    focus.append("text")
 //        .attr("class", "y1")
@@ -701,13 +715,14 @@ focus.append("rect")
 //        .attr("dy", "-.3em");
     focus.append("text")
         .attr("class", "y2")
-        .attr("dx", 100)
+        .style("text-anchor","end")
+        .attr("dx", 145)
         .attr("dy", "2em");
 
     // place the date at the intersection
         focus.append("text")
         .attr("class", "y6")
-        .attr("dx", 10)
+        .attr("dx", 5)
         .attr("dy", "1em")
 //    focus.append("text")
 //        .attr("class", "y3")
@@ -719,14 +734,14 @@ focus.append("rect")
     focus.append("text")
         .attr("class", "y4")
         .style("text-anchor","end")
-        .attr("dx", 125)
+        .attr("dx", 145)
         .attr("dy", "1em");
     
   svg.append("rect")
       .attr("class", "overlay")
-      .attr("width", width-150)
-      .attr("height", height+205)
-      .attr("transform", "translate(50,0)")
+      .attr("width", width-90)
+      .attr("height", height+220)
+      .attr("transform", "translate(50,-25)")
       .style("pointer-events", "all")
       .on("mouseover", function() { focus.style("display", null); })
       .on("mouseout", function() { focus.style("display", "none"); })
@@ -798,10 +813,10 @@ focus.append("rect")
     
     //X Axis Label
     svg.append("text")
-        .attr("transform", "translate(" + (width / 3+50) + "," + (height + 200) + ")")
+        .attr("transform", "translate(" + (width / 3+150) + "," + (height + 200) + ")")
         .style("text-anchor", "right")
         .style("font-weight", "bold")
-        .style("font-size", "14")
+        .style("font-size", "20")
         .text("Weight");
 
     // Add the Y Axis
@@ -817,12 +832,12 @@ focus.append("rect")
         .text("Hover over to see your recommended calorie intake and macronutrients according to weight");
     svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", -20)
-        .attr("x", -240)
+        .attr("y", -40)
+        .attr("x", -260)
         .attr("dy", "1em")
         .style("text-anchor","middle")
         .style("font-weight", "bold")
-        .style("font-size", "14")
+        .style("font-size", "20")
         .text("Calories");
     
     //create new array for pie chart
@@ -917,7 +932,7 @@ var xAxis = d3.svg.axis().scale(x)
 
 var yAxis = d3.svg.axis().scale(y)
     .orient("left")
-    .innerTickSize(-width+150)
+    .innerTickSize(-width+100)
     .outerTickSize(0)
     .tickPadding(10)
     .ticks(16);
@@ -954,14 +969,14 @@ var focus = svg.append("g")
         .attr("class", "y")
         .style("fill", "none")
         .style("stroke", "blue")
-        .attr("r", 4);
+        .attr("r",6);
 focus.append("rect")
         .attr("class", "tool")
         .attr("transform", "translate(0,-500)");
     // place the value at the intersection
         focus.append("text")
         .attr("class", "y5")
-        .attr("dx", 10)
+        .attr("dx", 5)
         .attr("dy", "2em");
 //    focus.append("text")
 //        .attr("class", "y1")
@@ -972,13 +987,14 @@ focus.append("rect")
 //        .attr("dy", "-.3em");
     focus.append("text")
         .attr("class", "y2")
-        .attr("dx", 100)
+        .style("text-anchor","end")
+        .attr("dx", 145)
         .attr("dy", "2em");
 
     // place the date at the intersection
         focus.append("text")
         .attr("class", "y6")
-        .attr("dx", 10)
+        .attr("dx", 5)
         .attr("dy", "1em")
 //    focus.append("text")
 //        .attr("class", "y3")
@@ -990,14 +1006,14 @@ focus.append("rect")
     focus.append("text")
         .attr("class", "y4")
         .style("text-anchor","end")
-        .attr("dx", 125)
+        .attr("dx", 145)
         .attr("dy", "1em");
     
   svg.append("rect")
       .attr("class", "overlay")
-      .attr("width", width-150)
-      .attr("height", height+205)
-      .attr("transform", "translate(50,0)")
+      .attr("width", width-90)
+      .attr("height", height+220)
+      .attr("transform", "translate(50,-25)")
       .style("pointer-events", "all")
       .on("mouseover", function() { focus.style("display", null); })
       .on("mouseout", function() { focus.style("display", "none"); })
@@ -1069,10 +1085,10 @@ focus.append("rect")
     
     //X Axis Label
     svg.append("text")
-        .attr("transform", "translate(" + (width / 3+50) + "," + (height + 200) + ")")
+        .attr("transform", "translate(" + (width / 3+150) + "," + (height + 200) + ")")
         .style("text-anchor", "right")
         .style("font-weight", "bold")
-        .style("font-size", "14")
+        .style("font-size", "20")
         .text("Weight");
 
     // Add the Y Axis
@@ -1083,12 +1099,12 @@ focus.append("rect")
     
     svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", -20)
-        .attr("x", -240)
+        .attr("y", -40)
+        .attr("x", -260)
         .attr("dy", "1em")
         .style("text-anchor","middle")
         .style("font-weight", "bold")
-        .style("font-size", "14")
+        .style("font-size", "20")
         .text("Calories");
     svg.append("text")
         .attr("x", 50)
@@ -1176,11 +1192,11 @@ focus.append("rect")
       
     // Set the dimensions of the canvas / graph
 var margin = {top: 30, right: 20, bottom: 30, left: 50},
-    width = 700 - margin.left - margin.right,
-    height = 370 - margin.top - margin.bottom;
+    width = 750 - margin.left - margin.right,
+    height = 520 - margin.top - margin.bottom;
 
 // Set the ranges
-var x = d3.scale.linear().range([0,width-150]);
+var x = d3.scale.linear().range([0,width-100]);
 var y = d3.scale.linear().range([height + 150, 0]);
 
 var bisectDate = d3.bisector(function(d) { return d.Weight; }).left;
