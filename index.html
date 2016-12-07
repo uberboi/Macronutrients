@@ -142,31 +142,7 @@ path {
 .d3 {
     display: none;
 }
-    .BackB{
-    position:absolute;
-    box-shadow: 0px 0px 10px 2px #9fb4f2;
-	box-shadow: 0px 0px 10px 2px #9fb4f2;
-	box-shadow: 0px 0px 10px 2px #9fb4f2;
-	background: (linear, left top, left bottom, (0.05, #7892c2), (1, #476e9e));
-	background: linear-gradient(top, #7892c2 5%, #476e9e 100%);
-	background: linear-gradient(top, #7892c2 5%, #476e9e 100%);
-	background: linear-gradient(top, #7892c2 5%, #476e9e 100%);
-	background: linear-gradient(top, #78x92c2 5%, #476e9e 100%);
-	background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
-	background-color: #7892c2;
-	border-radius: 10px;
-	border-radius: 10px;
-	border-radius: 10px;
-	border: 1px solid #4e6096;
-	display: none;
-	cursor: pointer;
-	color: #ffffff;
-	font-family: Arial;
-	font-size: 13px;
-	padding: 6px 10px;
-	text-decoration: none;
-    left: 1200px;
-    }
+
 .fLossB, .maintainB, .mGainB {
     position:relative;
     box-shadow: 0px 0px 10px 2px #9fb4f2;
@@ -188,19 +164,10 @@ path {
 	color: #ffffff;
 	font-family: Arial;
 	font-size: 13px;
-	padding: 60px 100px;
+	padding: 6px 10px;
 	text-decoration: none;
-    top:200px;
 }
-    .BackB:hover{
-        background: (linear, left top, left bottom,(0.05, #476e9e),(1, #7892c2));
-	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
-	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
-	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
-	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
-	background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
-	background-color: #476e9e;
-    }
+
 .fLossB:hover, .maintainB:hover, .mGainB:hover, .BackB:hover {
 	background: (linear, left top, left bottom,(0.05, #476e9e),(1, #7892c2));
 	background: linear-gradient(top, #476e9e 5%, #7892c2 100%);
@@ -210,13 +177,9 @@ path {
 	background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
 	background-color: #476e9e;
 }
-    .BackB:active{
-    position:absolute;
-    left:1200px;
-    }
+
 .fLossB:active, .maintainB:active, .mGainB:active {
 	position:relative;
-    top:200px;
 }
 
 .overlay {
@@ -229,6 +192,7 @@ path {
 }
 /*Button placement*/
 .buttonArea{
+    
     text-align: center;
 }
     
@@ -269,13 +233,20 @@ div.tooltip {
     
 .goalsDiv {
     position: relative;
-    top: 200px;
     font-size: 20px;
     font-family: monospace;
     color: #3399ff;
     overflow: hidden;
-}    
+}  
+    .tick text{
+    font-size: 12px;
+  }
+
+  .tick line{
+    opacity: 0.2;
+  }
 </style>
+
 <body>
     <div class="page-header">
 <h1>Calorie and Macronutrients for Fitness</h1></div>
@@ -289,7 +260,6 @@ div.tooltip {
         <input class="maintainB" type="button" name="maintain" value="I want to maintain my body!">
         <input class="mGainB" type="button" name="mGain" value="I need more muscle!">
     </div>
-    <input class="BackB" type="button" name="Back" value="Change Goal">
 <!-- load the d3.js library -->    
 <script src="https://d3js.org/d3.v3.min.js"></script>
 
@@ -323,53 +293,41 @@ div.tooltip {
     var fLoss = false;
     var maintain = false;
     var mGain = false;
-    var Back = false;
     
     //jump to respective functions if button is pressed
     d3.select("input.fLossB").on("click", fatLoss)
     d3.select("input.maintainB").on("click", maintenence)
     d3.select("input.mGainB").on("click", massGain)
-    d3.select("input.BackB").on("click", BackB)
-    
-    var button = document.getElementsByClassName("BackB");
-    var buttonArea = document.getElementsByClassName("buttonArea");
-    var goalsDiv = document.getElementsByClassName("goalsDiv");
+
     
         function fatLoss() {
+            piesvg.selectAll("*").remove();
+            svg.selectAll("*").remove();
             fLoss = true;
             maintain = false;
             mGain = false;
             console.log("fatloss button was pressed!")
             switchMacro();
-            button[0].style.display="inline-block";
-            buttonArea[0].style.display="none";
-            goalsDiv[0].style.display="none";
+            div.transition()
+            .style("opacity", 0);
         }
         function maintenence()  {
+            piesvg.selectAll("*").remove();
+            svg.selectAll("*").remove();
             fLoss = false;
             maintain = true;
             mGain = false;
             switchMacro();
-            button[0].style.display="inline-block";
-            buttonArea[0].style.display="none";
-            goalsDiv[0].style.display="none";
+            div.transition()
+            .style("opacity", 0);
         }
-        function massGain() {         
+        function massGain() {
+            piesvg.selectAll("*").remove();
+            svg.selectAll("*").remove();
             fLoss = false;
             maintain = false;
             mGain = true;
             switchMacro();
-             button[0].style.display="inline-block";
-            buttonArea[0].style.display="none";
-            goalsDiv[0].style.display="none";
-        }
-        function BackB(){
-            piesvg.selectAll("*").remove();
-            svg.selectAll("*").remove();
-            console.log("pressed")
-            button[0].style.display="none";
-            buttonArea[0].style.display="block";
-            goalsDiv[0].style.display="block";
             div.transition()
             .style("opacity", 0);
         }
@@ -386,26 +344,30 @@ function switchMacro() {
 var xAxis = d3.svg.axis().scale(x)
     .orient("bottom")
     .tickSize(0)
-    .tickValues([100,500]);
-    //.ticks(10);
+    .innerTickSize(-height-150)
+    .outerTickSize(0)
+    .tickPadding(10)
+    .ticks(10);
 
 var yAxis = d3.svg.axis().scale(y)
     .orient("left")
-    .tickValues([500,5500])
-    .tickSize(0);
-    //.ticks(2);
+    .innerTickSize(-width+150)
+    .outerTickSize(0)
+    .tickPadding(10)
+    .ticks(13);
     //Filtered data by rows for piechart
     var rowData = data.filter(function(d) {
         return d.Weight === "400";
     });
     
     // Scale the range of the data
-    x.domain(d3.extent(data, function(d) { return d.Weight; }));
+    x.domain([0,500]);
     y.domain([0, d3.max(data, function(d) { return d.Calories; })]);
 
     // Add the valueline path.
     var path = svg.append("path")
         .attr("class", "line")
+        .attr("transform", "translate(50,0)")
         .attr("d", valueline(data));
     
     var totalLength = path.node().getTotalLength();
@@ -418,21 +380,65 @@ var yAxis = d3.svg.axis().scale(y)
             .ease("linear")
             .attr("stroke-dashoffset", 0);
     
-    var focus = svg.append("g")
-      .attr("class", "focus")
-      .style("display", "none");
+            
+    var focus = svg.append("g") 
+    .style("display", "none")
+    .attr("transform", "translate(50,0)");
+// append the x line
+    focus.append("line")
+        .attr("class", "x")
+        .style("stroke", "blue")
+        .style("stroke-dasharray", "3,3")
+        .style("opacity", 0.5)
+        .attr("y1", 0)
+        .attr("y2", height);
+    // append the y line
+    focus.append("line")
+        .attr("class", "y")
+        .style("stroke", "blue")
+        .style("stroke-dasharray", "3,3")
+        .style("opacity", 0.5)
+        .attr("x1", width)
+        .attr("x2", width);
+    // append the circle at the intersection
+    focus.append("circle")
+        .attr("class", "y")
+        .style("fill", "none")
+        .style("stroke", "blue")
+        .attr("r", 4);
 
-  focus.append("circle")
-      .attr("r", 4.5);
+    // place the value at the intersection
+    focus.append("text")
+        .attr("class", "y1")
+        .style("stroke", "white")
+        .style("stroke-width", "3.5px")
+        .style("opacity", 0.8)
+        .attr("dx", 8)
+        .attr("dy", "-.3em");
+    focus.append("text")
+        .attr("class", "y2")
+        .attr("dx", 8)
+        .attr("dy", "-.3em");
 
-  focus.append("text")
-      .attr("x", 9)
-      .attr("dy", ".35em");
+    // place the date at the intersection
+    focus.append("text")
+        .attr("class", "y3")
+        .style("stroke", "white")
+        .style("stroke-width", "3.5px")
+        .style("opacity", 0.8)
+        .attr("dx", 8)
+        .attr("dy", "1em");
+    focus.append("text")
+        .attr("class", "y4")
+        .attr("dx", 8)
+        .attr("dy", "1em");
     
   svg.append("rect")
       .attr("class", "overlay")
       .attr("width", width-150)
-      .attr("height", height+190)
+      .attr("height", height+205)
+      .attr("transform", "translate(50,0)")
+      .style("pointer-events", "all")
       .on("mouseover", function() { focus.style("display", null); })
       .on("mouseout", function() { focus.style("display", "none"); })
       .on("mousemove", mousemove);
@@ -443,23 +449,62 @@ var yAxis = d3.svg.axis().scale(y)
       d0 = data[i - 1],
       d1 = data[i],
       d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
-      focus.attr("transform", "translate(" + x(d.Weight) + "," + y(d.Calories) + ")");
-      div.transition()
-          .duration(200)
-          .style("opacity", .9)
-   div.html("Weight:" + d.Weight+ "lbs" + "<br> Calories:"+d["Calories2"]+"kcals <br>"+"Proteins:"+d.Protein2+"g <br>"+"Carbohydrates:"+d.Carbohydrates2+"g <br>"+"Fats:"+d.Fats2+"g");
+        focus.select("circle.y")
+		    .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")");
+
+		focus.select("text.y1")
+		    .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")")
+		    .text(d.Calories);
+
+		focus.select("text.y2")
+		    .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")")
+		    .text(d.Calories);
+
+		focus.select("text.y3")
+		    .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")")
+		    .text(d.Weight);
+
+		focus.select("text.y4")
+		    .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")")
+		    .text(d.Weight);
+
+		focus.select(".x")
+		    .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")")
+		               .attr("y2", height - y(d.Calories));
+
+		focus.select(".y")
+		    .attr("transform",
+		          "translate(" + width * -1 + "," +
+		                         y(d.Calories) + ")")
+		               .attr("x2", width + width);
+//      div.transition()
+//          .duration(200)
+//          .style("opacity", .9)
+//   div.html("Weight:" + d.Weight+ "lbs" + "<br> Calories:"+d["Calories2"]+"kcals <br>"+"Proteins:"+d.Protein2+"g <br>"+"Carbohydrates:"+d.Carbohydrates2+"g <br>"+"Fats:"+d.Fats2+"g");
       }
 
     // Add the X Axis
     svg.append("g")
         .attr("class", "x axis")
         //add to height to match y axis length
-        .attr("transform", "translate(0," + (height + 200) + ")")
+        .attr("transform", "translate(50," + (height + 150) + ")")
         .call(xAxis);
     
     //X Axis Label
     svg.append("text")
-        .attr("transform", "translate(" + (width / 3) + "," + (height + 218) + ")")
+        .attr("transform", "translate(" + (width / 3+50) + "," + (height + 200) + ")")
         .style("text-anchor", "right")
         .style("font-weight", "bold")
         .style("font-size", "14")
@@ -468,6 +513,7 @@ var yAxis = d3.svg.axis().scale(y)
     // Add the Y Axis
     svg.append("g")
         .attr("class", "y axis")
+        .attr("transform", "translate(50,0)")
         .call(yAxis);
             
        svg.append("text")
@@ -561,26 +607,30 @@ var yAxis = d3.svg.axis().scale(y)
 var xAxis = d3.svg.axis().scale(x)
     .orient("bottom")
     .tickSize(0)
-    .tickValues([100,500]);
-    //.ticks(10);
+    .innerTickSize(-height-150)
+    .outerTickSize(0)
+    .tickPadding(10)
+    .ticks(10);
 
 var yAxis = d3.svg.axis().scale(y)
     .orient("left")
-    .tickValues([500,7000])
-    .tickSize(0);
-    //.ticks(2);
+    .innerTickSize(-width+150)
+    .outerTickSize(0)
+    .tickPadding(10)
+    .ticks(14);
     //Filtered data by rows for piechart
     var rowData = data.filter(function(d) {
         return d.Weight === "400";
     });
     
     // Scale the range of the data
-    x.domain(d3.extent(data, function(d) { return d.Weight; }));
-    y.domain([0, d3.max(data, function(d) { return d.Calories2; })]);
+    x.domain([0,500]);
+    y.domain([0, 7000]);
 
     // Add the valueline path.
     var path = svg.append("path")
         .attr("class", "line")
+        .attr("transform", "translate(50,0)")
         .attr("d", valueline(data));
     
     var totalLength = path.node().getTotalLength();
@@ -593,21 +643,64 @@ var yAxis = d3.svg.axis().scale(y)
             .ease("linear")
             .attr("stroke-dashoffset", 0);
     
-    var focus = svg.append("g")
-      .attr("class", "focus")
-      .style("display", "none");
+var focus = svg.append("g") 
+    .style("display", "none")
+    .attr("transform", "translate(50,0)");
+// append the x line
+    focus.append("line")
+        .attr("class", "x")
+        .style("stroke", "blue")
+        .style("stroke-dasharray", "3,3")
+        .style("opacity", 0.5)
+        .attr("y1", 0)
+        .attr("y2", height);
+    // append the y line
+    focus.append("line")
+        .attr("class", "y")
+        .style("stroke", "blue")
+        .style("stroke-dasharray", "3,3")
+        .style("opacity", 0.5)
+        .attr("x1", width)
+        .attr("x2", width);
+    // append the circle at the intersection
+    focus.append("circle")
+        .attr("class", "y")
+        .style("fill", "none")
+        .style("stroke", "blue")
+        .attr("r", 4);
 
-  focus.append("circle")
-      .attr("r", 4.5);
+    // place the value at the intersection
+    focus.append("text")
+        .attr("class", "y1")
+        .style("stroke", "white")
+        .style("stroke-width", "3.5px")
+        .style("opacity", 0.8)
+        .attr("dx", 8)
+        .attr("dy", "-.3em");
+    focus.append("text")
+        .attr("class", "y2")
+        .attr("dx", 8)
+        .attr("dy", "-.3em");
 
-  focus.append("text")
-      .attr("x", 9)
-      .attr("dy", ".35em");
+    // place the date at the intersection
+    focus.append("text")
+        .attr("class", "y3")
+        .style("stroke", "white")
+        .style("stroke-width", "3.5px")
+        .style("opacity", 0.8)
+        .attr("dx", 8)
+        .attr("dy", "1em");
+    focus.append("text")
+        .attr("class", "y4")
+        .attr("dx", 8)
+        .attr("dy", "1em");
     
   svg.append("rect")
       .attr("class", "overlay")
       .attr("width", width-150)
-      .attr("height", height+190)
+      .attr("height", height+205)
+      .attr("transform", "translate(50,0)")
+      .style("pointer-events", "all")
       .on("mouseover", function() { focus.style("display", null); })
       .on("mouseout", function() { focus.style("display", "none"); })
       .on("mousemove", mousemove);
@@ -618,23 +711,62 @@ var yAxis = d3.svg.axis().scale(y)
       d0 = data[i - 1],
       d1 = data[i],
       d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
-      focus.attr("transform", "translate(" + x(d.Weight) + "," + y(d.Calories2) + ")");
-      div.transition()
-          .duration(200)
-          .style("opacity", .9)
-      div.html("Weight:" + d.Weight+ "lbs" + "<br> Calories:"+d["Calories2"]+"kcals <br>"+"Proteins:"+d.Protein2+"g <br>"+"Carbohydrates:"+d.Carbohydrates2+"g <br>"+"Fats:"+d.Fats2+"g");
+        focus.select("circle.y")
+		    .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")");
+
+		focus.select("text.y1")
+		    .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")")
+		    .text(d.Calories);
+
+		focus.select("text.y2")
+		    .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")")
+		    .text(d.Calories);
+
+		focus.select("text.y3")
+		    .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")")
+		    .text(d.Weight);
+
+		focus.select("text.y4")
+		    .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")")
+		    .text(d.Weight);
+
+		focus.select(".x")
+		    .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")")
+		               .attr("y2", height - y(d.Calories));
+
+		focus.select(".y")
+		    .attr("transform",
+		          "translate(" + width * -1 + "," +
+		                         y(d.Calories) + ")")
+		               .attr("x2", width + width);
+//      div.transition()
+//          .duration(200)
+//          .style("opacity", .9)
+//      div.html("Weight:" + d.Weight+ "lbs" + "<br> Calories:"+d["Calories2"]+"kcals <br>"+"Proteins:"+d.Protein2+"g <br>"+"Carbohydrates:"+d.Carbohydrates2+"g <br>"+"Fats:"+d.Fats2+"g");
       }
 
     // Add the X Axis
     svg.append("g")
         .attr("class", "x axis")
         //add to height to match y axis length
-        .attr("transform", "translate(0," + (height + 200) + ")")
+        .attr("transform", "translate(50," + (height + 150) + ")")
         .call(xAxis);
     
     //X Axis Label
     svg.append("text")
-        .attr("transform", "translate(" + (width / 3) + "," + (height + 218) + ")")
+        .attr("transform", "translate(" + (width / 3+50) + "," + (height + 200) + ")")
         .style("text-anchor", "right")
         .style("font-weight", "bold")
         .style("font-size", "14")
@@ -643,6 +775,7 @@ var yAxis = d3.svg.axis().scale(y)
     // Add the Y Axis
     svg.append("g")
         .attr("class", "y axis")
+        .attr("transform", "translate(50,0)")
         .call(yAxis);
             
     svg.append("text")
@@ -735,26 +868,30 @@ var yAxis = d3.svg.axis().scale(y)
 var xAxis = d3.svg.axis().scale(x)
     .orient("bottom")
     .tickSize(0)
-    .tickValues([100,500]);
-    //.ticks(10);
+    .innerTickSize(-height-150)
+    .outerTickSize(0)
+    .tickPadding(10)
+    .ticks(10);
 
 var yAxis = d3.svg.axis().scale(y)
     .orient("left")
-    .tickValues([500,8500])
-    .tickSize(0);
-    //.ticks(2);
+    .innerTickSize(-width+150)
+    .outerTickSize(0)
+    .tickPadding(10)
+    .ticks(16);
     //Filtered data by rows for piechart
     var rowData = data.filter(function(d) {
         return d.Weight === "400";
     });
     
     // Scale the range of the data
-    x.domain(d3.extent(data, function(d) { return d.Weight; }));
-    y.domain([0, d3.max(data, function(d) { return d.Calories3; })]);
+    x.domain([0,500]);
+    y.domain([0,8500]);
 
     // Add the valueline path.
     var path = svg.append("path")
         .attr("class", "line")
+        .attr("transform", "translate(50,0)")
         .attr("d", valueline(data));
     
     var totalLength = path.node().getTotalLength();
@@ -767,21 +904,64 @@ var yAxis = d3.svg.axis().scale(y)
             .ease("linear")
             .attr("stroke-dashoffset", 0);
     
-    var focus = svg.append("g")
-      .attr("class", "focus")
-      .style("display", "none");
+var focus = svg.append("g") 
+    .style("display", "none")
+    .attr("transform", "translate(50,0)");
+// append the x line
+    focus.append("line")
+        .attr("class", "x")
+        .style("stroke", "blue")
+        .style("stroke-dasharray", "3,3")
+        .style("opacity", 0.5)
+        .attr("y1", 0)
+        .attr("y2", height);
+    // append the y line
+    focus.append("line")
+        .attr("class", "y")
+        .style("stroke", "blue")
+        .style("stroke-dasharray", "3,3")
+        .style("opacity", 0.5)
+        .attr("x1", width)
+        .attr("x2", width);
+    // append the circle at the intersection
+    focus.append("circle")
+        .attr("class", "y")
+        .style("fill", "none")
+        .style("stroke", "blue")
+        .attr("r", 4);
 
-  focus.append("circle")
-      .attr("r", 4.5);
+    // place the value at the intersection
+    focus.append("text")
+        .attr("class", "y1")
+        .style("stroke", "white")
+        .style("stroke-width", "3.5px")
+        .style("opacity", 0.8)
+        .attr("dx", 8)
+        .attr("dy", "-.3em");
+    focus.append("text")
+        .attr("class", "y2")
+        .attr("dx", 8)
+        .attr("dy", "-.3em");
 
-  focus.append("text")
-      .attr("x", 9)
-      .attr("dy", ".35em");
+    // place the date at the intersection
+    focus.append("text")
+        .attr("class", "y3")
+        .style("stroke", "white")
+        .style("stroke-width", "3.5px")
+        .style("opacity", 0.8)
+        .attr("dx", 8)
+        .attr("dy", "1em");
+    focus.append("text")
+        .attr("class", "y4")
+        .attr("dx", 8)
+        .attr("dy", "1em");
     
   svg.append("rect")
       .attr("class", "overlay")
       .attr("width", width-150)
-      .attr("height", height+190)
+      .attr("height", height+205)
+      .attr("transform", "translate(50,0)")
+      .style("pointer-events", "all")
       .on("mouseover", function() { focus.style("display", null); })
       .on("mouseout", function() { focus.style("display", "none"); })
       .on("mousemove", mousemove);
@@ -792,23 +972,62 @@ var yAxis = d3.svg.axis().scale(y)
       d0 = data[i - 1],
       d1 = data[i],
       d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
-      focus.attr("transform", "translate(" + x(d.Weight) + "," + y(d.Calories3) + ")");
-      div.transition()
-          .duration(200)
-          .style("opacity", .9)
-      div.html("Weight:" + d.Weight+ "lbs" + "<br> Calories:"+d["Calories2"]+"kcals <br>"+"Proteins:"+d.Protein2+"g <br>"+"Carbohydrates:"+d.Carbohydrates2+"g <br>"+"Fats:"+d.Fats2+"g");
+        focus.select("circle.y")
+		    .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")");
+
+		focus.select("text.y1")
+		    .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")")
+		    .text(d.Calories);
+
+		focus.select("text.y2")
+		    .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")")
+		    .text(d.Calories);
+
+		focus.select("text.y3")
+		    .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")")
+		    .text(d.Weight);
+
+		focus.select("text.y4")
+		    .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")")
+		    .text(d.Weight);
+
+		focus.select(".x")
+		    .attr("transform",
+		          "translate(" + x(d.Weight) + "," +
+		                         y(d.Calories) + ")")
+		               .attr("y2", height - y(d.Calories));
+
+		focus.select(".y")
+		    .attr("transform",
+		          "translate(" + width * -1 + "," +
+		                         y(d.Calories) + ")")
+		               .attr("x2", width + width);
+//      div.transition()
+//          .duration(200)
+//          .style("opacity", .9)
+//      div.html("Weight:" + d.Weight+ "lbs" + "<br> Calories:"+d["Calories3"]+"kcals <br>"+"Proteins:"+d.Protein3+"g <br>"+"Carbohydrates:"+d.Carbohydrates3+"g <br>"+"Fats:"+d.Fats3+"g");
       }
 
     // Add the X Axis
     svg.append("g")
         .attr("class", "x axis")
         //add to height to match y axis length
-        .attr("transform", "translate(0," + (height + 200) + ")")
+        .attr("transform", "translate(50," + (height + 150) + ")")
         .call(xAxis);
     
     //X Axis Label
     svg.append("text")
-        .attr("transform", "translate(" + (width / 3) + "," + (height + 218) + ")")
+        .attr("transform", "translate(" + (width / 3+50) + "," + (height + 200) + ")")
         .style("text-anchor", "right")
         .style("font-weight", "bold")
         .style("font-size", "14")
@@ -817,6 +1036,7 @@ var yAxis = d3.svg.axis().scale(y)
     // Add the Y Axis
     svg.append("g")
         .attr("class", "y axis")
+        .attr("transform", "translate(50,0)")
         .call(yAxis);
     
     svg.append("text")
@@ -909,7 +1129,7 @@ var margin = {top: 30, right: 20, bottom: 30, left: 50},
 
 // Set the ranges
 var x = d3.scale.linear().range([0,width-150]);
-var y = d3.scale.linear().range([height + 200, 0]);
+var y = d3.scale.linear().range([height + 150, 0]);
 
 var bisectDate = d3.bisector(function(d) { return d.Weight; }).left;
     
@@ -975,8 +1195,8 @@ var divPie = d3.select("body").append("divPie")
 var div = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0)
-    .style("left", (width + 250) + "px")
-    .style("top", (height + 100) + "px"); 
+    .style("left", (width + 150) + "px")
+    .style("top", (height + 200) + "px"); 
 
     
     
