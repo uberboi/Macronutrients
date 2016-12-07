@@ -730,8 +730,19 @@ focus.append("rect")
       .style("pointer-events", "all")
       .on("mouseover", function() { focus.style("display", null); })
       .on("mouseout", function() { focus.style("display", "none"); })
-      .on("mousemove", mousemove);
-    
+      .on("mousemove", mousemove)
+      .on('click',clicked);
+            
+  function clicked(){
+      var x0 = x.invert(d3.mouse(this)[0]),
+      i = bisectDate(data, x0, 1),
+      d0 = data[i - 1],
+      d1 = data[i],
+      d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
+      
+      divLine.style("display", "block")
+            .text("If you are " + (d.Weight) + " lbs, and you would like to maintain your weight then you should eat about " + (d.Calories2) + " calories a day, consisting of " + (d.Protein2) + " grams of protein " + (d.Carbohydrates2) + ", grams of carbohydrates, " + (d.Fats2) + " grams of fat.");
+  }
   function mousemove() {
       var x0 = x.invert(d3.mouse(this)[0]),
       i = bisectDate(data, x0, 1),
@@ -783,8 +794,8 @@ focus.append("rect")
 		          "translate(" + x(d.Weight) + "," +
 		                         y(d.Calories) + ")");
       
-      divLine.style("display", "block")
-            .text("If you are " + (d.Weight) + " lbs, and you would like to maintain your weight then you must eat about " + (d.Calories2) + " calories a day, consisting of " + (d.Protein2) + " grams of protein " + (d.Carbohydrates2) + ", grams of carbohydrates, " + (d.Fats2) + " grams of fat.");
+//      divLine.style("display", "block")
+//            .text("If you are " + (d.Weight) + " lbs, and you would like to maintain your weight then you must eat about " + (d.Calories2) + " calories a day, consisting of " + (d.Protein2) + " grams of protein " + (d.Carbohydrates2) + ", grams of carbohydrates, " + (d.Fats2) + " grams of fat.");
 
 //      div.transition()
 //          .duration(200)
@@ -1003,8 +1014,19 @@ focus.append("rect")
       .style("pointer-events", "all")
       .on("mouseover", function() { focus.style("display", null); })
       .on("mouseout", function() { focus.style("display", "none"); })
-      .on("mousemove", mousemove);
+      .on("mousemove", mousemove)
+      .on('click',clicked);
+            
+  function clicked(){
+      var x0 = x.invert(d3.mouse(this)[0]),
+      i = bisectDate(data, x0, 1),
+      d0 = data[i - 1],
+      d1 = data[i],
+      d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
     
+      divLine.style("display", "block")
+            .text("If you are " + (d.Weight) + " lbs, and you would like to build muscle then you should eat about " + (d.Calories3) + " calories a day, consisting of " + (d.Protein3) + " grams of protein " + (d.Carbohydrates3) + ", grams of carbohydrates, " + (d.Fats3) + " grams of fat.");
+  }
   function mousemove() {
       var x0 = x.invert(d3.mouse(this)[0]),
       i = bisectDate(data, x0, 1),
@@ -1056,8 +1078,8 @@ focus.append("rect")
 		          "translate(" + x(d.Weight) + "," +
 		                         y(d.Calories) + ")");
       
-      divLine.style("display", "block")
-            .text("If you are " + (d.Weight) + " lbs, and you would like to build muscle then you must eat about " + (d.Calories3) + " calories a day, consisting of " + (d.Protein3) + " grams of protein " + (d.Carbohydrates3) + ", grams of carbohydrates, " + (d.Fats3) + " grams of fat.");
+//      divLine.style("display", "block")
+//            .text("If you are " + (d.Weight) + " lbs, and you would like to build muscle then you must eat about " + (d.Calories3) + " calories a day, consisting of " + (d.Protein3) + " grams of protein " + (d.Carbohydrates3) + ", grams of carbohydrates, " + (d.Fats3) + " grams of fat.");
 
 //      div.transition()
 //          .duration(200)
