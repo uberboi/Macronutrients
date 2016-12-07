@@ -229,7 +229,6 @@ path {
 }
 /*Button placement*/
 .buttonArea{
-    
     text-align: center;
 }
     
@@ -279,7 +278,7 @@ div.tooltip {
 </style>
 <body>
     <div class="page-header">
-<h1>Calorie and Macronutrients Intake for Fitness</h1></div>
+<h1>Calorie and Macronutrients for Fitness</h1></div>
     <h2 style="text-align: center;">Based on your fitness goals, to maximize results you must consume a certain amount of calories and macronutrients ( Carbohydrates, Proteins, Fats) relative to your weight.</h2>    
 
     
@@ -472,7 +471,7 @@ var yAxis = d3.svg.axis().scale(y)
         .call(yAxis);
             
        svg.append("text")
-        .attr("y", 0 - (margin.top / 2) +50)
+        .attr("y", 0 - (margin.top / 2))
          .style("font-size", "12px") 
         .text("Hover over to see your recommended calorie intake and macronutrients according to weight");
     svg.append("text")
@@ -647,7 +646,7 @@ var yAxis = d3.svg.axis().scale(y)
         .call(yAxis);
             
     svg.append("text")
-        .attr("y", 0 - (margin.top / 2) +50)
+        .attr("y", 0 - (margin.top / 2))
          .style("font-size", "12px") 
         .text("Hover over to see your recommended calorie intake and macronutrients according to weight");
     svg.append("text")
@@ -830,7 +829,7 @@ var yAxis = d3.svg.axis().scale(y)
         .style("font-size", "14")
         .text("Calories");
     svg.append("text")
-        .attr("y", 0 - (margin.top / 2) +50)
+        .attr("y", 0 - (margin.top / 2))
          .style("font-size", "12px") 
         .text("Hover over to see your recommended calorie intake and macronutrients according to weight");
     //create new array for pie chart
@@ -922,7 +921,7 @@ var valueline = d3.svg.line()
 // Adds the svg canvas
 var svg = d3.select("body")
     .append("svg")
-        .attr("width", width + margin.left + margin.right)
+        .attr("width", width + margin.left + margin.right-100)
         .attr("height", height + margin.top + margin.bottom + 200)
     .append("g")
         .attr("transform", 
@@ -933,7 +932,7 @@ var svg = d3.select("body")
 var piesvg = d3.select("body")
     .append("svg:svg")
     //height and width of svg body
-    .attr("width", width + margin.left + margin.right)
+    .attr("width", width + margin.left + margin.right-100)
     .attr("height", height + margin.top + margin.bottom + 200)
   .append("g")
     .attr("transform", "translate(" + (width / 3 + 50) + "," + (height - 50) + ")");
