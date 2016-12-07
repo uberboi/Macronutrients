@@ -223,8 +223,8 @@ div.tooltip {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     position: absolute;
     display: none;
-    width: 250px;
-    height: 100px;
+    width: auto;
+    height: auto;
     background: none repeat scroll 0 0 grey;
     border: 0 none;
     border-radius: 8px 8px 8px 8px;
@@ -255,7 +255,8 @@ div.tooltip {
 <body>
     <div class="page-header">
 <h1>Calorie and Macronutrients for Fitness</h1></div>
-    <h2 style="text-align: center;">Based on your fitness goals, to maximize results you must consume a certain amount of calories and macronutrients ( Carbohydrates, Proteins, Fats) relative to your weight.</h2>    
+    <h2 style="text-align: center;">Based on your fitness goals, to maximize results you must consume a certain amount of</h2> 
+    <h2 style="text-align: center;"> calories and macronutrients (Carbohydrates, Proteins, Fats) relative to your weight.</h2>    
 
     
     <!--seprate div class for button placement-->
@@ -538,8 +539,9 @@ focus.append("rect")
         .call(yAxis);
             
        svg.append("text")
-        .attr("y", 0 - (margin.top / 2))
-         .style("font-size", "12px") 
+        .attr("x", 50)
+        .attr("y", (margin.bottom) + 500)
+        .style("font-size", "12px") 
         .text("Hover over to see your recommended calorie intake and macronutrients according to weight");
     svg.append("text")
         .attr("transform", "rotate(-90)")
@@ -583,6 +585,8 @@ focus.append("rect")
             } else if (z === "Fats") {
                 z = Fats;
             }
+            divPie.style("left", d3.event.pageX+10+"px");
+            divPie.style("top", d3.event.pageY-25+"px");
             divPie.style("display", "inline-block");
             divPie.html("Recommended Sources of " + d.data.name + "<br>" +
                        z[0][d.data.name] + z[0]["size"] + " per " + z[0]["serving"] + " serving" + "<br>"
@@ -798,8 +802,9 @@ focus.append("rect")
         .call(yAxis);
             
     svg.append("text")
-        .attr("y", 0 - (margin.top / 2))
-         .style("font-size", "12px") 
+        .attr("x", 50)
+        .attr("y", (margin.bottom) + 500)
+        .style("font-size", "12px") 
         .text("Hover over to see your recommended calorie intake and macronutrients according to weight");
     svg.append("text")
         .attr("transform", "rotate(-90)")
@@ -1068,7 +1073,8 @@ focus.append("rect")
         .style("font-size", "14")
         .text("Calories");
     svg.append("text")
-        .attr("y", 0 - (margin.top / 2))
+        .attr("x", 50)
+        .attr("y", (margin.bottom) + 500)
          .style("font-size", "12px") 
         .text("Hover over to see your recommended calorie intake and macronutrients according to weight");
     //create new array for pie chart
@@ -1160,7 +1166,7 @@ var valueline = d3.svg.line()
 // Adds the svg canvas
 var svg = d3.select("body")
     .append("svg")
-        .attr("width", width + margin.left + margin.right + 200)
+        .attr("width", width + margin.left + margin.right-100)
         .attr("height", height + margin.top + margin.bottom + 200)
     .append("g")
         .attr("transform", 
@@ -1209,15 +1215,13 @@ var pie = d3.layout.pie()
 
 //define Tooltip
 var divPie = d3.select("body").append("divPie")
-    .attr("class", "tooltipPie")
-    .style("left", (width + 110) + "px")
-    .style("top", (height + 190) + "px");
+    .attr("class", "tooltipPie");
             
 var div = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0)
-    .style("left", (width) + "px")
-    .style("top", (height) + "px"); 
+    .style("left", (width + 150) + "px")
+    .style("top", (height + 200) + "px"); 
 
     
     
