@@ -13,7 +13,7 @@ body { font: 12px Lato;}
     h1 {
     font-family: gandhi_serifregular,"Georgia",Times New Roman,serif;
     font-style: normal;
-    font-size: 3.0rem;
+    font-size: 60px;
     line-height: 1.12;
     letter-spacing: -0.9px;
     margin-bottom: .5em;
@@ -21,6 +21,14 @@ body { font: 12px Lato;}
     color: #222;
     text-align: center;
 }
+    h2{
+    
+    font-size:30px;
+    }
+    h3{
+    font-size:20px;
+        
+    }
  .foot-links a, .foot-links p{
     display: block;
     color: rgb(63, 63, 63);
@@ -239,7 +247,6 @@ div.tooltip {
 .goalsDiv {
     position: relative;
     font-size: 20px;
-    font-family: monospace;
     color: #3399ff;
     overflow: hidden;
 }  
@@ -268,14 +275,14 @@ div.tooltip {
 
 <body>
     <div class="page-header">
-<h1>Calorie and Macronutrients for Fitness</h1></div>
-    <h2 style="text-align: center;">Based on your fitness goals, to maximize results you must consume a certain amount of</h2> 
-    <h2 style="text-align: center;"> calories and macronutrients (Carbohydrates, Proteins, Fats) relative to your weight.</h2>    
+<h1>Calorie and Macronutrients when Exercising</h1></div>
+    <h2 style="text-align: center;">The correct diet is as important as the exercising itself when it comes to maximizing results.</h2> 
+    <h3 style="text-align: center;"> Your diet should consist of macronutrients(proteins, carbohydrates, and fats) that add up to a daily limit of calories determined by your weight. </h3>    
 
     
     <!--seprate div class for button placement-->
     <div class = "buttonArea">
-        <div class = "goalsDiv"><h2>What is your fitness goal?</h2></div>
+        <div class = "goalsDiv"><h2>What is your reason for exercising?</h2></div>
         <input class="fLossB" type="button" name="wLoss" value="I want to lose weight">
         <input class="maintainB" type="button" name="maintain" value="I want to maintain my body">
         <input class="mGainB" type="button" name="mGain" value="I need more muscle">
@@ -1260,8 +1267,8 @@ var pie = d3.layout.pie()
 //define Tooltip
 var divPie = d3.select("body").append("divPie")
     .attr("class", "tooltipPie")
-    .style("left", (width + 525) + "px")
-    .style("top", (height + 180) + "px");
+    .style("left", (width + 475) + "px")
+    .style("top", (height + 250) + "px");
             
 var div = d3.select("body").append("div")
     .attr("class", "tooltip")
@@ -1272,7 +1279,7 @@ var div = d3.select("body").append("div")
 var divLine = d3.select("body").append("divLine")
     .attr("class", "bottomTip")
     .style("left", (300) + "px" )
-    .style("top", (height + 625) + "px")
+    .style("top", (height + 700) + "px")
     
     
 
