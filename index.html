@@ -9,6 +9,15 @@ body { font: 12px Lato;}
     margin: 40px 0 20px;
     border-bottom: 1px solid #eee;
 }
+a {
+    text-decoration: none;
+}
+a:link, a:visited {
+    color: blue;
+}
+a:hover {
+    color: red;
+}
     h1 {
     font-family: gandhi_serifregular,"Georgia",Times New Roman,serif;
     font-style: normal;
@@ -224,7 +233,7 @@ div.tooltip {
     position: absolute;
     display: none;
     width: 300px;
-    height: 120px;
+    height: 100px;
     background: rgba(0,0,0,.1);
     border: 0 none;
     border-radius: 8px 8px 8px 8px;
@@ -254,12 +263,11 @@ div.tooltip {
 .bottomTip{
     position: absolute;
     text-align: left;
-    background: rgba(0,0,0,.1);
     display: none;
-    width: 225px;
-    height: 50px;
+    width: 1000px;
+    height: 100px;
     padding: 5px;
-    font-size: 14px;
+    font-size: 20px;
     border: 0 none;
     border-radius: 8px 8px 8px 8px;
 }
@@ -275,9 +283,9 @@ div.tooltip {
     <!--seprate div class for button placement-->
     <div class = "buttonArea">
         <div class = "goalsDiv"><h2>What is your fitness goal?</h2></div>
-        <input class="fLossB" type="button" name="wLoss" value="I want to lose weight!">
-        <input class="maintainB" type="button" name="maintain" value="I want to maintain my body!">
-        <input class="mGainB" type="button" name="mGain" value="I need more muscle!">
+        <input class="fLossB" type="button" name="wLoss" value="I want to lose weight">
+        <input class="maintainB" type="button" name="maintain" value="I want to maintain my body">
+        <input class="mGainB" type="button" name="mGain" value="I need more muscle">
     </div>
     <br>
 <!-- load the d3.js library -->    
@@ -414,24 +422,12 @@ focus.append("rect")
         .attr("class", "tool")
         .attr("transform", "translate(0,-500)");
     // place the value at the intersection
-//    focus.append("text")
-//        .attr("class", "y1")
-//        .style("stroke", "white")
-//        .style("stroke-width", "3.5px")
-//        .style("opacity", 0.8)
-//        .attr("dx", 8)
-//        .attr("dy", "-.3em");
+
         focus.append("text")
         .attr("class", "y5")
         .attr("dx", 5)
         .attr("dy", "2em");
-//    focus.append("text")
-//        .attr("class", "y1")
-//        .style("stroke", "white")
-//        .style("stroke-width", "3.5px")
-//        .style("opacity", 0.8)
-//        .attr("dx", 100)
-//        .attr("dy", "-.3em");
+
     focus.append("text")
         .attr("class", "y2")
         .style("text-anchor","end")
@@ -439,24 +435,11 @@ focus.append("rect")
         .attr("dy", "2em");
 
     // place the date at the intersection
-//    focus.append("text")
-//        .attr("class", "y3")
-//        .style("stroke", "white")
-//        .style("stroke-width", "3.5px")
-//        .style("opacity", 0.8)
-//        .attr("dx", 8)
-//        .attr("dy", "1em");
         focus.append("text")
         .attr("class", "y6")
         .attr("dx", 5)
         .attr("dy", "1em")
-//    focus.append("text")
-//        .attr("class", "y3")
-//        .style("stroke", "white")
-//        .style("stroke-width", "3.5px")
-//        .style("opacity", .8)
-//        .attr("dx", 125)
-//        .attr("dy", "1em");
+
     focus.append("text")
         .attr("class", "y4")
         .style("text-anchor","end")
@@ -473,7 +456,21 @@ focus.append("rect")
       .style("pointer-events", "all")
       .on("mouseover", function() { focus.style("display", null); })
       .on("mouseout", function() { focus.style("display", "none"); })
-      .on("mousemove", mousemove);
+      .on("mousemove", mousemove)
+      .on('click',clicked);
+            
+  function clicked(){
+      var x0 = x.invert(d3.mouse(this)[0]),
+      i = bisectDate(data, x0, 1),
+      d0 = data[i - 1],
+      d1 = data[i],
+      d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
+      
+      divLine.style("display", "block")
+            .text("If you are " + (d.Weight) + " lbs, and you would like to lose weight then you must eat less than " + (d.Calories) + " calories a day, consisting of " + (d.Protein) + " grams of protein " + (d.Carbohydrates) + ", grams of carbohydrates, " + (d.Fats) + " grams of fat.");
+      
+      
+  }
     
   function mousemove() {
       var x0 = x.invert(d3.mouse(this)[0]),
@@ -526,8 +523,8 @@ focus.append("rect")
 		          "translate(" + x(d.Weight) + "," +
 		                         y(d.Calories) + ")");
       
-      divLine.style("display", "block")
-            .text("If you are " + (d.Weight) + " lbs, you must eat less than " + (d.Calories) + " calories to begin to lose weight.");
+//      divLine.style("display", "block")
+//            .text("If you are " + (d.Weight) + " lbs, and you would like to lose weight then you must eat less than " + (d.Calories) + " calories a day, consisting of " + (d.Protein) + " grams of protein " + (d.Carbohydrates) + " grams of carbohydrates, " + (d.Fats) + " grams of fat.");
 //      div.transition()
 //          .duration(200)
 //          .style("opacity", .9)
@@ -707,13 +704,6 @@ focus.append("rect")
         .attr("class", "y5")
         .attr("dx", 5)
         .attr("dy", "2em");
-//    focus.append("text")
-//        .attr("class", "y1")
-//        .style("stroke", "white")
-//        .style("stroke-width", "3.5px")
-//        .style("opacity", 0.8)
-//        .attr("dx", 100)
-//        .attr("dy", "-.3em");
     focus.append("text")
         .attr("class", "y2")
         .style("text-anchor","end")
@@ -725,13 +715,7 @@ focus.append("rect")
         .attr("class", "y6")
         .attr("dx", 5)
         .attr("dy", "1em")
-//    focus.append("text")
-//        .attr("class", "y3")
-//        .style("stroke", "white")
-//        .style("stroke-width", "3.5px")
-//        .style("opacity", .8)
-//        .attr("dx", 125)
-//        .attr("dy", "1em");
+        
     focus.append("text")
         .attr("class", "y4")
         .style("text-anchor","end")
@@ -800,7 +784,7 @@ focus.append("rect")
 		                         y(d.Calories) + ")");
       
       divLine.style("display", "block")
-            .text("If you are " + (d.Weight) + " lbs, you must eat " + (d.Calories) + " calories to maintain your body weight.");
+            .text("If you are " + (d.Weight) + " lbs, and you would like to maintain your weight then you must eat about " + (d.Calories2) + " calories a day, consisting of " + (d.Protein2) + " grams of protein " + (d.Carbohydrates2) + ", grams of carbohydrates, " + (d.Fats2) + " grams of fat.");
 
 //      div.transition()
 //          .duration(200)
@@ -1073,7 +1057,7 @@ focus.append("rect")
 		                         y(d.Calories) + ")");
       
       divLine.style("display", "block")
-            .text("If you are " + (d.Weight) + " lbs, you must eat " + (d.Calories) + " calories or more to begin to gain weight.");
+            .text("If you are " + (d.Weight) + " lbs, and you would like to build muscle then you must eat about " + (d.Calories3) + " calories a day, consisting of " + (d.Protein3) + " grams of protein " + (d.Carbohydrates3) + ", grams of carbohydrates, " + (d.Fats3) + " grams of fat.");
 
 //      div.transition()
 //          .duration(200)
@@ -1213,7 +1197,7 @@ var valueline = d3.svg.line()
 var svg = d3.select("body")
     .append("svg")
         .attr("width", width + margin.left + margin.right+100)
-        .attr("height", height + margin.top + margin.bottom + 200)
+        .attr("height", height + margin.top + margin.bottom + 300)
     .append("g")
         .attr("transform", 
               "translate(" + margin.left + "," + margin.top + ")");
@@ -1224,7 +1208,7 @@ var piesvg = d3.select("body")
     .append("svg:svg")
     //height and width of svg body
     .attr("width", width + margin.left + margin.right-100)
-    .attr("height", height + margin.top + margin.bottom + 200)
+    .attr("height", height + margin.top + margin.bottom + 300)
   .append("g")
     .attr("transform", "translate(" + (width / 3 + 90) + "," + (height - 120) + ")");
     
@@ -1270,159 +1254,11 @@ var div = d3.select("body").append("div")
 
 var divLine = d3.select("body").append("divLine")
     .attr("class", "bottomTip")
-    .style("left", (width + 50) + "px" )
-    .style("top", (height + 200) + "px")
-    
-/*    
-// Get the data
-d3.csv("data.csv", function(error, data) {
-    data.forEach(function(d) {
-        d.Weight = d.Weight;
-        d.Calories = +d.Calories;
-    }); 
+    .style("left", (30) + "px" )
+    .style("top", (height + 625) + "px")
     
     
-    //Filtered data by rows for piechart
-    var rowData = data.filter(function(d) {
-        return d.Weight === "400";
-    });
-    
-    // Scale the range of the data
-    x.domain(d3.extent(data, function(d) { return d.Weight; }));
-    y.domain([0, d3.max(data, function(d) { return d.Calories; })]);
 
-    // Add the valueline path.
-    var path = svg.append("path")
-        .attr("class", "line")
-        .attr("d", valueline(data));
-    
-    var totalLength = path.node().getTotalLength();
-    
-    path
-        .attr("stroke-dasharray", totalLength + " " + totalLength)
-        .attr("stroke-dashoffset", totalLength)
-        .transition()
-            .duration(2000)
-            .ease("linear")
-            .attr("stroke-dashoffset", 0);
-    
-    var focus = svg.append("g")
-      .attr("class", "focus")
-      .style("display", "none");
-
-  focus.append("circle")
-      .attr("r", 4.5);
-
-  focus.append("text")
-      .attr("x", 9)
-      .attr("dy", ".35em");
-    
-  svg.append("rect")
-      .attr("class", "overlay")
-      .attr("width", width-150)
-      .attr("height", height+190)
-      .on("mouseover", function() { focus.style("display", null); })
-      .on("mouseout", function() { focus.style("display", "none"); })
-      .on("mousemove", mousemove);
-    
-  function mousemove() {
-      var x0 = x.invert(d3.mouse(this)[0]),
-      i = bisectDate(data, x0, 1),
-      d0 = data[i - 1],
-      d1 = data[i],
-      d = x0 - d0.Weight > d1.Weight - x0 ? d1 : d0;
-      focus.attr("transform", "translate(" + x(d.Weight) + "," + y(d.Calories) + ")");
-      focus.select("text").text(d.Calories);
-      div.transition()
-          .duration(200)
-          .style("opacity", .9)
-      div.html("Total Calories:"+d["Calories"]+"kcals <br>"+"Proteins:"+d.Protein+"g <br>"+"Carbohydrates:"+d.Carbohydrates+"g <br>"+"Fats:"+d.Fats+"g");
-      focus.select("text").text("Weight:"+d.Weight+"lb Calories:"+d.Calories);
-      }
-
-    // Add the X Axis
-    svg.append("g")
-        .attr("class", "x axis")
-        //add to height to match y axis length
-        .attr("transform", "translate(0," + (height + 200) + ")")
-        .call(xAxis);
-    
-    //X Axis Label
-    svg.append("text")
-        .attr("transform", "translate(" + (width / 3) + "," + (height + 218) + ")")
-        .style("text-anchor", "right")
-        .style("font-weight", "bold")
-        .style("font-size", "14")
-        .text("Weight");
-
-    // Add the Y Axis
-    svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis);
-    
-    svg.append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", -20)
-        .attr("x", -240)
-        .attr("dy", "1em")
-        .style("text-anchor","middle")
-        .style("font-weight", "bold")
-        .style("font-size", "14")
-        .text("Calories");
-    
-    //create new array for pie chart
-    dataPie = [
-        {"name": "Carbs", "val": rowData[0]["Carbohydrates"]},
-        {"name": "Protein", "val": rowData[0]["Protein"]},
-        {"name": "Fats", "val": rowData[0]["Fats"]}
-    ]
-    
-    //New variable 'g' for pie chart
-    var gpie = piesvg.selectAll(".arc")
-        .data(pie(dataPie))
-      .enter().append("g")
-        .attr("class", "arc");
-  
-    //Append pie chart path with colors
-    gpie.append("path")
-        .attr("d", arc)
-        .style("fill", function(d, i) { return color(i); })
-        .on("mouseover", function(d) {
-          d3.select(this)
-           .transition()
-            .duration(1000)
-            .attr("d", arcOver);
-          })
-        .on("mousemove", function(d){
-            divPie.style("left", d3.event.pageX+10+"px");
-            divPie.style("top", d3.event.pageY-25+"px");
-            divPie.style("display", "inline-block");
-            divPie.html(d.data.name);
-        })
-        .on("mouseout", function(d) {
-          divPie.style("display", "none");
-          d3.select(this).transition()
-              .duration(1000)
-              .attr("d", arc);
-		  })
-      .transition()
-        .ease("elastic")
-        .duration(4000)
-        .attrTween("d", tweenPie);
-    
-    //Append piechart with labels
-    gpie.append("text")
-      .style("fill", "White")
-      .style("font", "bold 12px Arial")
-      .transition().duration(2000)
-      .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
-      .attr("dy", ".35em")
-      .style("fill", "Black")
-      .text(function(d, i) { return dataPie[i].name + ": " + d3.format(".2f")((d.endAngle - d.startAngle)/(2*Math.PI)*100) + "%" })
-});
-
-*/
-    
 //Function for Pie animation
 function tweenPie(b) {
     b.innerRadius = radius *.6
@@ -1458,15 +1294,15 @@ function tweenPie(b) {
             <div class="col-sm-3" style="margin-left: 5px";>
               <h3>Data Sources:</h3>
               <div class="foot-links">
-                  <li><a href="http://www.jtsstrength.com/articles/2013/08/30/optimal-nutrition-for-strength-performance/">Optimal nutrition for strength performance</a></li> 
+                  <li><a style="text-decoration:none; color:blue" href="http://www.jtsstrength.com/articles/2013/08/30/optimal-nutrition-for-strength-performance/">Optimal nutrition for strength performance</a></li> 
               </div>
             </div>
             <div class="col-sm-3" style="margin-left: 5px";>
               <h3> Code Sources:</h3>
               <div class="foot-links">
-                  <li><a href="https://bl.ocks.org/mbostock/3902569/">X-value Mouseover</a></li>
-                  <li><a href="http://bl.ocks.org/mbostock/4341574">Pie Chart Animations</a></li>
-                  <li><a href="http://jsfiddle.net/8huvuoj9/1/">Pie Chart Mouseover Animation</a></li>
+                  <li><a style="text-decoration:none; color:blue" href="https://bl.ocks.org/mbostock/3902569/">X-value Mouseover</a></li>
+                  <li><a style="text-decoration:none; color:blue" href="https://bl.ocks.org/mbostock/4341574/">Pie Chart Animations</a></li>
+                  <li><a style="text-decoration:none; color:blue" href="https://jsfiddle.net/8huvuoj9/1/">Pie Chart Mouseover Animation</a></li>
               </div>
             </div>
           </div><!--/container-->
