@@ -588,11 +588,11 @@ focus.append("rect")
             }
             divPie.style("display", "inline-block");
             divPie.html("Recommended Sources of " + d.data.name + "<br>" +
-                       z[0][d.data.name] + z[0]["size"] + " per " + z[0]["serving"] + " serving" + "<br>"
-                       + z[1][d.data.name] + z[1]["size"] + " per " + z[1]["serving"] + " serving" + "<br>"
-                       + z[2][d.data.name] + z[2]["size"] + " per " + z[2]["serving"] + " serving" + "<br>"
-                       + z[3][d.data.name] + z[3]["size"] + " per " + z[3]["serving"] + " serving" + "<br>"
-                       + z[4][d.data.name] + z[4]["size"] + " per " + z[4]["serving"] + " serving" + "<br>");
+                        '<span style = "float:left;">'+ z[0][d.data.name] + '</span><span style = "float:right;">' + z[0]["size"] + " per " + z[0]["serving"] + " serving" + "</span>" + "<br>"
+                       + '<span style = "float:left;">'+ z[1][d.data.name] + '</span><span style = "float:right;">' + z[1]["size"] + " per " + z[1]["serving"] + " serving" + "</span>" + "<br>"
+                       + '<span style = "float:left;">'+ z[2][d.data.name] + '</span><span style = "float:right;">' + z[2]["size"] + " per " + z[2]["serving"] + " serving" + "</span>" +  "<br>"
+                       + '<span style = "float:left;">'+ z[3][d.data.name] + '</span><span style = "float:right;">' + z[3]["size"] + " per " + z[3]["serving"] + " serving" + "</span>" + "<br>"
+                       + '<span style = "float:left;">'+ z[4][d.data.name] + '</span><span style = "float:right;">' + z[4]["size"] + " per " + z[4]["serving"] + " serving" + "</span>" + "<br>");
         })
         .on("mouseout", function(d) {
           divPie.style("display", "inline-block");
