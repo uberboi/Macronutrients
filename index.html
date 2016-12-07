@@ -553,9 +553,9 @@ focus.append("rect")
         .call(yAxis);
             
        svg.append("text")
-        .attr("x", 50)
+        .attr("x", 25)
         .attr("y", (margin.bottom) + 650)
-        .style("font-size", "12px") 
+        .style("font-size", "16px") 
         .text("Click on the graph to select your weight to see your recommended calorie intake and macronutrients according to weight");
     svg.append("text")
         .attr("transform", "rotate(-90)")
@@ -825,9 +825,9 @@ focus.append("rect")
         .call(yAxis);
             
     svg.append("text")
-        .attr("x", 50)
+        .attr("x", 25)
         .attr("y", (margin.bottom) + 650)
-        .style("font-size", "12px") 
+        .style("font-size", "16px") 
         .text("Click on the graph to select your weight to see your recommended calorie intake and macronutrients according to weight");
     svg.append("text")
         .attr("transform", "rotate(-90)")
@@ -1118,9 +1118,9 @@ focus.append("rect")
         .style("font-size", "20")
         .text("Calories");
     svg.append("text")
-        .attr("x", 50)
+        .attr("x", 25)
         .attr("y", (margin.bottom) + 650)
-         .style("font-size", "12px") 
+         .style("font-size", "16px") 
         .text("Click on the graph to select your weight to see your recommended calorie intake and macronutrients according to weight");
     //create new array for pie chart
     dataPie = [ 
@@ -1267,7 +1267,7 @@ var pie = d3.layout.pie()
 //define Tooltip
 var divPie = d3.select("body").append("divPie")
     .attr("class", "tooltipPie")
-    .style("left", (width + 475) + "px")
+    .style("left", (width + 525) + "px")
     .style("top", (height + 250) + "px");
             
 var div = d3.select("body").append("div")
@@ -1278,7 +1278,7 @@ var div = d3.select("body").append("div")
 
 var divLine = d3.select("body").append("divLine")
     .attr("class", "bottomTip")
-    .style("left", (300) + "px" )
+    .style("left", (275) + "px" )
     .style("top", (height + 700) + "px")
     
     
@@ -1302,7 +1302,8 @@ function tweenPie(b) {
             <div class="row-1">
               <h3> Created by: </h3>
                   Han Nguyen, Kevin Cai, Steven Huang  <br>
-
+              <h3>In collaboration with:</h3>
+                 Suresh K. Lodha, Ryan Brounley
               <h3>Created for: </h3> CMPS165, Data Programming for Visualization, Fall 2016
             </div><!--/col-sm-3-->
             <br>
