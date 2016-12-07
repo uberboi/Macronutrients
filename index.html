@@ -525,6 +525,9 @@ focus.append("rect")
             .attr("transform",
 		          "translate(" + x(d.Weight) + "," +
 		                         y(d.Calories) + ")");
+      
+      divLine.style("display", "block")
+            .text("If you are " + (d.Weight) + " lbs, you must eat less than " + (d.Calories) + " calories to begin to lose weight.");
 //      div.transition()
 //          .duration(200)
 //          .style("opacity", .9)
@@ -554,7 +557,7 @@ focus.append("rect")
             
        svg.append("text")
         .attr("x", 50)
-        .attr("y", (margin.bottom) + 500)
+        .attr("y", (margin.bottom) + 650)
         .style("font-size", "12px") 
         .text("Hover over to see your recommended calorie intake and macronutrients according to weight");
     svg.append("text")
@@ -795,6 +798,9 @@ focus.append("rect")
             .attr("transform",
 		          "translate(" + x(d.Weight) + "," +
 		                         y(d.Calories) + ")");
+      
+      divLine.style("display", "block")
+            .text("If you are " + (d.Weight) + " lbs, you must eat " + (d.Calories) + " calories to maintain your body weight.");
 
 //      div.transition()
 //          .duration(200)
@@ -825,7 +831,7 @@ focus.append("rect")
             
     svg.append("text")
         .attr("x", 50)
-        .attr("y", (margin.bottom) + 500)
+        .attr("y", (margin.bottom) + 650)
         .style("font-size", "12px") 
         .text("Hover over to see your recommended calorie intake and macronutrients according to weight");
     svg.append("text")
@@ -1065,6 +1071,9 @@ focus.append("rect")
             .attr("transform",
 		          "translate(" + x(d.Weight) + "," +
 		                         y(d.Calories) + ")");
+      
+      divLine.style("display", "block")
+            .text("If you are " + (d.Weight) + " lbs, you must eat " + (d.Calories) + " calories or more to begin to gain weight.");
 
 //      div.transition()
 //          .duration(200)
@@ -1104,7 +1113,7 @@ focus.append("rect")
         .text("Calories");
     svg.append("text")
         .attr("x", 50)
-        .attr("y", (margin.bottom) + 500)
+        .attr("y", (margin.bottom) + 650)
          .style("font-size", "12px") 
         .text("Hover over to see your recommended calorie intake and macronutrients according to weight");
     //create new array for pie chart
@@ -1259,7 +1268,10 @@ var div = d3.select("body").append("div")
     .style("left", (width + 150) + "px")
     .style("top", (height + 200) + "px"); 
 
-    
+var divLine = d3.select("body").append("divLine")
+    .attr("class", "bottomTip")
+    .style("left", (width + 50) + "px" )
+    .style("top", (height + 200) + "px")
     
 /*    
 // Get the data
